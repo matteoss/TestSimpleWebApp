@@ -14,10 +14,12 @@ namespace TestSimpleWebApp.Data
 
         }
         public DbSet<Oglas> Oglasi { get; set; }
+        public DbSet<Korisnik> Korisnici { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Oglas>().ToTable("Oglas");
+            modelBuilder.Entity<Korisnik>().ToTable("Korisnik");
         }
     }
 }

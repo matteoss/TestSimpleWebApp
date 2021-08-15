@@ -25,7 +25,10 @@ namespace TestSimpleWebApp
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TestSimpleWebAppContext>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            services.AddDbContext<TestSimpleWebAppContext>(options => { 
+                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); 
+            });
+            services.AddControllers();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -37,13 +40,15 @@ namespace TestSimpleWebApp
             }
 
             app.UseRouting();
-
+            app.UseStaticFiles();
+           
             app.UseEndpoints(endpoints =>
             {
-                endpoints.MapGet("/", async context =>
+                /*endpoints.MapGet("/", async context =>
                 {
                     await context.Response.WriteAsync("Hello World!");
-                });
+                });*/
+                endpoints.MapControllers();
             });
         }
     }
