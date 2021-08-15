@@ -22,7 +22,6 @@
   <ItemGroup>
     <Folder Include="Static\css\" />
     <Folder Include="Static\images\" />
-    <Folder Include="Static\js\" />
   </ItemGroup>
 
 </Project>

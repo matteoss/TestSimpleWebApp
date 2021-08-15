@@ -12,9 +12,9 @@ namespace TestSimpleWebApp.Controllers
         [HttpGet("")]
         [HttpGet("home")]
         //[HttpGet("index")]
-        public String Index()
+        public IActionResult Index()
         {
-            return "Hello world from HomeController!";
+            return Redirect("index.html");
         }
     }
 }
