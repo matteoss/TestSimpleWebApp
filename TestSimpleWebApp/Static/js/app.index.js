@@ -1,2 +1,2 @@
 ﻿
-requirejs(['./common']);
+requirejs(['js/common']);

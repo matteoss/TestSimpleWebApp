@@ -3,14 +3,31 @@
 <head>
     <meta charset="utf-8" />
     <title>Index</title>
-    <script type='text/javascript' data-main="js/app.index" src='js/lib/require.js'></script>
+    <script type='text/javascript' src='js/lib/require.js'></script>
+    <script type='text/javascript' src='js/requirejs-config.js'></script>
+    <script type='text/javascript' >require(["js/app.index"]);</script>
     <link rel="stylesheet" href="css/my-css.css">
 </head>
 <body>
     <div>
+        <script type="text/javascript">
+            var oglasi;
+            require(['ko'], function (ko) {
+                oglasi = ko.observableArray(); //[]; // [{naslov: "oglas1", opis: "opis1"}, {naslov: "oglas2", opis: "opis2"}];
+            });
+            require(['jquery'], function ($) {
+                $.getJSON("/Oglasi/", function (result) {
+                    $.each(result, function (i, field) {
+                        oglasi.push(field);
+                    });
+                });
+            });
+        </script>
         <navigation-bar></navigation-bar>
-        <p>Hello from index.html</p>
-        <test-temp></test-temp>
+        <div class="main-container">
+            <p>Hello from index.html</p>
+            <lista-oglasa params='oglasi: oglasi'></lista-oglasa>
+        </div>
     </div>
 </body>
 </html>

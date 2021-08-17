@@ -1,13 +1,9 @@
 ﻿define(['ko', 'text!./oglas.html'], function (ko, htmlString) {
-    function Oglas(naslov, opis) {
-        this.naziv = ko.observable(naslov);
-        this.opis = ko.observable(opis);
+    function Oglas(params) {
+        this.naslov = ko.observable(params.oglas.Naziv);
+        this.opis = ko.observable(params.oglas.Opis);
+        this.vrijeme_kreiranja = ko.observable(params.oglas.VrijemeKreiranja);
+        //alert(JSON.stringify(params));
     }
-
-    Oglas.prototype.postaviOglas = function (oglas) {
-        this.naziv = oglas.naziv;
-        this.opis = oglas.opis;
-    };
-
 return { viewModel: Oglas, template: htmlString };
 });
