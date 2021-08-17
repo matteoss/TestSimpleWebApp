@@ -12,17 +12,32 @@ namespace TestSimpleWebApp.Controllers
     public class OglasController : Controller
     {
         private readonly TestSimpleWebAppContext _testSimpleWebAppContext;
+        private readonly int _itemsPerPage = 2;
 
         public OglasController(TestSimpleWebAppContext testSimpleWebAppContext)
         {
             _testSimpleWebAppContext = testSimpleWebAppContext;
         }
 
-        [HttpGet("/Oglasi/{trazi?}")]
-        public String getOglasi(String trazi)
+        [HttpGet("/Oglasi/{page:int:min(1)}/{trazi?}")]
+        public String getOglasi(String trazi, int page)
         {
-            List<Oglas> oglasi = _testSimpleWebAppContext.Oglasi.Where(o => o.Naziv.Contains(trazi) || String.IsNullOrEmpty(trazi)).ToList();
-            return JsonSerializer.Serialize(oglasi);
+            List<Oglas> oglasi = _testSimpleWebAppContext.Oglasi
+                .Where(o => o.Naziv.Contains(trazi) || String.IsNullOrEmpty(trazi))
+                .OrderBy(a => a.Naziv)
+                .Skip(_itemsPerPage * (page - 1))
+                .Take(_itemsPerPage + 1)
+                .ToList();
+            PagedList<Oglas> oglasiPaged = new PagedList<Oglas>();
+            if (oglasi.Count > _itemsPerPage) {
+                oglasi.RemoveAt(oglasi.Count - 1);
+                oglasiPaged.HasMore = true;
+            } else
+            {
+                oglasiPaged.HasMore = false;
+            }
+            oglasiPaged.List = oglasi;
+            return JsonSerializer.Serialize(oglasiPaged);
         }
     }
 }

@@ -15,6 +15,9 @@ require(['ko', 'jquery'], function (ko, $) {
         ko.components.register('lista-oglasa', {
             require: '/components/lista-oglasa.js'
         });
+        ko.components.register('page-number', {
+            require: '/components/page-number.js'
+        });
         ko.applyBindings();
     });
 });

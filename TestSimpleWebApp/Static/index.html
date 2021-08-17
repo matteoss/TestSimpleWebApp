@@ -9,24 +9,36 @@
     <link rel="stylesheet" href="css/my-css.css">
 </head>
 <body>
-    <div>
+    <div class="root-container">
         <script type="text/javascript">
             var oglasi;
+            var page;
+            var hasMorePages;
+            var search;
             require(['ko'], function (ko) {
                 oglasi = ko.observableArray(); //[]; // [{naslov: "oglas1", opis: "opis1"}, {naslov: "oglas2", opis: "opis2"}];
+                page = ko.observable(1);
+                search = ko.observable("");
+                hasMorePages = ko.observable(false);
             });
-            require(['jquery'], function ($) {
-                $.getJSON("/Oglasi/", function (result) {
-                    $.each(result, function (i, field) {
-                        oglasi.push(field);
+            var refresh_function = function () {
+                require(['ko', 'jquery'], function (ko, $) {
+                    oglasi.removeAll();
+                    $.getJSON("/Oglasi/" + page() + "/" + search(), function (result) {
+                        $.each(result.List, function (i, field) {
+                            oglasi.push(field);
+                        });
+                        hasMorePages(result.HasMore);
                     });
                 });
-            });
+            }
+            refresh_function(page);
         </script>
-        <navigation-bar></navigation-bar>
+        <navigation-bar params='search: search, search_function: refresh_function'></navigation-bar>
         <div class="main-container">
             <p>Hello from index.html</p>
             <lista-oglasa params='oglasi: oglasi'></lista-oglasa>
+            <page-number params='page: page, hasMorePages: hasMorePages, refresh_function: refresh_function'></page-number>
         </div>
     </div>
 </body>

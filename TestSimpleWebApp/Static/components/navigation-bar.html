@@ -1,6 +1,15 @@
-﻿<ul class="main-nav-bar">
-    <li class="main-nav-bar-item"><a href="default.asp">Home</a></li>
-    <li class="main-nav-bar-item"><a href="news.asp">News</a></li>
-    <li class="main-nav-bar-item"><a href="contact.asp">Contact</a></li>
-    <li class="main-nav-bar-item"><a href="about.asp">About</a></li>
-</ul>
+﻿<div class="main-nav-bar">
+    <table>
+        <tr>
+            <td class="main-nav-bar-home">
+                <a href="index.html">Home</a>
+            </td>
+            <td class="main-nav-bar-search">
+                <input type="text" data-bind="value: search"/>
+            </td>
+            <td class="main-nav-bar-search-button">
+                <button data-bind="click: search_function">Traži</button>
+            </td>
+        </tr>
+    </table>
+</div>

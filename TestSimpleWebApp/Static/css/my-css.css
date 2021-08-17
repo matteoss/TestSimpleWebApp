@@ -1,14 +1,71 @@
-﻿.main-nav-bar {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-.main-nav-bar-item {
-    float: left;
+﻿body{
+    margin: 0px;
 }
 
-.main-nav-bar-item > a {
+.root-container {
+
+}
+
+.main-container {
+    margin: 0px;
+}
+
+.main-nav-bar {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    background-color: white;
+    top: 0px;
+}
+
+.main-nav-bar table{
+    width: 100%;
+}
+
+.main-nav-bar-home {
+    width: 1%;
+}
+
+.main-nav-bar-home a {
     display: block;
     padding: 8px;
-    background-color: #dddddd;
+    background-color: aqua;
+}
+
+.main-nav-bar-search {
+    width: 50%;
+}
+
+.main-nav-bar-search input {
+    width: 100%;
+}
+
+.main-nav-bar-search-button {
+    width: 49%;
+}
+
+.main-nav-bar-search-button button {
+    
+}
+
+.page-number-container {
+    position: fixed;
+    bottom: 0px;
+    width: 100%;
+}
+
+.page-number-container table{
+    margin: auto;
+}
+
+.lista-oglasa-content {
+    background-color: aqua;
+    padding: 5px;
+}
+
+.oglas-content{
+    background-color: white;
+    padding: 8px;
+    margin: 5px;
 }
