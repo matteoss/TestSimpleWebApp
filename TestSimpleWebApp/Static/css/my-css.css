@@ -1,0 +1,14 @@
+﻿.main-nav-bar {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+.main-nav-bar-item {
+    float: left;
+}
+
+.main-nav-bar-item > a {
+    display: block;
+    padding: 8px;
+    background-color: #dddddd;
+}

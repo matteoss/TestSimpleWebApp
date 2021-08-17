@@ -29,10 +29,10 @@ namespace TestSimpleWebApp.Data
 
             var oglasi = new Oglas[]
             {
-                new Oglas("Samsung S10", 1, "Prodajem mobitel Samsung S10"),
-                new Oglas("BMW 5", 1, "BMW 520i"),
-                new Oglas("Lenovo", 1, "Prodajem laptop lenovo"),
-                new Oglas("Tipkovnica", 2, "Prodajem tipkovnicu Logitech"),
+                new Oglas("Samsung S10", 1, "Prodajem mobitel Samsung S10", new DateTime()),
+                new Oglas("BMW 5", 1, "BMW 520i", new DateTime()),
+                new Oglas("Lenovo", 1, "Prodajem laptop lenovo", new DateTime()),
+                new Oglas("Tipkovnica", 2, "Prodajem tipkovnicu Logitech", new DateTime()),
             };
 
             foreach(Oglas o in oglasi)

@@ -13,17 +13,19 @@ namespace TestSimpleWebApp.Models
         public String Naziv { get; set; }
         public int VlasnikID { get; set; }
         public String Opis { get; set; }
+        public DateTime DatumKreiranja { get; set; }
 
         public Oglas()
         {
 
         }
 
-        public Oglas(string naziv, int vlasnikID, string opis)
+        public Oglas(string naziv, int vlasnikID, string opis, DateTime datumKreiranja)
         {
             Naziv = naziv;
             VlasnikID = vlasnikID;
             Opis = opis;
+            DatumKreiranja = datumKreiranja;
         }
 
         public override string ToString()
