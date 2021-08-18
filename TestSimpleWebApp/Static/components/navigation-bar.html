@@ -5,7 +5,7 @@
                 <a href="index.html">Home</a>
             </td>
             <td class="main-nav-bar-search">
-                <input type="text" data-bind="value: search"/>
+                <form data-bind="submit: search_function"><input type="text" data-bind="value: search" /></form>
             </td>
             <td class="main-nav-bar-search-button">
                 <button data-bind="click: search_function">Traži</button>
