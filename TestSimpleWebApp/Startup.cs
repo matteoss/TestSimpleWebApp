@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestSimpleWebApp.Data;
+using TestSimpleWebApp.Security;
 
 namespace TestSimpleWebApp
 {
@@ -29,7 +30,9 @@ namespace TestSimpleWebApp
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); 
             });
             services.AddControllers();
-            //services.AddAp
+
+            services.Configure<SecuritySettings>(Configuration.GetSection("SecuritySettings"));
+            services.AddScoped<IKorisnikService, KorisnikService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +45,8 @@ namespace TestSimpleWebApp
 
             app.UseRouting();
             app.UseStaticFiles();
+
+            app.UseMiddleware<JwtMiddleware>();
            
             app.UseEndpoints(endpoints =>
             {
