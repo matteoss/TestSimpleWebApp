@@ -69,3 +69,46 @@
     padding: 8px;
     margin: 5px;
 }
+
+popup {
+    visibility: hidden;
+    z-index: 1;
+}
+
+.popup-containter {
+    position: absolute;
+    display: table;
+    top: 0%;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(80, 80, 80, 0.7);
+}
+
+.popup-middle {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+.popup-view {
+    margin: auto;
+    background-color: white;
+    width: 30%;
+    text-align: center;
+    padding: 4px;
+}
+
+.popup-subject {
+
+}
+
+.popup-text {
+
+}
+
+.popup-view button {
+
+}
+
+popup.show {
+    visibility: visible;
+}

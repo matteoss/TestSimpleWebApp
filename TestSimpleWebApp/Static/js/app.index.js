@@ -28,3 +28,16 @@ var search_function = function () {
     page(1);
     refresh_function();
 }
+
+var make_alert = function () {
+    require(['jquery'], function ($) {
+        $.getJSON("/authorized/", function (result) {
+            alert(JSON.stringify(result));
+        });
+    });
+}
+
+var show_popup = function (id) {
+    var popup = document.getElementById(id);
+    popup.classList.toggle("show");
+}

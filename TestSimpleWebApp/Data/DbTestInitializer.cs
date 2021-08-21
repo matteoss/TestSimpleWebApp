@@ -19,8 +19,8 @@ namespace TestSimpleWebApp.Data
 
             var korisnici = new Korisnik[]
             {
-                new Korisnik("marko", ""),
-                new Korisnik("ivo", ""),
+                new Korisnik("mateo", "", "lozinka", "Admin"),
+                new Korisnik("marko", "", "lozinka", "User"),
             };
             foreach(Korisnik k in korisnici){
                 context.Korisnici.Add(k);

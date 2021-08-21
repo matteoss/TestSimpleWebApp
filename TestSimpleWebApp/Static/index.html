@@ -10,10 +10,12 @@
 </head>
 <body>
     <div class="root-container">
-        <navigation-bar params='search: search, search_function: search_function'></navigation-bar>
+        <navigation-bar params='search: search, search_function: search_function, username: Security.username'></navigation-bar>
         <div class="main-container">
             <p>Hello from index.html</p>
             <lista-oglasa params='oglasi: oglasi'></lista-oglasa>
+            <button onclick="show_popup('main-popup')">Alert</button>
+            <popup id="main-popup" params="id: 'main-popup'"></popup>
             <page-number params='page: page, hasMorePages: hasMorePages, refresh_function: refresh_function'></page-number>
         </div>
     </div>

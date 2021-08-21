@@ -29,19 +29,21 @@ namespace TestSimpleWebApp.Security
 
 
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<Korisnik> _users = new List<Korisnik>
-        {
-            new Korisnik("test", "") { ID = 1, Lozinka = "test" }
-        };
+        private List<Korisnik> _users;
 
         private readonly SecuritySettings _securitySettings;
 
         public KorisnikService(IOptions<SecuritySettings> securitySettings)
         {
             _securitySettings = securitySettings.Value;
+
+            _users = new List<Korisnik>
+            {
+                new Korisnik("mateo", "", HashPassword("lozinka"), "Admin") { ID = 1  }
+            };
         }
 
-        private string HashPassword(string password)
+        public string HashPassword(string password)
         {
             var salt = new byte[saltSize];
             RandomNumberGenerator.Create().GetBytes(salt);
@@ -62,7 +64,8 @@ namespace TestSimpleWebApp.Security
             return Convert.ToBase64String(result);
         }
 
-        private bool VerifyPassword(string hashedPassword, string password)
+
+        public bool VerifyPassword(string hashedPassword, string password)
         {
             var hashedPasswordBytes = Convert.FromBase64String(hashedPassword);
             if (hashedPasswordBytes[0] != versionMark)
@@ -70,23 +73,23 @@ namespace TestSimpleWebApp.Security
                 return false;
             }
             var passwordIterCount = (int)(
-                ((uint)hashedPasswordBytes[1]) << 24
-                | ((uint)hashedPasswordBytes[2]) << 16
-                | ((uint)hashedPasswordBytes[3]) << 8
-                | ((uint)hashedPasswordBytes[4])
+                (((uint)hashedPasswordBytes[1]) << 24)
+                | (((uint)hashedPasswordBytes[2]) << 16)
+                | (((uint)hashedPasswordBytes[3]) << 8)
+                | (((uint)hashedPasswordBytes[4]))
                 );
             var passwordSaltSize = (int)(
-                ((uint)hashedPasswordBytes[5]) << 24
-                | ((uint)hashedPasswordBytes[6]) << 16
-                | ((uint)hashedPasswordBytes[7]) << 8
-                | ((uint)hashedPasswordBytes[8])
+                (((uint)hashedPasswordBytes[5]) << 24)
+                | (((uint)hashedPasswordBytes[6]) << 16)
+                | (((uint)hashedPasswordBytes[7]) << 8)
+                | (((uint)hashedPasswordBytes[8]))
                 );
             var salt = new byte[passwordSaltSize];
             Array.Copy(hashedPasswordBytes, 9, salt, 0, passwordSaltSize);
             var expectedSubkey = new byte[hashedPasswordBytes.Length - 9 - passwordSaltSize];
             Array.Copy(hashedPasswordBytes, 9 + passwordSaltSize, expectedSubkey, 0, hashedPasswordBytes.Length - 9 - passwordSaltSize);
 
-            var subkey = KeyDerivation.Pbkdf2(password, salt, KeyDerivationPrf.HMACSHA256, passwordIterCount, passwordSaltSize);
+            var subkey = KeyDerivation.Pbkdf2(password, salt, KeyDerivationPrf.HMACSHA256, passwordIterCount, expectedSubkey.Length);
             return subkey.SequenceEqual(expectedSubkey);
         }
 
@@ -95,15 +98,11 @@ namespace TestSimpleWebApp.Security
 
             var user = _users.SingleOrDefault(x => x.KorisnickoIme == model.Username);
 
-            if (!VerifyPassword(user.Lozinka, model.Password))
+            if (user == null || !VerifyPassword(user.Lozinka, model.Password))
             {
                 return null;
             }
 
-            // return null if user not found
-            if (user == null) return null;
-
-            // authentication successful so generate jwt token
             var token = generateJwtToken(user);
 
             return new AuthResponse(token);
@@ -116,15 +115,15 @@ namespace TestSimpleWebApp.Security
 
         // helper methods
 
-        private string generateJwtToken(Korisnik user)
+        private string generateJwtToken(Korisnik korisnik)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_securitySettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", user.ID.ToString()) }),
-                AdditionalHeaderClaims = new Dictionary<string, object>() { { "role", "default" } },
+                Subject = new ClaimsIdentity(new[] { new Claim("id", korisnik.ID.ToString()) }),
+                AdditionalHeaderClaims = new Dictionary<string, object>() { { "role", korisnik.Rola } },
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

@@ -15,11 +15,14 @@ namespace TestSimpleWebApp.Models
         public string Opis { get; set; }
         [JsonIgnore]
         public string Lozinka { get; set; }
+        public string Rola { get; set; }
 
-        public Korisnik(string korisnickoIme, string opis)
+        public Korisnik(string korisnickoIme, string opis, string lozinka, string rola)
         {
             KorisnickoIme = korisnickoIme;
             Opis = opis;
+            Lozinka = lozinka;
+            Rola = rola;
         }
     }
 }

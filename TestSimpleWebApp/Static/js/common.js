@@ -1,5 +1,7 @@
 ﻿
-require(['ko', 'jquery'], function (ko, $) {
+//requirejs(['js/security']);
+
+require(['ko', 'jquery', 'js/security'], function (ko, $) {
     $(document).ready(function () {
         ko.components.register('navigation-bar', {
             require: '/components/navigation-bar.js' 
@@ -17,6 +19,9 @@ require(['ko', 'jquery'], function (ko, $) {
         });
         ko.components.register('page-number', {
             require: '/components/page-number.js'
+        });
+        ko.components.register('popup', {
+            require: '/components/popup.js'
         });
         ko.applyBindings();
     });
