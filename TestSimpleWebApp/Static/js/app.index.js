@@ -15,10 +15,11 @@ var refresh_function = function () {
     require(['ko', 'jquery'], function (ko, $) {
         oglasi.removeAll();
         $.getJSON("/Oglasi/" + page() + "/" + search(), function (result) {
-            $.each(result.List, function (i, field) {
+            //alert(JSON.stringify(result));
+            $.each(result.list, function (i, field) {
                 oglasi.push(field);
             });
-            hasMorePages(result.HasMore);
+            hasMorePages(result.hasMore);
         });
     });
 }

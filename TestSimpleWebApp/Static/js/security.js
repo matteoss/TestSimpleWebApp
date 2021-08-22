@@ -1,54 +1,65 @@
 ﻿
-var Security;
-
-require(['jquery', 'ko'], function ($, ko) {
-    var SecurityFunction = function () {
-        this.username = ko.observable("");
-
-        this.beforeSendFunction = function (xhr) {
+define(['module'], function (module) {
+    var Security = {
+        version: null,
+        username: null,
+        beforeSendFunction: null,
+        check_login: null,
+        login: null,
+    };
+    require(['jquery', 'ko'], function ($, ko) {
+        Security.version = "1.0";
+        Security.username = ko.observable("");
+        Security.beforeSendFunction = function (xhr) {
             xhr.setRequestHeader('Authorization', 'Bearer ' + document.cookie.match('(^|;)\\s*' + 'token' + '\\s*=\\s*([^;]+)')?.pop() || '');
         };
 
-        var beforeSendFunctionTmp = this.beforeSendFunction;
-        var usernameTmp = this.username;
+        var beforeSendFunctionTmp = Security.beforeSendFunction;
+        var usernameTmp = Security.username;
 
-        this.check_login = function () {
+        Security.check_login = function () {
+            console.log(document.cookie.match('(^|;)\\s*' + 'token' + '\\s*=\\s*([^;]+)')?.pop() || '');
             $.ajax({
                 url: "authorized",
                 beforeSend: beforeSendFunctionTmp,
                 success: function (result) {
-                    username(document.cookie.match('(^|;)\\s*' + 'username' + '\\s*=\\s*([^;]+)')?.pop() || '');
+                    usernameTmp(document.cookie.match('(^|;)\\s*' + 'username' + '\\s*=\\s*([^;]+)')?.pop() || '');
                 },
                 error: function (jqXHR, textStatus, errorThrown) {
                     if (jqXHR.status == 401) {
-                        document.cookie = "";
+                        document.cookie = "username= ; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+                        document.cookie = "token= ; expires=Thu, 01 Jan 1970 00:00:01 GMT";
                         usernameTmp("");
                     }
                 }
             });
         };
 
-        this.login = function (username, password, onError) {
+        Security.login = function (username, password, onError) {
             $.ajax({
                 url: "login",
                 type: 'POST',
-                data: JSON.stringify({ username: username, password: password }),
+                contentType: "application/json",
+                data: JSON.stringify({ Username: username, Password: password }),
                 success: function (result) {
-                    document.cookie = "username=" + username + "; token=" + result.Token + "; expires=Thu, 18 Dec 2013 12:00:00 UTC";
-                    username(username);
+                    console.log(JSON.stringify(result));
+                    var expires = new Date(result.expires).toUTCString();
+                    document.cookie = "username=" + username + "; expires=" + expires;
+                    document.cookie = "token=" + result.token + "; expires=" + expires;
+                    usernameTmp(username);
                 },
                 error: onError
             });
         };
-    };
-    Security = new SecurityFunction();
-    $(document).ready(
-        function () {
-            Security.check_login();
-        }
-    );
 
+        /*$(document).ready(
+            function () {
+                Security.check_login();
+            }
+        );*/
+
+    });
+    return Security;
 });
-
     
 

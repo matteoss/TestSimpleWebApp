@@ -16,6 +16,7 @@ namespace TestSimpleWebApp.Security
     public interface IKorisnikService
     {
         AuthResponse Authenticate(AuthRequest model);
+        string HashPassword(string password);
         Korisnik GetById(int id);
     }
      
@@ -105,7 +106,7 @@ namespace TestSimpleWebApp.Security
 
             var token = generateJwtToken(user);
 
-            return new AuthResponse(token);
+            return new AuthResponse(token, DateTime.Now.AddHours(_securitySettings.TokenDurationHours).ToUniversalTime());
         }
 
         public Korisnik GetById(int id)
@@ -123,7 +124,6 @@ namespace TestSimpleWebApp.Security
             var tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new[] { new Claim("id", korisnik.ID.ToString()) }),
-                AdditionalHeaderClaims = new Dictionary<string, object>() { { "role", korisnik.Rola } },
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

@@ -1,7 +1,7 @@
 ﻿
 //requirejs(['js/security']);
 
-require(['ko', 'jquery', 'js/security'], function (ko, $) {
+require(['ko', 'jquery', 'security'], function (ko, $, s) {
     $(document).ready(function () {
         ko.components.register('navigation-bar', {
             require: '/components/navigation-bar.js' 

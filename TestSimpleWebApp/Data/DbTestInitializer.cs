@@ -3,12 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestSimpleWebApp.Models;
+using TestSimpleWebApp.Security;
 
 namespace TestSimpleWebApp.Data
 {
     public static class DbTestInitializer
     {
-        public static void Initialize(TestSimpleWebAppContext context)
+        public static void Initialize(TestSimpleWebAppContext context, IKorisnikService korisnikService)
         {
             context.Database.EnsureCreated();
 
@@ -19,8 +20,8 @@ namespace TestSimpleWebApp.Data
 
             var korisnici = new Korisnik[]
             {
-                new Korisnik("mateo", "", "lozinka", "Admin"),
-                new Korisnik("marko", "", "lozinka", "User"),
+                new Korisnik("mateo", "", korisnikService.HashPassword("lozinka"), "Admin"),
+                new Korisnik("marko", "", korisnikService.HashPassword("lozinka"), "User"),
             };
             foreach(Korisnik k in korisnici){
                 context.Korisnici.Add(k);

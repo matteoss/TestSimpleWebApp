@@ -8,5 +8,6 @@ namespace TestSimpleWebApp.Security
     public class SecuritySettings
     {
         public string Secret { get; set; }
+        public float TokenDurationHours { get; set; }
     }
 }

@@ -8,10 +8,12 @@ namespace TestSimpleWebApp.Models
     public class AuthResponse
     {
         public string Token { get; set; }
+        public DateTime Expires { get; set; }
 
-        public AuthResponse(string token)
+        public AuthResponse(string token, DateTime expires)
         {
             Token = token;
+            Expires = expires;
         }
     }
 }

@@ -14,13 +14,15 @@ namespace TestSimpleWebApp.Security
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var korisnik = (Korisnik)context.HttpContext.Items["User"];
-            var korisnikRole = (string)context.HttpContext.Items["userRole"];
-            if (korisnik == null || role == null || korisnikRole != role)
+            if (korisnik == null || (role != null && korisnik.Rola != role))
             {
                 // not logged in
-                context.Result = new JsonResult(new { message = "Unauthorized" }) { StatusCode = StatusCodes.Status401Unauthorized };
+                context.Result = new JsonResult(
+                    new { message = "Unauthorized User: "+ (korisnik == null ? "-" : korisnik.KorisnickoIme) }
+                ) { StatusCode = StatusCodes.Status401Unauthorized };
             }
         }
+
 
         public virtual string Role
         {

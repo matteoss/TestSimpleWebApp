@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -14,16 +15,18 @@ namespace TestSimpleWebApp.Security
     {
         private readonly RequestDelegate _next;
         private readonly SecuritySettings _securitySettings;
+        private readonly ILogger<JwtMiddleware> _logger;
 
-        public JwtMiddleware(RequestDelegate next, IOptions<SecuritySettings> securitySettings)
+        public JwtMiddleware(RequestDelegate next, IOptions<SecuritySettings> securitySettings, ILogger<JwtMiddleware> logger)
         {
             _next = next;
             _securitySettings = securitySettings.Value;
+            _logger = logger;
         }
         public async Task Invoke(HttpContext context, IKorisnikService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
-
+            _logger.LogDebug("Token: {token}", token);
             if (token != null)
                 attachUserToContext(context, userService, token);
 
@@ -47,12 +50,10 @@ namespace TestSimpleWebApp.Security
 
                 var jwtToken = (JwtSecurityToken)validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
-
-                var userRole = jwtToken.Claims.First(x => x.Type == "role").Value;
+                _logger.LogDebug("userId: {userId}", userId);
 
                 // attach user to context on successful jwt validation
                 context.Items["User"] = userService.GetById(userId);
-                context.Items["userRole"] = userRole;
             }
             catch
             {

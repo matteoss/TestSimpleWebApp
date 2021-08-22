@@ -9,7 +9,8 @@ using TestSimpleWebApp.Models;
 
 namespace TestSimpleWebApp.Controllers
 {
-    public class OglasController : Controller
+    [ApiController]
+    public class OglasController : ControllerBase
     {
         private readonly TestSimpleWebAppContext _testSimpleWebAppContext;
         private readonly int _itemsPerPage = 2;
@@ -20,7 +21,7 @@ namespace TestSimpleWebApp.Controllers
         }
 
         [HttpGet("/Oglasi/{page:int:min(1)}/{trazi?}")]
-        public String getOglasi(String trazi, int page)
+        public IActionResult getOglasi(String trazi, int page)
         {
             List<Oglas> oglasi = _testSimpleWebAppContext.Oglasi
                 .Where(o => o.Naziv.Contains(trazi) || String.IsNullOrEmpty(trazi))
@@ -37,7 +38,7 @@ namespace TestSimpleWebApp.Controllers
                 oglasiPaged.HasMore = false;
             }
             oglasiPaged.List = oglasi;
-            return JsonSerializer.Serialize(oglasiPaged);
+            return Ok(oglasiPaged);
         }
     }
 }

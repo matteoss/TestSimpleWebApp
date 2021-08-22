@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TestSimpleWebApp.Data;
+using TestSimpleWebApp.Security;
 
 namespace TestSimpleWebApp
 {
@@ -15,9 +16,7 @@ namespace TestSimpleWebApp
     {
         public static void Main(string[] args)
         {
-            var host = CreateHostBuilder(args)
-                .ConfigureWebHost(h => h.UseWebRoot("Static"))
-                .Build();
+            var host = CreateHostBuilder(args).Build();
             CreateDbIfNotExists(host);
             host.Run();
         }
@@ -30,7 +29,8 @@ namespace TestSimpleWebApp
                 try
                 {
                     var context = services.GetRequiredService<TestSimpleWebAppContext>();
-                    DbTestInitializer.Initialize(context);
+                    var korisnikService = services.GetRequiredService<IKorisnikService>();
+                    DbTestInitializer.Initialize(context, korisnikService);
                 }
                 catch (Exception ex)
                 {
@@ -42,9 +42,14 @@ namespace TestSimpleWebApp
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .ConfigureLogging(l => {
+                    l.ClearProviders();
+                    l.AddConsole();
+                })
                 .ConfigureWebHostDefaults(webBuilder =>
                 {
                     webBuilder.UseStartup<Startup>();
-                });
+                })
+                .ConfigureWebHost(h => h.UseWebRoot("Static"));
     }
 }
