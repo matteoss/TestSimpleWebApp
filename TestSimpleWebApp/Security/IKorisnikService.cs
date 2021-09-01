@@ -30,7 +30,7 @@ namespace TestSimpleWebApp.Security
 
 
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private List<Korisnik> _users;
+        private readonly List<Korisnik> _users;
 
         private readonly SecuritySettings _securitySettings;
 
@@ -104,7 +104,7 @@ namespace TestSimpleWebApp.Security
                 return null;
             }
 
-            var token = generateJwtToken(user);
+            var token = GenerateJwtToken(user);
 
             return new AuthResponse(token, DateTime.Now.AddHours(_securitySettings.TokenDurationHours).ToUniversalTime());
         }
@@ -116,7 +116,7 @@ namespace TestSimpleWebApp.Security
 
         // helper methods
 
-        private string generateJwtToken(Korisnik korisnik)
+        private string GenerateJwtToken(Korisnik korisnik)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();

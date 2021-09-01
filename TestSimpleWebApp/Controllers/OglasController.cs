@@ -2,8 +2,6 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text.Json;
-using System.Threading.Tasks;
 using TestSimpleWebApp.Data;
 using TestSimpleWebApp.Models;
 
@@ -21,7 +19,7 @@ namespace TestSimpleWebApp.Controllers
         }
 
         [HttpGet("/Oglasi/{page:int:min(1)}/{trazi?}")]
-        public IActionResult getOglasi(String trazi, int page)
+        public IActionResult GetOglasi(String trazi, int page)
         {
             List<Oglas> oglasi = _testSimpleWebAppContext.Oglasi
                 .Where(o => o.Naziv.Contains(trazi) || String.IsNullOrEmpty(trazi))

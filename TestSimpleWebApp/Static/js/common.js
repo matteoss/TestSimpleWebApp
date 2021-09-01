@@ -23,6 +23,9 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('popup', {
             require: '/components/popup.js'
         });
+        ko.components.register('login-popup', {
+            require: '/components/login-popup.js'
+        });
         ko.applyBindings();
     });
 });

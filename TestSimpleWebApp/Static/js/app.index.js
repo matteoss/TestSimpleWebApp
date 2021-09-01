@@ -42,3 +42,12 @@ var show_popup = function (id) {
     var popup = document.getElementById(id);
     popup.classList.toggle("show");
 }
+
+
+require(['jquery', 'security'], function ($, security) {
+    $(document).ready(
+        function () {
+            security.check_login();
+        }
+    );
+});

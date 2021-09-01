@@ -1,0 +1,10 @@
+﻿<div class="login-popup-containter" >
+    <div class="login-popup-view"  >
+        <form data-bind="submit: login">
+            <input type="text" required placeholder="Username" data-bind="value: username" /><br />
+            <input type="password" required placeholder="Password" data-bind="value: password" />
+        </form>
+        <button data-bind="text: button_login_text, click: login"></button>
+        <button data-bind="text: button_cancel_text, click: close_function"></button>
+    </div>
+</div>

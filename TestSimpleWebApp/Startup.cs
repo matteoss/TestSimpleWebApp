@@ -1,16 +1,15 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.OData.Edm;
+using Microsoft.OData.ModelBuilder;
 using TestSimpleWebApp.Data;
+using TestSimpleWebApp.Hubs;
+using TestSimpleWebApp.Models;
 using TestSimpleWebApp.Security;
 
 namespace TestSimpleWebApp
@@ -25,16 +24,23 @@ namespace TestSimpleWebApp
         }
         // This method gets called by the runtime. Use this method to add services to the container.
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
+
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<TestSimpleWebAppContext>(options => { 
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")); 
             });
-            services.AddControllers();
+            services.AddControllers()
+                    .AddOData(opt => {
+                        opt.AddRouteComponents("odata", GetEdmModel());
+                        opt.Select().Count().Filter().OrderBy().SetMaxTop(100);
+                    });
 
             services.Configure<SecuritySettings>(Configuration.GetSection("SecuritySettings"));
             services.AddScoped<IKorisnikService, KorisnikService>();
             services.AddLogging();
+            services.AddSignalR();
+            
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -56,8 +62,18 @@ namespace TestSimpleWebApp
                 {
                     await context.Response.WriteAsync("Hello World!");
                 });*/
-                endpoints.MapControllers();
+                
+                endpoints.MapControllers(); 
+                endpoints.MapHub<NotificationHub>("/notifications/sync");
+                
             });
+        }
+
+        private IEdmModel GetEdmModel()
+        {
+            var odataBuilder = new ODataConventionModelBuilder();
+            odataBuilder.EntitySet<Oglas>("Oglasi").EntityType.HasKey(x => x.ID);
+            return odataBuilder.GetEdmModel();
         }
     }
 }

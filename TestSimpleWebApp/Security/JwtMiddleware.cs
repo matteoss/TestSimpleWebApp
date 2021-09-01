@@ -28,11 +28,11 @@ namespace TestSimpleWebApp.Security
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             _logger.LogDebug("Token: {token}", token);
             if (token != null)
-                attachUserToContext(context, userService, token);
+                AttachUserToContext(context, userService, token);
 
             await _next(context);
         }
-        private void attachUserToContext(HttpContext context, IKorisnikService userService, string token)
+        private void AttachUserToContext(HttpContext context, IKorisnikService userService, string token)
         {
             try
             {
