@@ -10,14 +10,18 @@
 </head>
 <body>
     <div class="root-container">
-        <navigation-bar params='search: search, search_function: search_function'></navigation-bar>
+        <navigation-bar params='search_function: search_function, novi_oglas_action: novi_oglas_action'></navigation-bar>
         <div class="main-container">
             <p>Hello from index.html</p>
-            <lista-oglasa params='oglasi: oglasi'></lista-oglasa>
-            <button onclick="show_popup('main-popup')">Alert</button>
-            <popup id="main-popup" params="id: 'main-popup'"></popup>
+            <div data-bind="component: { name: main_view, params: main_params.params}">
+
+            </div>
+            <popup id="main-popup" params="id: 'main-popup'"></popup> 
             <login-popup id="login-popup" params="id: 'login-popup'"></login-popup>
-            <page-number params='page: page, hasMorePages: hasMorePages, refresh_function: refresh_function'></page-number>
+        </div>
+        <div class="footer">
+            <button onclick="show_popup('main-popup')">Alert</button>
+            <button onclick="navigate('about')">About</button>
         </div>
     </div>
 </body>

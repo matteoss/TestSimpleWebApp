@@ -10,6 +10,9 @@
             <td class="main-nav-bar-search-button">
                 <button data-bind="click: search_function">Traži</button>
             </td>
+            <td class="main-nav-bar-novi-oglas">
+                <button data-bind="text: 'Novi oglas', visible: show_novi_oglas, click: novi_oglas_action"></button> 
+            </td>
             <td class="main-nav-bar-user">
                 <button data-bind="text: username, click: authorization_action"></button> 
             </td>

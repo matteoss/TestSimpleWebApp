@@ -20,6 +20,15 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('page-number', {
             require: '/components/page-number.js'
         });
+        ko.components.register('lista-oglasa-paged', {
+            require: '/components/lista-oglasa-paged.js'
+        });
+        ko.components.register('about', {
+            require: '/components/about.js'
+        });
+        ko.components.register('novi-oglas', {
+            require: '/components/novi-oglas.js'
+        });
         ko.components.register('popup', {
             require: '/components/popup.js'
         });

@@ -5,5 +5,5 @@
         this.vrijeme_kreiranja = ko.observable(params.oglas.datumKreiranja);
         //alert(JSON.stringify(params));
     }
-return { viewModel: Oglas, template: htmlString };
+    return { viewModel: Oglas, template: htmlString };
 });

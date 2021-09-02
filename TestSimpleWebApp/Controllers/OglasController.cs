@@ -11,7 +11,7 @@ namespace TestSimpleWebApp.Controllers
     public class OglasController : ControllerBase
     {
         private readonly TestSimpleWebAppContext _testSimpleWebAppContext;
-        private readonly int _itemsPerPage = 2;
+        private readonly int _itemsPerPage = 10;
 
         public OglasController(TestSimpleWebAppContext testSimpleWebAppContext)
         {

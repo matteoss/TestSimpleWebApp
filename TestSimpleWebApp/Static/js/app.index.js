@@ -1,33 +1,51 @@
 ﻿
 requirejs(['js/common']);
 
-var oglasi;
-var page;
-var hasMorePages;
-var search;
-require(['ko'], function (ko) {
-    oglasi = ko.observableArray(); //[]; // [{naslov: "oglas1", opis: "opis1"}, {naslov: "oglas2", opis: "opis2"}];
-    page = ko.observable(1);
-    search = ko.observable("");
-    hasMorePages = ko.observable(false);
+var main_view;
+var main_params = { params: null };
+
+require(['ko', 'navigator'], function (ko, navigator) {
+    main_view = ko.observable("about");
+
+    navigator.main_view = main_view;
+    navigator.main_params = main_params;
 });
+
 var refresh_function = function () {
-    require(['ko', 'jquery'], function (ko, $) {
-        oglasi.removeAll();
-        $.getJSON("/Oglasi/" + page() + "/" + search(), function (result) {
+    require(['ko', 'jquery', 'oglasi'], function (ko, $, o) {
+        o.oglasi.removeAll();
+        $.getJSON("/Oglasi/" + o.page() + "/" + o.search(), function (result) {
             //alert(JSON.stringify(result));
             $.each(result.list, function (i, field) {
-                oglasi.push(field);
+                o.oglasi.push(field);
             });
-            hasMorePages(result.hasMore);
+            o.hasMorePages(result.hasMore);
         });
     });
 }
-refresh_function();
+
+
+function navigate(view) {
+    require(['ko', 'navigator'], function (ko, navigator) {
+        navigator.set_view(view);
+        navigator.set_params(null);
+    });
+}
+
 
 var search_function = function () {
-    page(1);
+    require(['navigator', 'oglasi'], function (navigator,o) {
+        o.page(1);
+        navigator.set_params({ oglasi: o.oglasi, page: o.page, hasMorePages: o.hasMorePages, refresh_function: refresh_function });
+        navigator.set_view('lista-oglasa-paged');
+    });
     refresh_function();
+}
+
+search_function();
+
+var novi_oglas_action = function () {
+    navigate('novi-oglas');
 }
 
 var make_alert = function () {

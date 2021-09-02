@@ -1,5 +1,5 @@
 ﻿
-define(['module'], function (module) {
+define([], function () {
     var Security = {
         version: null,
         username: null,

@@ -8,6 +8,7 @@
 
 .main-container {
     margin: 0px;
+    margin-bottom: 50px;
 }
 
 .main-nav-bar {
@@ -49,10 +50,18 @@
     
 }
 
-.page-number-container {
+.footer {
     position: fixed;
     bottom: 0px;
     width: 100%;
+    background-color: aqua;
+}
+
+.page-number-container {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    background-color: aqua;
 }
 
 .page-number-container table{
