@@ -82,8 +82,22 @@ define([], function () {
 
         Security.authorization_action = function () {
             if (Security.username()) {
-                logoutLocal();
-                alert("Logged out.");
+
+                require(['dialog_yes_no'], function (d) {
+                    d.set_subject("Odjava?");
+                    d.set_yes_function(
+                        function () {
+                            logoutLocal();
+                            alert("Logged out.");
+                        }
+                    );
+                    d.set_no_function(
+                        function () {
+                        }
+                    );
+                    d.show();
+                });
+
             } else {
                 var popup = document.getElementById("login-popup");
                 popup.classList.toggle("show");

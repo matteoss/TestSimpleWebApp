@@ -1,7 +1,10 @@
-﻿define(['ko', 'text!./navigation-bar.html', 'security', 'oglasi'], function (ko, htmlString, security, o) {
+﻿define(['ko', 'text!./navigation-bar.html', 'security'], function (ko, htmlString, security) {
     function MyComponentViewModel(params) {
-        this.search = o.search;
-        this.search_function = params.search_function;
+        var self = this;
+        this.search = ko.observable("");
+        this.search_function = function () {
+            params.search_function(self.search);
+        }
         this.username = ko.pureComputed(function () {
             if (security.username()) {
                 return security.username();

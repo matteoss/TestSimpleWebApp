@@ -8,6 +8,6 @@ require.config({
         security: '/js/security',
         signalr: '/js/lib/signalr',
         navigator: '/js/navigator',
-        oglasi: '/js/oglasi',
+        dialog_yes_no: '/js/dialog-yes-no-controller',
     }
 });

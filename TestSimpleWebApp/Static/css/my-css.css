@@ -122,6 +122,15 @@ popup.show {
     visibility: visible;
 }
 
+dialog-yes-no {
+    visibility: hidden;
+    z-index: 1;
+}
+
+dialog-yes-no.show {
+    visibility: visible;
+}
+
 login-popup {
     visibility: hidden;
     z-index: 1;

@@ -4,25 +4,9 @@ requirejs(['js/common']);
 var main_view;
 var main_params = { params: null };
 
-require(['ko', 'navigator'], function (ko, navigator) {
+require(['ko'], function (ko) {
     main_view = ko.observable("about");
-
-    navigator.main_view = main_view;
-    navigator.main_params = main_params;
 });
-
-var refresh_function = function () {
-    require(['ko', 'jquery', 'oglasi'], function (ko, $, o) {
-        o.oglasi.removeAll();
-        $.getJSON("/Oglasi/" + o.page() + "/" + o.search(), function (result) {
-            //alert(JSON.stringify(result));
-            $.each(result.list, function (i, field) {
-                o.oglasi.push(field);
-            });
-            o.hasMorePages(result.hasMore);
-        });
-    });
-}
 
 
 function navigate(view) {
@@ -33,16 +17,13 @@ function navigate(view) {
 }
 
 
-var search_function = function () {
-    require(['navigator', 'oglasi'], function (navigator,o) {
-        o.page(1);
-        navigator.set_params({ oglasi: o.oglasi, page: o.page, hasMorePages: o.hasMorePages, refresh_function: refresh_function });
+var search_function = function (search) {
+    require(['navigator'], function (navigator) {
+        navigator.set_params({ search: search});
         navigator.set_view('lista-oglasa-paged');
     });
-    refresh_function();
 }
 
-search_function();
 
 var novi_oglas_action = function () {
     navigate('novi-oglas');
@@ -56,16 +37,38 @@ var make_alert = function () {
     });
 }
 
+var d_y_n = function (text) {
+    require(['dialog_yes_no'], function (d) {
+        d.set_text(text);
+        d.set_yes_function(
+            function () {
+                alert('yes');
+            }
+        );
+        d.set_no_function(
+            function () {
+                alert('no');
+            }
+        );
+        d.show();
+    });
+}
+
 var show_popup = function (id) {
     var popup = document.getElementById(id);
     popup.classList.toggle("show");
 }
 
 
-require(['jquery', 'security'], function ($, security) {
+require(['jquery'], function ($) {
     $(document).ready(
         function () {
-            security.check_login();
+            require(['security', 'navigator'], function (security, navigator) {
+                security.check_login();
+                navigator.main_view = main_view;
+                navigator.main_params = main_params;
+                search_function();
+            });
         }
     );
 });

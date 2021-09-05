@@ -35,6 +35,9 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('login-popup', {
             require: '/components/login-popup.js'
         });
+        ko.components.register('dialog-yes-no', {
+            require: '/components/dialog-yes-no.js'
+        });
         ko.applyBindings();
     });
 });
