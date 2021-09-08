@@ -5,9 +5,9 @@ using System.Collections.Generic;
 
 namespace TestSimpleWebApp.Models
 {
-    public partial class Object
+    public partial class Property
     {
-        public Object()
+        public Property()
         {
             Reservations = new HashSet<Reservation>();
         }

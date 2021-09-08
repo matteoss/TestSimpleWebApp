@@ -6,7 +6,7 @@
         this.hasMorePages = ko.observable(false);
         this.search = params.search;
 
-        this.refresh_function = function () {
+        this.refreshFunction = function () {
             self.oglasi.removeAll();
             $.getJSON("/Oglasi/" + self.page() + "/" + ((typeof self.search === 'function') ? self.search() : ""), function (result) {
                 //alert(JSON.stringify(result));
@@ -19,7 +19,7 @@
 
         $(document).ready(
             function () {
-                self.refresh_function();
+                self.refreshFunction();
             }
         );
     }

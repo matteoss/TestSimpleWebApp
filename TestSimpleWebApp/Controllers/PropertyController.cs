@@ -8,28 +8,28 @@ using TestSimpleWebApp.Models;
 
 namespace TestSimpleWebApp.Controllers
 {
-    public class ObjectController : ODataController
+    public class PropertyController : ODataController
     {
 
         private readonly PropertyManagementSystemDbContext _propertyManagementSystemDbContext;
 
-        public ObjectController(PropertyManagementSystemDbContext propertyManagementSystemDbContext)
+        public PropertyController(PropertyManagementSystemDbContext propertyManagementSystemDbContext)
         {
             _propertyManagementSystemDbContext = propertyManagementSystemDbContext;
         }
 
-        [HttpGet("odata/Objects")]
+        [HttpGet("odata/Properties")]
         [EnableQuery]
         public IActionResult Get()
         {
-            return Ok(_propertyManagementSystemDbContext.Objects);
+            return Ok(_propertyManagementSystemDbContext.Properties);
         }
 
-        [HttpGet("odata/Objects({id})")]
+        [HttpGet("odata/Property({id})")]
         [EnableQuery]
         public IActionResult Get(int id)
         {
-            return Ok(_propertyManagementSystemDbContext.Objects.FirstOrDefault(o => o.Id == id));
+            return Ok(_propertyManagementSystemDbContext.Properties.FirstOrDefault(o => o.Id == id));
         }
 
     }

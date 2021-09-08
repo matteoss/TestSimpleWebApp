@@ -1,26 +1,26 @@
 ﻿
 requirejs(['js/common']);
 
-var main_view;
-var main_params = { params: null };
+var mainView;
+var mainParams = { params: null };
 
 require(['ko'], function (ko) {
-    main_view = ko.observable("about");
+    mainView = ko.observable("about");
 });
 
 
 function navigate(view) {
     require(['ko', 'navigator'], function (ko, navigator) {
-        navigator.set_view(view);
-        navigator.set_params(null);
+        navigator.setView(view);
+        navigator.setParams(null);
     });
 }
 
 
 var search_function = function (search) {
     require(['navigator'], function (navigator) {
-        navigator.set_params({ search: search});
-        navigator.set_view('lista-oglasa-paged');
+        navigator.setParams({ search: search});
+        navigator.setView('lista-oglasa-paged');
     });
 }
 
@@ -39,13 +39,13 @@ var make_alert = function () {
 
 var d_y_n = function (text) {
     require(['dialog_yes_no'], function (d) {
-        d.set_text(text);
-        d.set_yes_function(
+        d.setText(text);
+        d.setYesFunction(
             function () {
                 alert('yes');
             }
         );
-        d.set_no_function(
+        d.setNoFunction(
             function () {
                 alert('no');
             }
@@ -64,10 +64,11 @@ require(['jquery'], function ($) {
     $(document).ready(
         function () {
             require(['security', 'navigator'], function (security, navigator) {
-                security.check_login();
-                navigator.main_view = main_view;
-                navigator.main_params = main_params;
-                search_function();
+                security.checkLogin();
+                navigator.mainView = mainView;
+                navigator.mainParams = mainParams;
+                navigator.setParams({});
+                navigator.setView('book-table');
             });
         }
     );

@@ -18,7 +18,7 @@ namespace TestSimpleWebApp.Models
         }
 
         public virtual DbSet<Guest> Guests { get; set; }
-        public virtual DbSet<Object> Objects { get; set; }
+        public virtual DbSet<Property> Properties { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomType> RoomTypes { get; set; }
@@ -70,9 +70,9 @@ namespace TestSimpleWebApp.Models
                     .HasMaxLength(250);
             });
 
-            modelBuilder.Entity<Object>(entity =>
+            modelBuilder.Entity<Property>(entity =>
             {
-                entity.ToTable("Object");
+                entity.ToTable("Property");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
@@ -95,7 +95,7 @@ namespace TestSimpleWebApp.Models
 
                 entity.Property(e => e.GuestId).HasColumnName("GuestID");
 
-                entity.Property(e => e.ObjectId).HasColumnName("ObjectID");
+                entity.Property(e => e.PropertyId).HasColumnName("PropertyID");
 
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
@@ -111,27 +111,27 @@ namespace TestSimpleWebApp.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Guest");
 
-                entity.HasOne(d => d.Object)
+                entity.HasOne(d => d.Property)
                     .WithMany(p => p.Reservations)
-                    .HasForeignKey(d => d.ObjectId)
+                    .HasForeignKey(d => d.PropertyId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("fk_Object");
+                    .HasConstraintName("fk_Property");
 
                 entity.HasOne(d => d.Room)
                     .WithMany(p => p.Reservations)
-                    .HasForeignKey(d => new { d.ObjectId, d.RoomNumber })
+                    .HasForeignKey(d => new { d.PropertyId, d.RoomNumber })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Room");
             });
 
             modelBuilder.Entity<Room>(entity =>
             {
-                entity.HasKey(e => new { e.ObjectId, e.RoomNumber })
+                entity.HasKey(e => new { e.PropertyId, e.RoomNumber })
                     .HasName("Room_pkey");
 
                 entity.ToTable("Room");
 
-                entity.Property(e => e.ObjectId).HasColumnName("ObjectID");
+                entity.Property(e => e.PropertyId).HasColumnName("PropertyID");
 
                 entity.Property(e => e.RoomTypeId).HasColumnName("RoomTypeID");
 

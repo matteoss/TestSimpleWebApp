@@ -4,11 +4,11 @@ define([], function () {
         version: null,
         username: null,
         beforeSendFunction: null,
-        check_login: null,
+        checkLogin: null,
         login: null,
         logout: null,
-        make_request: null,
-        authorization_action: null,
+        makeRequest: null,
+        authorizationAction: null,
     };
     require(['jquery', 'ko'], function ($, ko) {
         Security.version = "1.0";
@@ -28,7 +28,7 @@ define([], function () {
             usernameLocal("");
         };
 
-        Security.check_login = function () {
+        Security.checkLogin = function () {
             //console.log(document.cookie.match('(^|;)\\s*' + 'token' + '\\s*=\\s*([^;]+)')?.pop() || '');
             $.ajax({
                 url: "authorized",
@@ -63,7 +63,7 @@ define([], function () {
 
         Security.logout = logoutLocal;
 
-        Security.make_request = function (url, type, data, success, error) {
+        Security.makeRequest = function (url, type, data, success, error) {
             $.ajax({
                 url: url,
                 type: type,
@@ -80,7 +80,7 @@ define([], function () {
             });
         };
 
-        Security.authorization_action = function () {
+        Security.authorizationAction = function () {
             if (Security.username()) {
 
                 require(['dialog_yes_no'], function (d) {

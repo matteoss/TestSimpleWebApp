@@ -1,4 +1,4 @@
 ﻿<div>
-    <h2>About</h2>
-    <p data-bind="text: tekst"></p>
+    <input type="radio" name="reservationGroup" data-bind="value: id, checked: checkedId, attr: { id: 'res'+id }" />
+    <label data-bind="text: reservationText, attr: { for: 'res'+id }"></label>
 </div>

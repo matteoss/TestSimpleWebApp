@@ -1,6 +1,7 @@
 ﻿<div class="book-row">
+    <h3 data-bind="propertyId"></h3>
     <h3 data-bind="roomNumber"></h3>
-    <div data-bind="foreach: {data: reservations, as: 'reservation'}">
+    <div data-bind="foreach: {data: reservations, as: 'reservation'} ">
         <reservation-bar params="reservation: reservation">
 
         </reservation-bar>

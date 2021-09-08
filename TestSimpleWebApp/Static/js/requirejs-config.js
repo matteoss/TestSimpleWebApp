@@ -9,5 +9,6 @@ require.config({
         signalr: '/js/lib/signalr',
         navigator: '/js/navigator',
         dialog_yes_no: '/js/dialog-yes-no-controller',
+        book_controller: '/js/book-controller',
     }
 });

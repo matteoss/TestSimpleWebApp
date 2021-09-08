@@ -75,8 +75,8 @@ namespace TestSimpleWebApp
             //odataBuilder.EntitySet<Oglas>("Oglasi").EntityType.HasKey(x => x.ID);
             odataBuilder.EntitySet<Guest>("Guests").EntityType.HasKey(x => x.Id);
             odataBuilder.EntitySet<Reservation>("Reservations").EntityType.HasKey(x => x.Id);
-            odataBuilder.EntitySet<Object>("Objects").EntityType.HasKey(x => x.Id);
-            odataBuilder.EntitySet<Room>("Rooms").EntityType.HasKey(x => new { x.ObjectId, x.RoomNumber });
+            odataBuilder.EntitySet<Property>("Properties").EntityType.HasKey(x => x.Id);
+            odataBuilder.EntitySet<Room>("Rooms").EntityType.HasKey(x => new { x.PropertyId, x.RoomNumber });
             odataBuilder.EntitySet<RoomType>("RoomTypes").EntityType.HasKey(x => x.Id);
             return odataBuilder.GetEdmModel();
         }

@@ -38,6 +38,15 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('dialog-yes-no', {
             require: '/components/dialog-yes-no.js'
         });
+        ko.components.register('reservation-bar', {
+            require: '/components/reservation-bar.js'
+        });
+        ko.components.register('book-row', {
+            require: '/components/book-row.js'
+        });
+        ko.components.register('book-table', {
+            require: '/components/book-table.js'
+        });
         ko.applyBindings();
     });
 });

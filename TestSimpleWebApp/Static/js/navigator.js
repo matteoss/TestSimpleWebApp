@@ -2,18 +2,18 @@
 define([], function () {
     var Navigator = {
         version: "1.0",
-        main_params: null,
-        main_view: null,
-        set_view: null,
-        set_params: null
+        mainParams: null,
+        mainView: null,
+        setView: null,
+        setParams: null
     };
 
-    Navigator.set_view = function (page) {
-        Navigator.main_view(page);
+    Navigator.setView = function (page) {
+        Navigator.mainView(page);
     };
 
-    Navigator.set_params = function (params) {
-        Navigator.main_params.params = params;
+    Navigator.setParams = function (params) {
+        Navigator.mainParams.params = params;
     };
 
     return Navigator;

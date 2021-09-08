@@ -12,14 +12,14 @@ namespace TestSimpleWebApp.Models
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
         public int ServiceId { get; set; }
-        public int ObjectId { get; set; }
+        public int PropertyId { get; set; }
         public int GuestId { get; set; }
         public int? PreviousStay { get; set; }
         public int? NextStay { get; set; }
         public int RoomNumber { get; set; }
 
         public virtual Guest Guest { get; set; }
-        public virtual Object Object { get; set; }
+        public virtual Property Property { get; set; }
         public virtual Room Room { get; set; }
     }
 }

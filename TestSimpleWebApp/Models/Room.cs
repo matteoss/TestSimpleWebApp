@@ -12,7 +12,7 @@ namespace TestSimpleWebApp.Models
             Reservations = new HashSet<Reservation>();
         }
 
-        public int ObjectId { get; set; }
+        public int PropertyId { get; set; }
         public int RoomNumber { get; set; }
         public int RoomTypeId { get; set; }
         public string Status { get; set; }

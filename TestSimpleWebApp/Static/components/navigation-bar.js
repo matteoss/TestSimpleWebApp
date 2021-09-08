@@ -12,7 +12,7 @@
                 return "Login"
             }
         }); 
-        this.authorization_action = security.authorization_action;
+        this.authorizationAction = security.authorizationAction;
         this.novi_oglas_action = params.novi_oglas_action;
         this.show_novi_oglas = ko.pureComputed(function () {
             if (security.username()) {
