@@ -13,14 +13,14 @@ using TestSimpleWebApp.Models;
 
 namespace TestSimpleWebApp.Security
 {
-    public interface IKorisnikService
+    public interface IUserService
     {
         AuthResponse Authenticate(AuthRequest model);
         string HashPassword(string password);
-        Korisnik GetById(int id);
+        User GetById(int id);
     }
      
-    public class KorisnikService : IKorisnikService
+    public class UserService : IUserService
     {
         private static readonly int saltSize = 128 / 8;
         private static readonly int iterationCount = 10000;
@@ -30,17 +30,17 @@ namespace TestSimpleWebApp.Security
 
 
         // users hardcoded for simplicity, store in a db with hashed passwords in production applications
-        private readonly List<Korisnik> _users;
+        private readonly List<User> _users;
 
         private readonly SecuritySettings _securitySettings;
 
-        public KorisnikService(IOptions<SecuritySettings> securitySettings)
+        public UserService(IOptions<SecuritySettings> securitySettings)
         {
             _securitySettings = securitySettings.Value;
 
-            _users = new List<Korisnik>
+            _users = new List<User>
             {
-                new Korisnik("mateo", "", HashPassword("lozinka"), "Admin") { ID = 1  }
+                new User("mateo", "", HashPassword("lozinka"), "Admin") { Id = 1  }
             };
         }
 
@@ -97,9 +97,9 @@ namespace TestSimpleWebApp.Security
         public AuthResponse Authenticate(AuthRequest model)
         {
 
-            var user = _users.SingleOrDefault(x => x.KorisnickoIme == model.Username);
+            var user = _users.SingleOrDefault(x => x.Username == model.Username);
 
-            if (user == null || !VerifyPassword(user.Lozinka, model.Password))
+            if (user == null || !VerifyPassword(user.Password, model.Password))
             {
                 return null;
             }
@@ -109,21 +109,21 @@ namespace TestSimpleWebApp.Security
             return new AuthResponse(token, DateTime.Now.AddHours(_securitySettings.TokenDurationHours).ToUniversalTime());
         }
 
-        public Korisnik GetById(int id)
+        public User GetById(int id)
         {
-            return _users.FirstOrDefault(x => x.ID == id);
+            return _users.FirstOrDefault(x => x.Id == id);
         }
 
         // helper methods
 
-        private string GenerateJwtToken(Korisnik korisnik)
+        private string GenerateJwtToken(User user)
         {
             // generate token that is valid for 7 days
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(_securitySettings.Secret);
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[] { new Claim("id", korisnik.ID.ToString()) }),
+                Subject = new ClaimsIdentity(new[] { new Claim("id", user.Id.ToString()) }),
                 Expires = DateTime.UtcNow.AddDays(7),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

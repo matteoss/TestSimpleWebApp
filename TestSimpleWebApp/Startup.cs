@@ -27,7 +27,7 @@ namespace TestSimpleWebApp
 
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<TestSimpleWebAppContext>(options => { 
+            services.AddDbContext<PropertyManagementSystemDbContext>(options => { 
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")); 
             });
             services.AddControllers()
@@ -37,7 +37,7 @@ namespace TestSimpleWebApp
                     });
 
             services.Configure<SecuritySettings>(Configuration.GetSection("SecuritySettings"));
-            services.AddScoped<IKorisnikService, KorisnikService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddLogging();
             services.AddSignalR();
             
@@ -72,7 +72,12 @@ namespace TestSimpleWebApp
         private IEdmModel GetEdmModel()
         {
             var odataBuilder = new ODataConventionModelBuilder();
-            odataBuilder.EntitySet<Oglas>("Oglasi").EntityType.HasKey(x => x.ID);
+            //odataBuilder.EntitySet<Oglas>("Oglasi").EntityType.HasKey(x => x.ID);
+            odataBuilder.EntitySet<Guest>("Guests").EntityType.HasKey(x => x.Id);
+            odataBuilder.EntitySet<Reservation>("Reservations").EntityType.HasKey(x => x.Id);
+            odataBuilder.EntitySet<Object>("Objects").EntityType.HasKey(x => x.Id);
+            odataBuilder.EntitySet<Room>("Rooms").EntityType.HasKey(x => new { x.ObjectId, x.RoomNumber });
+            odataBuilder.EntitySet<RoomType>("RoomTypes").EntityType.HasKey(x => x.Id);
             return odataBuilder.GetEdmModel();
         }
     }

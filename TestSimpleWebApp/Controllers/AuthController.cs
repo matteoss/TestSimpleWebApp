@@ -9,21 +9,21 @@ namespace TestSimpleWebApp.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly TestSimpleWebAppContext _testSimpleWebAppContext;
-        private readonly IKorisnikService _korisnikService;
+        private readonly PropertyManagementSystemDbContext _propertyManagementSystemDbContext;
+        private readonly IUserService _userService;
         private readonly ILogger<AuthController> _logger;
 
-        public AuthController(TestSimpleWebAppContext testSimpleWebAppContext, IKorisnikService korisnikService, ILogger<AuthController> logger)
+        public AuthController(PropertyManagementSystemDbContext propertyManagementSystemDbContext, IUserService userService, ILogger<AuthController> logger)
         {
-            _testSimpleWebAppContext = testSimpleWebAppContext;
-            _korisnikService = korisnikService;
+            _propertyManagementSystemDbContext = propertyManagementSystemDbContext;
+            _userService = userService;
             _logger = logger;
         }
 
         [HttpPost("login")]
         public IActionResult Login(AuthRequest authRequest)
         {
-            var response = _korisnikService.Authenticate(authRequest);
+            var response = _userService.Authenticate(authRequest);
             if (response == null)
             {
                 _logger.LogDebug("Login failed for username: {user}", authRequest.Username);

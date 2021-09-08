@@ -14,9 +14,10 @@ namespace TestSimpleWebApp.Tests
         [Fact]
         public void Test1()
         {
-            KorisnikService korisnikService = new KorisnikService(Options.Create<SecuritySettings>(new SecuritySettings() { Secret = "secret" }) );
+            UserService korisnikService = new UserService(Options.Create<SecuritySettings>(new SecuritySettings() { Secret = "xecretKeywqejane" }) );
             string password = "password123";
             string passwordHash = korisnikService.HashPassword(password);
+            Console.WriteLine(passwordHash);
             var hashedPasswordBytes = Convert.FromBase64String(passwordHash);
             Assert.Equal((byte)0x01, hashedPasswordBytes[0]);
             //10000 -> 10 0111 0001 0000
@@ -34,7 +35,7 @@ namespace TestSimpleWebApp.Tests
         [Fact]
         public void Test2()
         {
-            KorisnikService korisnikService = new KorisnikService(Options.Create<SecuritySettings>(new SecuritySettings() { Secret = "secret" }));
+            UserService korisnikService = new UserService(Options.Create<SecuritySettings>(new SecuritySettings() { Secret = "secret" }));
             string password = "password123";
             string passwordHash = korisnikService.HashPassword(password);
             string newPassword = "password123";
@@ -59,7 +60,7 @@ namespace TestSimpleWebApp.Tests
         [Fact]
         public void Test3()
         {
-            KorisnikService korisnikService = new KorisnikService(Options.Create<SecuritySettings>(new SecuritySettings() { Secret = "xecretKeywqejane" }));
+            UserService korisnikService = new UserService(Options.Create<SecuritySettings>(new SecuritySettings() { Secret = "xecretKeywqejane" }));
             AuthResponse response = korisnikService.Authenticate(new AuthRequest() { Username = "mateo", Password = "lozinka"});
             Assert.NotNull(response);
         }

@@ -9,7 +9,7 @@ namespace TestSimpleWebApp.Data
 {
     public static class DbTestInitializer
     {
-        public static void Initialize(TestSimpleWebAppContext context, IKorisnikService korisnikService)
+        public static void Initialize(TestSimpleWebAppContext context, IUserService korisnikService)
         {
             context.Database.EnsureCreated();
 
@@ -18,12 +18,12 @@ namespace TestSimpleWebApp.Data
                 return;
             }
 
-            var korisnici = new Korisnik[]
+            var korisnici = new User[]
             {
-                new Korisnik("mateo", "", korisnikService.HashPassword("lozinka"), "Admin"),
-                new Korisnik("marko", "", korisnikService.HashPassword("lozinka"), "User"),
+                new User("mateo", "", korisnikService.HashPassword("lozinka"), "Admin"),
+                new User("marko", "", korisnikService.HashPassword("lozinka"), "User"),
             };
-            foreach(Korisnik k in korisnici){
+            foreach(User k in korisnici){
                 context.Korisnici.Add(k);
             }
             context.SaveChanges();

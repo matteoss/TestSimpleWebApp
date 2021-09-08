@@ -23,7 +23,7 @@ namespace TestSimpleWebApp.Security
             _securitySettings = securitySettings.Value;
             _logger = logger;
         }
-        public async Task Invoke(HttpContext context, IKorisnikService userService)
+        public async Task Invoke(HttpContext context, IUserService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             _logger.LogDebug("Token: {token}", token);
@@ -32,7 +32,7 @@ namespace TestSimpleWebApp.Security
 
             await _next(context);
         }
-        private void AttachUserToContext(HttpContext context, IKorisnikService userService, string token)
+        private void AttachUserToContext(HttpContext context, IUserService userService, string token)
         {
             try
             {
