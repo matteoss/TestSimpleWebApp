@@ -33,7 +33,7 @@ namespace TestSimpleWebApp
             services.AddControllers()
                     .AddOData(opt => {
                         opt.AddRouteComponents("odata", GetEdmModel());
-                        opt.Select().Count().Filter().OrderBy().SetMaxTop(100);
+                        opt.Select().Count().Filter().OrderBy().SetMaxTop(100).Expand();
                     });
 
             services.Configure<SecuritySettings>(Configuration.GetSection("SecuritySettings"));

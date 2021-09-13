@@ -1,7 +1,32 @@
-﻿<div class="book-table">
-    <div data-bind="foreach: {data: reservationRows, as: 'reservationRow'}">
-        <book-row params="reservationRow: reservationRow">
-
-        </book-row>
-    </div>
-</div>
+﻿<table class="book-table">
+    <thead>
+        <tr>
+            <td>
+                <p>ID hotela</p>
+            </td>
+            <td>
+                <p>Vrsta sobe</p>
+            </td>
+            <!-- ko foreach: dates -->
+            <td>
+                <p data-bind="text: $data"></p>
+            </td>
+            <!-- /ko -->
+        </tr>
+    </thead>
+    <tbody>
+        <!-- ko foreach: reservationRows -->
+        <tr class="book-row">
+            <td>
+                <h3 data-bind="text: propertyId"></h3>
+            </td>
+            <td>
+                <h3 data-bind="text: roomNumber"></h3>
+            </td>
+            <!-- ko foreach: reservations -->
+            <reservation-bar params="reservation: $data"></reservation-bar>
+            <!-- /ko -->
+        </tr>
+        <!-- /ko -->
+    </tbody>
+</table>

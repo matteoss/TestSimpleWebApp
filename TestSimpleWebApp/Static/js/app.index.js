@@ -73,3 +73,11 @@ require(['jquery'], function ($) {
         }
     );
 });
+
+require(['jquery', 'book_controller'], function ($,b) {
+    $(document).ready(
+        function () {
+            b.refreshFunction();
+        }
+    );
+});
