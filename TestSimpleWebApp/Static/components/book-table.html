@@ -14,19 +14,7 @@
             <!-- /ko -->
         </tr>
     </thead>
-    <tbody>
-        <!-- ko foreach: reservationRows -->
-        <tr class="book-row">
-            <td>
-                <h3 data-bind="text: propertyId"></h3>
-            </td>
-            <td>
-                <h3 data-bind="text: roomNumber"></h3>
-            </td>
-            <!-- ko foreach: reservations -->
-            <reservation-bar params="reservation: $data"></reservation-bar>
-            <!-- /ko -->
-        </tr>
-        <!-- /ko -->
+    <tbody data-bind="foreach: {data: reservationRows, as: 'reservationRow'} ">
+        <book-row params="reservationRow: reservationRow"></book-row>
     </tbody>
 </table>

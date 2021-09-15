@@ -4,6 +4,7 @@
         this.propertyId = params.reservationRow.propertyId;
         this.roomNumber = params.reservationRow.roomNumber;
         this.reservations = params.reservationRow.reservations;
+        console.log("book-row loaded");
     }
     return { viewModel: bookRow, template: htmlString };
 });

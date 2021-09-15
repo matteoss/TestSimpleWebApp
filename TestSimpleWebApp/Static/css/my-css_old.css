@@ -57,6 +57,28 @@
     background-color: aqua;
 }
 
+.page-number-container {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    background-color: aqua;
+}
+
+.page-number-container table{
+    margin: auto;
+}
+
+.lista-oglasa-content {
+    background-color: aqua;
+    padding: 5px;
+}
+
+.oglas-content{
+    background-color: white;
+    padding: 8px;
+    margin: 5px;
+}
+
 popup {
     visibility: hidden;
     z-index: 1;
@@ -133,24 +155,4 @@ login-popup {
 
 login-popup.show {
     visibility: visible;
-}
-
-.reservation-bar-chk {
-    visibility: hidden;
-    margin: 0px;
-    display: inline-block;
-    width:0%;
-    height:0%;
-}
-
-.reservation-bar {
-    cursor: pointer;
-    display: inline-block;
-    background-color: aqua;
-    width: 99%;
-    padding: 5px 0px;
-}
-
-.reservation-bar-chk:checked + .reservation-bar {
-    background: red;
 }

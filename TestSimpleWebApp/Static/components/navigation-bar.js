@@ -13,14 +13,6 @@
             }
         }); 
         this.authorizationAction = security.authorizationAction;
-        this.novi_oglas_action = params.novi_oglas_action;
-        this.show_novi_oglas = ko.pureComputed(function () {
-            if (security.username()) {
-                return true;
-            } else {
-                return false;
-            }
-        });
     }
 
 return { viewModel: MyComponentViewModel, template: htmlString };

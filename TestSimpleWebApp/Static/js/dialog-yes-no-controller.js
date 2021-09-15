@@ -1,54 +1,60 @@
 ﻿
 define(['ko'], function (ko) {
-    var Dialog = {
-        version: "1.0",
-        id: null,
-        dialogSubject: ko.observable("Obavijest"),
-        dialogText: ko.observable("Text"),
-        buttonYesText: "Yes",
-        buttonNoText: "No",
-        yesFunction: null,
-        noFunction: null,
-        yesAction: null,
-        noAction: null,
+    function Dialog() {
+        this.version = "1.0";
+        this.dialogId = "";
+        this.dialogSubject = ko.observable("Obavijest");
+        this.dialogText = ko.observable("Text");
+        this.buttonYesText= "Yes";
+        this.buttonNoText= "No";
+        this.yesFunction= null;
+        this.noFunction= null;
     };
 
-    Dialog.yesAction = function () {
-        var popup = document.getElementById(Dialog.id);
+    Dialog.prototype.setId = function (id) {
+        this.dialogId = id;
+    }
+
+    Dialog.prototype.yesAction = function () {
+        var popup = document.getElementById(this.dialogId);
         popup.classList.toggle("show");
-        if (typeof Dialog.yesFunction === 'function') {
-            Dialog.yesFunction();
+        if (typeof this.yesFunction === 'function') {
+            this.yesFunction();
         }
-        Dialog.yesFunction = null;
+        this.yesFunction = null;
+        console.log("Dialog.yesAction");
     };
-    Dialog.noAction = function () {
-        var popup = document.getElementById(Dialog.id);
+
+    Dialog.prototype.noAction = function () {
+        var popup = document.getElementById(this.dialogId);
         popup.classList.toggle("show");
-        if (typeof Dialog.noFunction === 'function') {
-            Dialog.noFunction();
+        if (typeof this.noFunction === 'function') {
+            this.noFunction();
         }
-        Dialog.noFunction = null;
+        this.noFunction = null;
+        console.log("Dialog.noAction");
     };
 
-    Dialog.setText = function (text) {
-        Dialog.dialogText(text);
+    Dialog.prototype.setText = function (text) {
+        this.dialogText(text);
     };
-    Dialog.setSubject = function (text) {
-        Dialog.dialogSubject(text);
+    Dialog.prototype.setSubject = function (text) {
+        this.dialogSubject(text);
     };
 
-    Dialog.setYesFunction = function (f) {
-        Dialog.yesFunction = f;
+    Dialog.prototype.setYesFunction = function (f) {
+        this.yesFunction = f;
     };
-    Dialog.setNoFunction = function (f) {
-        Dialog.noFunction = f;
+    Dialog.prototype.setNoFunction = function (f) {
+        this.noFunction = f;
     };
-    Dialog.show = function () {
-        var popup = document.getElementById(Dialog.id);
+    Dialog.prototype.show = function () {
+        var popup = document.getElementById(this.dialogId);
         popup.classList.toggle("show");
+        console.log("Dialog.show " + this.dialogId);
     };
-
-    return Dialog;
+    console.log("dialog-yes-no-controller ready");
+    return new Dialog();
 });
     
 

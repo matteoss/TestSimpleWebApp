@@ -1,10 +1,10 @@
 ﻿define(['ko', 'text!./reservation-bar.html'], function (ko, htmlString) {
-    function about(params) {
+    function reservationBar(params) {
         console.log(ko.toJSON(params));
         self = this;
-        this.id = params.reservation.id;
+        this.id = params.res.id;
         this.checkedId = ko.observable("");
-        this.reservationText = params.reservation.guest.Surname;
+        this.reservationText = "test"; //params.reservation.guest.Surname;
         this.offset = ko.pureComputed(function () {
             return params.dates().findIndex((e) => e == params.reservation.startDate.split('T')[0]);
         });
@@ -16,6 +16,7 @@
                 return 0;
             }
         });
+        console.log("reservation-bar loaded");
     }
-    return { viewModel: about, template: htmlString };
+    return { viewModel: reservationBar, template: htmlString };
 });

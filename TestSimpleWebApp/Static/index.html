@@ -10,11 +10,12 @@
 </head>
 <body>
     <div class="root-container">
-        <navigation-bar params='search_function: search_function, novi_oglas_action: novi_oglas_action'></navigation-bar>
+        <navigation-bar params='search_function: search_function'></navigation-bar>
         <div class="main-container">
             <p>Hello from index.html</p>
             <div data-bind="component: { name: mainView, params: mainParams.params}"></div>
-            <popup id="main-popup" params="id: 'main-popup'"></popup> 
+            <!--<book-table-2></book-table-2>-->
+            <popup id="main-popup" params="id: 'main-popup'"></popup>
             <login-popup id="login-popup" params="id: 'login-popup'"></login-popup>
             <dialog-yes-no id="dialog-popup" params="id: 'dialog-popup'"></dialog-yes-no>
         </div>
@@ -22,6 +23,9 @@
             <button onclick="show_popup('main-popup')">Alert</button>
             <button onclick="d_y_n('yes/no')">Dialog</button>
             <button onclick="navigate('about')">About</button>
+            <button onclick="navigate('book-table')">Book 1</button>
+            <button onclick="navigate('book-table-2')">Book 2</button>
+            <button onclick="book_2_test()">Test</button>
         </div>
     </div>
 </body>

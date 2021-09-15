@@ -25,10 +25,6 @@ var search_function = function (search) {
 }
 
 
-var novi_oglas_action = function () {
-    navigate('novi-oglas');
-}
-
 var make_alert = function () {
     require(['jquery'], function ($) {
         $.getJSON("/authorized/", function (result) {
@@ -38,7 +34,7 @@ var make_alert = function () {
 }
 
 var d_y_n = function (text) {
-    require(['dialog_yes_no'], function (d) {
+    require(['dialog_yes_no_controller'], function (d) {
         d.setText(text);
         d.setYesFunction(
             function () {
@@ -59,25 +55,25 @@ var show_popup = function (id) {
     popup.classList.toggle("show");
 }
 
+function book_2_test() {
+    require(['book_controller_2'], function (b) {
+        b.reservationRows()[0].reservations()[0].size(b.reservationRows()[0].reservations()[0].size() - 1);
+    });
+}
 
 require(['jquery'], function ($) {
     $(document).ready(
         function () {
-            require(['security', 'navigator'], function (security, navigator) {
+            require(['security', 'navigator', 'book_controller_2'], function (security, navigator, b) {
                 security.checkLogin();
                 navigator.mainView = mainView;
                 navigator.mainParams = mainParams;
                 navigator.setParams({});
-                navigator.setView('book-table');
+                navigator.setView('book-table-2');
+                //navigator.setView('book-table');
+                b.refreshFunction();
             });
         }
     );
 });
 
-require(['jquery', 'book_controller'], function ($,b) {
-    $(document).ready(
-        function () {
-            b.refreshFunction();
-        }
-    );
-});

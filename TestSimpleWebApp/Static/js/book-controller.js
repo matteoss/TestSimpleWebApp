@@ -1,10 +1,11 @@
 ﻿
 define(['ko'], function (ko) {
     function Book() {
+        let self = this;
         this.version  = "1.0";
         this.propertyId = ko.observable("");
         this.roomId = ko.observable("");
-        this.dateFrom = ko.observable(new Date(2021, 8, 1));
+        this.dateFrom = ko.observable(new Date(2021, 9, 1));
         this.reservationRows = ko.observableArray([]);
         this.numberOfDays = 30;
     };
@@ -12,7 +13,6 @@ define(['ko'], function (ko) {
     Book.prototype.refreshFunction = function () {
         this.reservationRows.removeAll();
         let self = this;
-        let dateFrom = new Date(this.dateFrom());
         let dateTo = new Date(this.dateFrom());
         dateTo.setDate(dateTo.getDate() + this.numberOfDays);
         let query = "/odata/Reservations/?$filter=EndDate le " + dateTo.toISOString() + "&$expand=Guest&$orderby=PropertyId,RoomNumber,StartDate";
@@ -37,6 +37,7 @@ define(['ko'], function (ko) {
                     }
                 }
 
+
                 currReservations.push({
                     id: res.Id,
                     status: res.Status,
@@ -46,7 +47,7 @@ define(['ko'], function (ko) {
                     guestId: res.GuestId,
                     previousStay: res.PreviousStay,
                     nextStay: res.NextStay,
-                    guest: res.Guest,
+                    guest: res.Guest
                 });
 
 

@@ -1,0 +1,47 @@
+﻿<p>
+    CheckedId: <span data-bind="text: checkedId"> </span>
+</p>
+<div data-bind="if: displayDetails">
+    <p data-bind="with: selectedRes">
+        Name: <span data-bind="text: guest.Name"> </span> <span data-bind="text: guest.Surname"> </span><br />
+        startDate: <span data-bind="text: startDate"> </span> <br />
+        endDate: <span data-bind="text: endDate"> </span>
+    </p>
+</div>
+<table class="book-table-class">
+    <thead>
+        <tr>
+            <td>
+                <p>ID hotela</p>
+            </td>
+            <td>
+                <p>Vrsta sobe</p>
+            </td>
+            <!-- ko foreach: dates -->
+            <td>
+                <p data-bind="text: $data"></p>
+            </td>
+            <!-- /ko -->
+        </tr>
+    </thead>
+    <tbody data-bind="foreach: reservationRows">
+        <tr class="book-row">
+            <td>
+                <h3 data-bind="text: propertyId"></h3>
+            </td>
+            <td>
+                <h3 data-bind="text: roomNumber"></h3>
+            </td>
+            <!-- ko foreach: reservations -->
+            <!-- ko foreach: offsetArray -->
+            <td></td>
+            <!-- /ko -->
+            <td data-bind="attr: { colspan: size }">
+                <input class="reservation-bar-chk" type="radio" name="reservationGroup" data-bind="value: id, checked: $component.checkedId, attr: { id: 'res'+id }" />
+                <label draggable="true" class="reservation-bar" data-bind="text: guest.Surname + ' ' + guest.Name, attr: { for: 'res'+id }"></label>
+                <!--<span data-bind="text: offset"></span><span>-</span><span data-bind="text: size"></span>-->
+            </td>
+            <!-- /ko -->
+        </tr>
+    </tbody>
+</table>

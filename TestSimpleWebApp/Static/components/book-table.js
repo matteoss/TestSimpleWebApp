@@ -11,7 +11,7 @@
             return d;
         }, this);
         this.reservationRows = b.reservationRows;
-
+        console.log("book-table loaded");
     }
 
 

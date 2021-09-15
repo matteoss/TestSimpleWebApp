@@ -11,7 +11,7 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
             template: '<p>ovo je template 2</p>'
         });
 
-        ko.components.register('oglas', {
+        /*ko.components.register('oglas', {
             require: '/components/oglas.js'
         });
         ko.components.register('lista-oglasa', {
@@ -22,13 +22,13 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         });
         ko.components.register('lista-oglasa-paged', {
             require: '/components/lista-oglasa-paged.js'
-        });
+        });*/
         ko.components.register('about', {
             require: '/components/about.js'
         });
-        ko.components.register('novi-oglas', {
+        /*ko.components.register('novi-oglas', {
             require: '/components/novi-oglas.js'
-        });
+        });*/
         ko.components.register('popup', {
             require: '/components/popup.js'
         });
@@ -46,6 +46,9 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         });
         ko.components.register('book-table', {
             require: '/components/book-table.js'
+        });
+        ko.components.register('book-table-2', {
+            require: '/components/book-table-2.js'
         });
         ko.applyBindings();
     });
