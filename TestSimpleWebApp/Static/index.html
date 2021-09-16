@@ -10,7 +10,7 @@
 </head>
 <body>
     <div class="root-container">
-        <navigation-bar params='search_function: search_function'></navigation-bar>
+        <navigation-bar params='searchFunction: searchFunction'></navigation-bar>
         <div class="main-container">
             <p>Hello from index.html</p>
             <div data-bind="component: { name: mainView, params: mainParams.params}"></div>
@@ -25,6 +25,7 @@
             <button onclick="navigate('about')">About</button>
             <button onclick="navigate('book-table')">Book 1</button>
             <button onclick="navigate('book-table-2')">Book 2</button>
+            <button onclick="navigate('guest')">Guest</button>
             <button onclick="book_2_test()">Test</button>
         </div>
     </div>

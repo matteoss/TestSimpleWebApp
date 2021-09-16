@@ -35,7 +35,7 @@ define(['ko'], function (ko) {
             $.each(result.value, function (i, res) {
                 //console.log(JSON.stringify(res));
 
-                if (lastPropertyId != res.PropertyId || lastRoomNumber != res.RoomNumber) {
+                if (lastPropertyId != res.propertyId || lastRoomNumber != res.roomNumber) {
                     if (currReservations.length > 0) {
                         let resRow = {
                             propertyId: lastPropertyId,
@@ -49,11 +49,11 @@ define(['ko'], function (ko) {
                 }
 
 
-                let offset = self.dates().findIndex((e) => e == res.StartDate.split('T')[0]);
+                let offset = self.dates().findIndex((e) => e == res.startDate.split('T')[0]);
                 if (offset == -1) {
                     offset = 0;
                 }
-                let size = self.dates().findIndex((e) => e == res.EndDate.split('T')[0]);
+                let size = self.dates().findIndex((e) => e == res.endDate.split('T')[0]);
                 if (size > -1) {
                     size = size - offset;
                 } else {
@@ -61,26 +61,15 @@ define(['ko'], function (ko) {
                 }
                 offset = offset - lastEndIndex;
 
-                function reservation() {
-                    this.id = res.Id;
-                    this.status= res.Status;
-                    this.startDate= res.StartDate;
-                    this.endDate= res.EndDate;
-                    this.serviceId= res.ServiceId;
-                    this.guestId= res.GuestId;
-                    this.previousStay= res.PreviousStay;
-                    this.nextStay = res.NextStay;
-                    this.guest = res.Guest;
-                    this.offset = offset;
-                    this.offsetArray = new Array(this.offset);
-                    this.size = ko.observable(size);
-                }
+                res.offset = offset;
+                res.size = ko.observable(size);
+                res.offsetArray = new Array(offset);
 
-                currReservations.push(new reservation());
+                currReservations.push(res);
 
 
-                lastPropertyId = res.PropertyId;
-                lastRoomNumber = res.RoomNumber;
+                lastPropertyId = res.propertyId;
+                lastRoomNumber = res.roomNumber;
                 lastEndIndex = lastEndIndex + offset + size;
             });
 

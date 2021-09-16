@@ -1,0 +1,8 @@
+﻿<!-- ko if: offset > 0 -->
+<td data-bind="attr: { colspan: offset }"></td>
+<!-- /ko -->
+<td class="book-bar-td" data-bind="attr: { colspan: size }">
+    <input class="book-bar-chk" type="radio" name="reservationGroup" data-bind="value: id, checked: $component.checkedId, attr: { id: 'res'+id }" />
+    <label draggable="true" class="book-bar" data-bind="text: reservationText, attr: { for: 'res'+id }"></label>
+    <!--<span data-bind="text: offset"></span><span>-</span><span data-bind="text: size"></span>-->
+</td>

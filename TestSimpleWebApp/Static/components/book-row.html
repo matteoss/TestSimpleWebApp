@@ -1,15 +1,15 @@
 ﻿<tr class="book-row">
-    <td>
+    <td class="book-bar-td">
         <h3 data-bind="text: propertyId"></h3>
     </td>
-    <td>
+    <td class="book-bar-td">
         <h3 data-bind="text: roomNumber"></h3>
     </td>
-    <!-- ko foreach: {data: reservations, as 'res' } -->
-    <td>
-        <reservation-bar params="res: res">
-
-        </reservation-bar>
-    </td>
+    <!-- ko foreach: {data: reservations, as: 'res' } -->
+    <!-- ko component: {
+    name: "book-bar",
+    params: { reservation: res, checkedId: $component.checkedId }
+    } -->
+    <!-- /ko -->
     <!-- /ko -->
 </tr>

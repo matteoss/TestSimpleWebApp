@@ -1,0 +1,16 @@
+﻿<div class="guest">
+    <table>
+        <tbody data-bind="using: guest">
+            <tr><td>ID</td><td><input type="number" data-bind="value: id"/></td></tr>
+            <tr><td>Name</td><td><input type="text" data-bind="value: name"/></td></tr>
+            <tr><td>Surname</td><td><input type="text" data-bind="value: surname"/></td></tr>
+            <tr><td>Date of birth</td><td><input type="date" data-bind="value: dateOfBirth"/></td></tr>
+            <tr><td>Document type</td><td><input type="text" data-bind="value: documentType"/></td></tr>
+            <tr><td>Document ID</td><td><input type="text" data-bind="value: documentId"/></td></tr>
+            <tr><td>Country</td><td><input type="text" data-bind="value: country"/></td></tr>
+            <tr><td>City</td><td><input type="text" data-bind="value: city"/></td></tr>
+            <tr><td>Address</td><td><input type="text" data-bind="value: address"/></td></tr>
+            <tr><td><button data-bind="click: $component.deleteFunction">Delete</button></td><td><button data-bind="click: $component.saveFunction">Save</button></td></tr>+
+        </tbody>
+    </table>
+</div>

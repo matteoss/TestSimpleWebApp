@@ -17,10 +17,11 @@ function navigate(view) {
 }
 
 
-var search_function = function (search) {
-    require(['navigator'], function (navigator) {
-        navigator.setParams({ search: search});
-        navigator.setView('lista-oglasa-paged');
+var searchFunction = function (search) {
+    require(['navigator', 'guest_search'], function (navigator, gs) {
+        navigator.setParams({ search: search });
+        navigator.setView('guest-list');
+        gs.searchFunction(search());
     });
 }
 
@@ -64,14 +65,15 @@ function book_2_test() {
 require(['jquery'], function ($) {
     $(document).ready(
         function () {
-            require(['security', 'navigator', 'book_controller_2'], function (security, navigator, b) {
+            require(['security', 'navigator', 'book_controller', 'book_controller_2'], function (security, navigator, b, b2) {
                 security.checkLogin();
                 navigator.mainView = mainView;
                 navigator.mainParams = mainParams;
                 navigator.setParams({});
-                navigator.setView('book-table-2');
-                //navigator.setView('book-table');
+                //navigator.setView('book-table-2');
+                navigator.setView('book-table');
                 b.refreshFunction();
+                b2.refreshFunction();
             });
         }
     );

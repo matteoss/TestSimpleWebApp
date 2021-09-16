@@ -83,15 +83,15 @@ define([], function () {
         Security.authorizationAction = function () {
             if (Security.username()) {
 
-                require(['dialog_yes_no'], function (d) {
-                    d.set_subject("Odjava?");
-                    d.set_yes_function(
+                require(['dialog_yes_no_controller'], function (d) {
+                    d.setSubject("Odjava?");
+                    d.setYesFunction(
                         function () {
                             logoutLocal();
                             alert("Logged out.");
                         }
                     );
-                    d.set_no_function(
+                    d.setNoFunction(
                         function () {
                         }
                     );

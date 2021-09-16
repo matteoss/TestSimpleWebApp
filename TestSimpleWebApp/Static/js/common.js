@@ -17,12 +17,12 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('lista-oglasa', {
             require: '/components/lista-oglasa.js'
         });
-        ko.components.register('page-number', {
-            require: '/components/page-number.js'
-        });
         ko.components.register('lista-oglasa-paged', {
             require: '/components/lista-oglasa-paged.js'
         });*/
+        ko.components.register('page-number', {
+            require: '/components/page-number.js'
+        });
         ko.components.register('about', {
             require: '/components/about.js'
         });
@@ -38,14 +38,26 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('dialog-yes-no', {
             require: '/components/dialog-yes-no.js'
         });
-        ko.components.register('reservation-bar', {
-            require: '/components/reservation-bar.js'
+        ko.components.register('book-bar', {
+            require: '/components/book-bar.js'
         });
         ko.components.register('book-row', {
             require: '/components/book-row.js'
         });
         ko.components.register('book-table', {
             require: '/components/book-table.js'
+        });
+        ko.components.register('book-details', {
+            require: '/components/book-details.js'
+        });
+        ko.components.register('book-params', {
+            require: '/components/book-params.js'
+        });
+        ko.components.register('guest', {
+            require: '/components/guest.js'
+        });
+        ko.components.register('guest-list', {
+            require: '/components/guest-list.js'
         });
         ko.components.register('book-table-2', {
             require: '/components/book-table-2.js'

@@ -1,16 +1,38 @@
 ﻿define(['ko', 'jquery', 'book_controller', 'text!./book-table.html'], function (ko, $, b, htmlString) {
     function bookTable(params) {
         //console.log(ko.toJSON(b.reservationRows()));
-        this.dates = ko.pureComputed(function () {
-            let d = [];
-            for (let i = 0; i < b.numberOfDays; i++) {
-                let date = new Date(b.dateFrom());
-                date.setDate(date.getDate() + i);
-                d.push(date.toISOString().split('T')[0]);
-            }
-            return d;
-        }, this);
+        let self = this;
+        this.params = b.params;
+        this.refreshFunction = function () {
+            b.refreshFunction();
+            self.checkedId("");
+        };
+        this.dates = b.dates;
         this.reservationRows = b.reservationRows;
+        this.checkedId = ko.observable("");
+        this.selectedRes = ko.pureComputed(function () {
+            let chkId = self.checkedId();
+            try {
+                let row = self.reservationRows().findIndex((r) => {
+                    let res = r.reservations();
+                    return res.findIndex((e) => e.id == chkId) > -1;
+                });
+                if (row > -1) {
+                    let res = self.reservationRows()[row].reservations().find((e) => e.id == chkId);
+                    console.log(ko.toJSON(res));
+                    return res;
+                } else {
+                    console.log("selected res not found");
+                    return null;
+                }
+            } catch (e) {
+                console.log(e);
+                return null;
+            }
+        }, this);
+        this.displayDetails = ko.pureComputed(function () {
+            return self.checkedId() > 0 /*&& self.selectedRes()*/ != null;
+        });
         console.log("book-table loaded");
     }
 

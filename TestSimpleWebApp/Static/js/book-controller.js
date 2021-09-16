@@ -1,70 +1,93 @@
-﻿
-define(['ko'], function (ko) {
+﻿-define(['ko'], function (ko) {
     function Book() {
         let self = this;
-        this.version  = "1.0";
-        this.propertyId = ko.observable("");
-        this.roomId = ko.observable("");
-        this.dateFrom = ko.observable(new Date(2021, 9, 1));
+        this.version = "1.0";
+        this.params = {
+            propertyId: ko.observable(""),
+            roomNumber: ko.observable(""),
+            dateFrom: ko.observable(new Date(2021, 9, 1))
+        };
         this.reservationRows = ko.observableArray([]);
         this.numberOfDays = 30;
+        this.currentDate = ko.observable(new Date().toISOString().split("T")[0]);
+        this.dates = ko.pureComputed(function () {
+            let d = [];
+            for (let i = 0; i < self.numberOfDays; i++) {
+                let date = new Date(self.params.dateFrom());
+                date.setDate(date.getDate() + i);
+                let dateString = date.toISOString().split('T')[0]
+                let dateClass;
+                if (dateString === self.currentDate()) {
+                    dateClass = "current-date";
+                } else if (date.getDay() == 6 || date.getDay() == 0) {
+                    dateClass = "weekend-date";
+                } else {
+                    dateClass = "default-date";
+                }
+                d.push({
+                    date: dateString,
+                    dateClass: dateClass
+                });
+            }
+            return d;
+        }, this);
     };
 
     Book.prototype.refreshFunction = function () {
         this.reservationRows.removeAll();
         let self = this;
-        let dateTo = new Date(this.dateFrom());
+        let dateTo = new Date(this.params.dateFrom());
         dateTo.setDate(dateTo.getDate() + this.numberOfDays);
-        let query = "/odata/Reservations/?$filter=EndDate le " + dateTo.toISOString() + "&$expand=Guest&$orderby=PropertyId,RoomNumber,StartDate";
+        console.log(ko.toJSON(this.params));
+        let additionalQueryFilter = [];
+        if (this.params.propertyId()) {
+            additionalQueryFilter.push("PropertyId eq " + this.params.propertyId());
+        }
+        if (this.params.roomNumber()) {
+            additionalQueryFilter.push("RoomNumber eq " + this.params.roomNumber());
+        }
+        let query = "/odata/Rooms/?$expand=Reservations($filter=EndDate gt "
+            + new Date(this.params.dateFrom()).toISOString()
+            + " and StartDate le " + dateTo.toISOString()
+            + ";$expand=Guest;$orderby=StartDate)"
+            + (additionalQueryFilter.length > 0 ? "&$filter=" + additionalQueryFilter.join(' and ') : "")
+            + "&$orderby=PropertyId,RoomNumber";
         console.log(query);
         $.getJSON(query, function (result) {
             //console.log(JSON.stringify(result));
-            let lastPropertyId;
-            let lastRoomNumber;
-            let currReservations = [];
-            $.each(result.value, function (i, res) {
+
+            self.reservationRows(result.value);
+
+
+            $.each(self.reservationRows(), function (i, room) {
                 //console.log(JSON.stringify(res));
 
-                if (lastPropertyId != res.PropertyId || lastRoomNumber != res.RoomNumber) {
-                    if (currReservations.length > 0) {
-                        let resRow = {
-                            propertyId: lastPropertyId,
-                            roomNumber: lastRoomNumber,
-                            reservations: ko.observableArray(Array.from(currReservations))
-                        };
-                        self.reservationRows.push(resRow);
-                        currReservations = [];
+                let lastEndIndex = 0;
+
+                room.reservations = ko.observableArray(room.reservations);
+
+                $.each(room.reservations(), function (i, res) {
+
+                    let offset = self.dates().findIndex((e) => e.date == res.startDate.split('T')[0]);
+                    if (offset == -1) {
+                        offset = 0;
                     }
-                }
+                    let size = self.dates().findIndex((e) => e.date == res.endDate.split('T')[0]);
+                    if (size > -1) {
+                        size = size - offset;
+                    } else {
+                        size = self.numberOfDays - offset;
+                    }
+                    offset = offset - lastEndIndex;
 
+                    res.offset = offset;
+                    res.size = ko.observable(size);
 
-                currReservations.push({
-                    id: res.Id,
-                    status: res.Status,
-                    startDate: res.StartDate,
-                    endDate: res.EndDate,
-                    serviceId: res.ServiceId,
-                    guestId: res.GuestId,
-                    previousStay: res.PreviousStay,
-                    nextStay: res.NextStay,
-                    guest: res.Guest
+                    lastEndIndex = lastEndIndex + offset + size;
                 });
-
-
-                lastPropertyId = res.PropertyId;
-                lastRoomNumber = res.RoomNumber;
             });
 
-            if (currReservations.length > 0) {
-                let resRow = {
-                    propertyId: lastPropertyId,
-                    roomNumber: lastRoomNumber,
-                    reservations: ko.observableArray(currReservations.slice())
-                };
-                self.reservationRows.push(resRow);
-            }
             //console.log(ko.toJSON(self.reservationRows()));
-
         });
     }
 

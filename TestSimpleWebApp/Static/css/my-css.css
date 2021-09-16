@@ -135,7 +135,14 @@ login-popup.show {
     visibility: visible;
 }
 
-.reservation-bar-chk {
+.book-table, .book-row, .book-bar-td, .book-row-datumi td {
+    border: 1px solid black;
+    border-spacing: 0;
+    padding: 0px;
+    margin: 0px;
+}
+
+.book-bar-chk {
     visibility: hidden;
     margin: 0px;
     display: inline-block;
@@ -143,7 +150,7 @@ login-popup.show {
     height:0%;
 }
 
-.reservation-bar {
+.book-bar {
     cursor: pointer;
     display: inline-block;
     background-color: aqua;
@@ -151,6 +158,40 @@ login-popup.show {
     padding: 5px 0px;
 }
 
-.reservation-bar-chk:checked + .reservation-bar {
+.book-bar-chk:checked + .book-bar {
     background: red;
+}
+
+.current-date {
+    background-color: chartreuse;
+}
+.weekend-date {
+    background-color: aqua;
+}
+
+.book-params {
+    display:inline-block;
+    margin-left: 10px;
+    margin-right: 20px;
+}
+
+.book-details {
+    display: inline-block;
+    margin-left: 10px;
+}
+
+
+.page-number-container {
+    position: fixed;
+    bottom: 20px;
+    width: 100%;
+    background-color: aqua;
+}
+
+    .page-number-container table {
+        margin: auto;
+    }
+
+.marked-for-update{
+    background-color: crimson;
 }

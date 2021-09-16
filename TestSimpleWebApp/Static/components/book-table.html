@@ -1,20 +1,36 @@
-﻿<table class="book-table">
+﻿<!-- ko component: {
+        name: "book-params",
+        params: { params: params, refreshFunction: refreshFunction }
+        } -->
+<!-- /ko -->
+<!-- ko component: {
+        name: "book-details",
+        params: { reservation: selectedRes, checkedId: checkedId }
+        } -->
+<!-- /ko -->
+<table class="book-table">
     <thead>
-        <tr>
+        <tr class="book-row-datumi">
             <td>
                 <p>ID hotela</p>
             </td>
             <td>
-                <p>Vrsta sobe</p>
+                <p>Broj sobe</p>
             </td>
             <!-- ko foreach: dates -->
-            <td>
-                <p data-bind="text: $data"></p>
+            <td data-bind="class: dateClass">
+                <p data-bind="text: date "></p>
             </td>
             <!-- /ko -->
         </tr>
     </thead>
-    <tbody data-bind="foreach: {data: reservationRows, as: 'reservationRow'} ">
-        <book-row params="reservationRow: reservationRow"></book-row>
+    <tbody data-bind="foreach: {data: reservationRows, as: 'row'} ">
+        <!-- ko component: {
+        name: "book-row",
+        params: { reservationRow: row, checkedId: $component.checkedId }
+        } -->
+        <!-- /ko -->
+        <!--<book-row params="reservationRow: $data"></book-row>-->
+        <!--<tr><td><h3 data-bind="text: propertyId"></h3></td></tr>-->
     </tbody>
 </table>

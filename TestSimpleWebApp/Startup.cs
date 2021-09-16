@@ -30,11 +30,14 @@ namespace TestSimpleWebApp
             services.AddDbContext<PropertyManagementSystemDbContext>(options => { 
                 options.UseNpgsql(Configuration.GetConnectionString("DefaultConnection")); 
             });
-            services.AddControllers()
-                    .AddOData(opt => {
-                        opt.AddRouteComponents("odata", GetEdmModel());
-                        opt.Select().Count().Filter().OrderBy().SetMaxTop(100).Expand();
-                    });
+            services.AddControllers().AddJsonOptions(o => {
+                o.JsonSerializerOptions.DictionaryKeyPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+                o.JsonSerializerOptions.PropertyNamingPolicy = System.Text.Json.JsonNamingPolicy.CamelCase;
+            })
+                .AddOData(opt => {
+                opt.AddRouteComponents("odata", GetEdmModel());
+                opt.Select().Count().Filter().OrderBy().SetMaxTop(100).Expand();
+            });
 
             services.Configure<SecuritySettings>(Configuration.GetSection("SecuritySettings"));
             services.AddScoped<IUserService, UserService>();
@@ -72,6 +75,7 @@ namespace TestSimpleWebApp
         private IEdmModel GetEdmModel()
         {
             var odataBuilder = new ODataConventionModelBuilder();
+            odataBuilder.EnableLowerCamelCase();
             //odataBuilder.EntitySet<Oglas>("Oglasi").EntityType.HasKey(x => x.ID);
             odataBuilder.EntitySet<Guest>("Guests").EntityType.HasKey(x => x.Id);
             odataBuilder.EntitySet<Reservation>("Reservations").EntityType.HasKey(x => x.Id);

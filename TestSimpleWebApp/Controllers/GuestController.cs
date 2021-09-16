@@ -25,7 +25,7 @@ namespace TestSimpleWebApp.Controllers
             return Ok(_propertyManagementSystemDbContext.Guests);
         }
 
-        [HttpGet("odata/Guests({id})")]
+        [Route("odata/Guests({id})")]
         [EnableQuery]
         public IActionResult Get(int id)
         {
