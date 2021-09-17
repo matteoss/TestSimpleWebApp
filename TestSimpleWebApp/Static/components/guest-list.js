@@ -1,37 +1,44 @@
-﻿define(['ko', 'text!./guest-list.html', 'guest_search'], function (ko, htmlString, gs) {
+﻿define(['ko', 'text!./guest-list.html', 'grid_controller'], function (ko, htmlString, gcBuilder) {
+
     function guest(params) {
         console.log(ko.toJSON(params));
         self = this;
-        this.guests = gs.guests;
+        this.gridName = "GuestGrid";
+        this.grid = gcBuilder.getGrid(this.gridName);
+        this.guests = this.grid.list;
         this.search = params.search;
-        this.page = gs.page;
-        this.hasMorePages = gs.hasMorePages;
-        this.searchFunction = function () {
-            gs.searchFunction(self.search());
-        }
+        this.page = this.grid.page;
+        this.hasMorePages = this.grid.hasMorePages;
         this.refreshFunction = function () {
-            gs.refreshFunction(self.search());
+            self.grid.refreshFunction("contains(Surname,'" + self.search() + "') or contains(Name,'" + self.search() + "')");
+        }
+        this.guest = function () {
+            this.id = ko.observable("");
+            this.name = ko.observable("");
+            this.surname = ko.observable("");
+            this.dateOfBirth = ko.observable("");
+            this.documentId = ko.observable("");
+            this.documentType = ko.observable("");
+            this.country = ko.observable("");
+            this.city = ko.observable("");
+            this.address = ko.observable("");
+            this.markedForUpdate = ko.observable(true);
         }
         this.newFunction = function () {
-            gs.guests.push(new gs.guest());
+            self.grid.list.push(new self.guest());
         }
         this.deleteAction = function (index, guest) {
             console.log("Deleting at " + index + "  " + ko.toJSON(guest));
-            if (guest.id) {
-                alert("DB delete not implemented yet");
-                gs.guests.splice(index, 1);
-            } else {
-                gs.guests.splice(index, 1);
-            }
+            
         }
         this.deleteFunction = function (index, guest) {
             console.log(index + "  " + ko.toJSON(guest));
             require(['dialog_yes_no_controller'], function (d) {
                 d.setSubject("Delete?");
-                d.setText("Delete guest " + guest.surname + " " + guest.name);
+                d.setText("Delete guest " + guest.surname() + " " + guest.name());
                 d.setYesFunction(
                     function () {
-                        self.deleteAction(index, guest);
+                        self.grid.deleteFunction(index, guest);
                     }
                 );
                 d.setNoFunction(
@@ -44,22 +51,19 @@
         this.saveFunction = function () {
             $.each(self.guests(), function (i, g) {
                 if (g.markedForUpdate()) {
-                    alert("marker for update: " + ko.toJSON(g));
-                    gs.saveFunction(g);
+                    //alert("marker for update: " + ko.toJSON(g));
+                    self.grid.saveFunction(g);
                 }
             });
         };
 
 
-        for (var propt in this.guests()) {
-            if (typeof this.guests()[propt].subscribe === 'function') {
-                console.log(propt + ': ' + typeof this.guests()[propt].subscribe);
-            }
-        }
-
         console.log("guest-list loaded");
     }
 
+    guest.prototype.dispose = function () {
+        gcBuilder.deleteGrid(this.gridName);
+    }
 
     return { viewModel: guest, template: htmlString };
 });

@@ -18,10 +18,10 @@ function navigate(view) {
 
 
 var searchFunction = function (search) {
-    require(['navigator', 'guest_search'], function (navigator, gs) {
+    require(['navigator', 'grid_controller'], function (navigator, gs) {
         navigator.setParams({ search: search });
         navigator.setView('guest-list');
-        gs.searchFunction(search());
+        gs.getGrid("GuestGrid", "Guests", ['dateOfBirth']).searchFunction("contains(Surname,'" + search() + "') or contains(Name,'" + search() + "')");
     });
 }
 

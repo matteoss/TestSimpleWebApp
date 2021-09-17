@@ -5,7 +5,7 @@
         this.params = {
             propertyId: ko.observable(""),
             roomNumber: ko.observable(""),
-            dateFrom: ko.observable(new Date(2021, 9, 1))
+            dateFrom: ko.observable(new Date(2021, 9, 1).toISOString().split("T")[0])
         };
         this.reservationRows = ko.observableArray([]);
         this.numberOfDays = 30;

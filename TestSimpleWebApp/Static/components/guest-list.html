@@ -20,10 +20,10 @@
                 <td><span data-bind=" text: id"></span></td>
                 <td><input type="text" data-bind="value: surname " /></td>
                 <td><input type="text" data-bind="value: name" /></td>
-                <td><input type="date" data-bind="value: dateOfBirth" /></td>
-                <td><input type="text" data-bind="value: documentId" /></td>
-                <td><input type="text" data-bind="value: documentType" /></td>
-                <td><input type="text" data-bind="value: country" /></td>
+                <td><input type="date" style="max-width: 10em" data-bind="value: dateOfBirth" /></td>
+                <td><input type="text" style="max-width: 10em" data-bind="value: documentId" /></td>
+                <td><input type="text" style="max-width: 10em" data-bind="value: documentType" /></td>
+                <td><input type="text" maxlength="3" style="max-width: 3em" data-bind="value: country" /></td>
                 <td><input type="text" data-bind="value: city" /></td>
                 <td><input type="text" data-bind="value: address" /></td>
                 <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
@@ -32,5 +32,6 @@
     </table>
     <button data-bind="click: newFunction">Add</button>
     <button data-bind="click: saveFunction">Save</button>
+    <button data-bind="click: refreshFunction">Refresh</button>
     <page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>
 </div>

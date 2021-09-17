@@ -42,7 +42,7 @@ namespace TestSimpleWebApp.Models
                 entity.ToTable("Guest");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Address).HasMaxLength(250);
