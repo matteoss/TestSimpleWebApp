@@ -68,6 +68,7 @@ namespace TestSimpleWebApp
                 
                 endpoints.MapControllers(); 
                 endpoints.MapHub<NotificationHub>("/notifications/sync");
+                endpoints.MapHub<ReservationHub>("/reservation/sync");
                 
             });
         }

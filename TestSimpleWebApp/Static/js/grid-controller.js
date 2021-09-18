@@ -52,7 +52,7 @@
                     let subscriptions = [];
 
                     for (var propt in e) {
-                        console.log(propt + ': ' + typeof e[propt]);
+                        //console.log(propt + ': ' + typeof e[propt]);
                         if (self.dateFields.includes(propt)) {
                             if (e[propt]) {
                                 e[propt] = e[propt].split("T")[0];
@@ -105,6 +105,9 @@
                 data: ko.toJSON(data),
                 success: function (jqXHR) {
                     object.markedForUpdate(false);
+                    if (insert && jqXHR.id) {
+                        object.id(jqXHR.id);
+                    }
                     console.log(JSON.stringify(jqXHR));
                 },
                 error: function (jqXHR) {
@@ -121,7 +124,7 @@
         this.grid.prototype.deleteFunction = function (index, object) {
             ///object["@odata.type"] = "Microsoft.OData.TestSimpleWebApp.Models.Guest";
             let self = this;
-            if (object.id()) {
+            if (typeof object.id() === 'number') {
                 let data = prepareForOData(Object.assign({}, object));
                 console.log(ko.toJSON(data));
                 $.ajax({
@@ -151,6 +154,7 @@
 
         } else {
             this.grids[gridName] = new this.grid(modelName, dateFields);
+            console.log("grid " + gridName + " created. Params: " + JSON.stringify({ modelName: modelName, dateFields: dateFields }));
         }
         return this.grids[gridName];
     }
@@ -162,6 +166,7 @@
             self.grids[gridName].deleteSubscriptions(e);
         });
         delete this.grids[gridName];
+        console.log("grid " + gridName + " deleted");
     }
 
     return new gridBuilder();

@@ -1,4 +1,4 @@
-﻿-define(['ko'], function (ko) {
+﻿-define(['ko', 'signalr'], function (ko, signalR) {
     function Book() {
         let self = this;
         this.version = "1.0";
@@ -31,6 +31,42 @@
             }
             return d;
         }, this);
+
+        $(document).ready(
+            function () {
+                var connection = new signalR.HubConnectionBuilder().withUrl("/reservation/sync").build();
+                connection.on("PatchReservation", function (reservation) {
+                    console.log("reservation change: " + JSON.stringify(reservation));
+                    $.each(self.reservationRows(), function (i, row) {
+                        $.each(row.reservations(), function (i, res) {
+                            if (reservation.id === res.id()) {
+                                for (var propt in reservation) {
+                                    if (!['id', 'guest'].includes(propt)) {
+                                        res[propt](reservation[propt]);
+                                    }
+                                }
+                                //need exit;
+                            }
+                        });
+                    });
+                });
+
+                connection.start().then(function () {
+                    console.log("signalR connection started");
+                }).catch(function (err) {
+                    return console.error(err.toString());
+                });
+
+                /*document.getElementById("sendButton").addEventListener("click", function (event) {
+                    var user = document.getElementById("userInput").value;
+                    var message = document.getElementById("messageInput").value;
+                    connection.invoke("SendMessage", user, message).catch(function (err) {
+                        return console.error(err.toString());
+                    });
+                    event.preventDefault();
+                });*/
+            }
+        );
     };
 
     Book.prototype.refreshFunction = function () {
@@ -62,28 +98,43 @@
             $.each(self.reservationRows(), function (i, room) {
                 //console.log(JSON.stringify(res));
 
-                let lastEndIndex = 0;
+                let lastEndIndex = ko.observable(0);
 
                 room.reservations = ko.observableArray(room.reservations);
 
                 $.each(room.reservations(), function (i, res) {
 
-                    let offset = self.dates().findIndex((e) => e.date == res.startDate.split('T')[0]);
-                    if (offset == -1) {
-                        offset = 0;
+                    for (var propt in res) {
+                        res[propt] = ko.observable(res[propt]);
                     }
-                    let size = self.dates().findIndex((e) => e.date == res.endDate.split('T')[0]);
-                    if (size > -1) {
-                        size = size - offset;
-                    } else {
-                        size = self.numberOfDays - offset;
-                    }
-                    offset = offset - lastEndIndex;
 
-                    res.offset = offset;
-                    res.size = ko.observable(size);
+                    res.lastEndIndex = lastEndIndex;
 
-                    lastEndIndex = lastEndIndex + offset + size;
+                    res.offset = ko.computed(function () {
+                        let offset = self.dates().findIndex((e) => e.date == res.startDate().split('T')[0]);
+                        if (offset == -1) {
+                            offset = 0;
+                        }
+                        offset = offset - res.lastEndIndex();
+                        return offset;
+                    });
+                    res.size = ko.computed(function () {
+                        let size = self.dates().findIndex((e) => e.date == res.endDate().split('T')[0]);
+                        if (size > -1) {
+                            size = size - res.offset() + res.lastEndIndex();
+                        } else {
+                            size = self.numberOfDays - res.offset();
+                        }
+                        return size;
+                    });
+
+                    res.endIndex = ko.computed(function () {
+                        return res.lastEndIndex() + res.offset() + res.size()
+                    });
+
+                    console.log(ko.toJSON(res));
+
+                    lastEndIndex = res.endIndex;
                 });
             });
 

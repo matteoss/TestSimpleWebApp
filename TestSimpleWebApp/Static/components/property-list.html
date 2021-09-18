@@ -1,0 +1,23 @@
+﻿<div class="property-list">
+    <table>
+        <thead>
+            <tr>
+                <td></td>
+                <td>ID</td>
+                <td>Name</td>
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: properties">
+            <tr data-bind="class: (markedForUpdate() ? 'marked-for-update' : '')">
+                <td><span data-bind=" text: $index"></span></td>
+                <td><span data-bind=" text: id"></span></td>
+                <td><input type="text" data-bind="value: name" /></td>
+                <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button data-bind="click: newFunction">Add</button>
+    <button data-bind="click: saveFunction">Save</button>
+    <button data-bind="click: refreshFunction">Refresh</button>
+    <page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>
+</div>

@@ -4,8 +4,19 @@
         self = this;
         this.id = params.reservation.id;
         this.checkedId = params.checkedId;
-        this.reservationText = params.reservation.guest.surname + " " + params.reservation.guest.name
-            + " " + params.reservation.offset + "/" + params.reservation.size();
+        this.barClass = ko.pureComputed(function () {
+            let bc = 'book-bar-td';
+            if (params.reservation.status() == 'Reserved') {
+                bc = bc + ' book-bar-reserved';
+            } else if (params.reservation.status() == 'CheckedIn') {
+                bc = bc + ' book-bar-checked-in';
+            }
+            return bc;
+        });
+        this.reservationText = ko.pureComputed(function () {
+            return params.reservation.guest().surname + " " + params.reservation.guest().name
+                + " " + params.reservation.offset() + "/" + params.reservation.size();
+        });
         this.offset = params.reservation.offset;
         this.size = params.reservation.size;
         console.log("book-bar loaded");

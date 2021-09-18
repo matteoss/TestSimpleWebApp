@@ -1,0 +1,37 @@
+﻿<div class="reservation-list">
+    <table>
+        <thead>
+            <tr>
+                <td></td>
+                <td>ID</td>
+                <td>Status</td>
+                <td>Start date</td>
+                <td>End date</td>
+                <td>Service ID</td>
+                <td>Property ID</td>
+                <td>Guest</td>
+                <td>Room Number</td>
+                <!--public int? PreviousStay { get; set; }-->
+                <!--public int? NextStay { get; set; }-->
+            </tr>
+        </thead>
+        <tbody data-bind="foreach: reservations">
+            <tr data-bind="class: (markedForUpdate() ? 'marked-for-update' : '')">
+                <td><span data-bind=" text: $index"></span></td>
+                <td><span data-bind=" text: id"></span></td>
+                <td><input type="text" data-bind="value: status" /></td>
+                <td><input type="date" data-bind="value: startDate" /></td>
+                <td><input type="date" data-bind="value: endDate" /></td>
+                <td><input type="text" data-bind="value: serviceId" /></td>
+                <td><input type="number" data-bind="value: propertyId" /></td>
+                <td><input type="number" data-bind="value: guestId" /></td>
+                <td><input type="number" data-bind="value: roomNumber" /></td>
+                <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <button data-bind="click: newFunction">Add</button>
+    <button data-bind="click: saveFunction">Save</button>
+    <button data-bind="click: refreshFunction">Refresh</button>
+    <page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>
+</div>

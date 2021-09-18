@@ -14,11 +14,15 @@
             let chkId = self.checkedId();
             try {
                 let row = self.reservationRows().findIndex((r) => {
-                    let res = r.reservations();
-                    return res.findIndex((e) => e.id == chkId) > -1;
+                    if (typeof r.reservations === 'function') {
+                        let res = r.reservations();
+                        return res.findIndex((e) => e.id() == chkId) > -1;
+                    } else {
+                        return -1;
+                    }
                 });
                 if (row > -1) {
-                    let res = self.reservationRows()[row].reservations().find((e) => e.id == chkId);
+                    let res = self.reservationRows()[row].reservations().find((e) => e.id() == chkId);
                     console.log(ko.toJSON(res));
                     return res;
                 } else {

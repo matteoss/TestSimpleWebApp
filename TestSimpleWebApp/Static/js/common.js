@@ -59,6 +59,12 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('guest-list', {
             require: '/components/guest-list.js'
         });
+        ko.components.register('property-list', {
+            require: '/components/property-list.js'
+        });
+        ko.components.register('reservation-list', {
+            require: '/components/reservation-list.js'
+        });
         ko.components.register('book-table-2', {
             require: '/components/book-table-2.js'
         });

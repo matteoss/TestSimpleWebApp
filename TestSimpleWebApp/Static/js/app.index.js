@@ -12,7 +12,7 @@ require(['ko'], function (ko) {
 function navigate(view) {
     require(['ko', 'navigator'], function (ko, navigator) {
         navigator.setView(view);
-        navigator.setParams(null);
+        navigator.setParams({});
     });
 }
 

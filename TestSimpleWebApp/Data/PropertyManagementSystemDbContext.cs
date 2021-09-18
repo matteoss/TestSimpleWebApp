@@ -75,7 +75,7 @@ namespace TestSimpleWebApp.Models
                 entity.ToTable("Property");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Name)
@@ -88,7 +88,7 @@ namespace TestSimpleWebApp.Models
                 entity.ToTable("Reservation");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
                 entity.Property(e => e.EndDate).HasColumnType("date");
@@ -149,7 +149,7 @@ namespace TestSimpleWebApp.Models
                 entity.ToTable("RoomType");
 
                 entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("ID");
 
                 entity.Property(e => e.Name).HasMaxLength(100);

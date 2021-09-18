@@ -158,8 +158,17 @@ login-popup.show {
     padding: 5px 0px;
 }
 
+.book-bar-reserved{
+    background-color: yellow;
+}
+
+.book-bar-checked-in{
+    background-color: orangered;
+}
+
 .book-bar-chk:checked + .book-bar {
-    background: red;
+    background-color: red;
+    font-weight: bold;
 }
 
 .current-date {
