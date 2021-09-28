@@ -204,3 +204,7 @@ login-popup.show {
 .marked-for-update{
     background-color: crimson;
 }
+
+.dd-selected-item{
+    background-color:silver;
+}

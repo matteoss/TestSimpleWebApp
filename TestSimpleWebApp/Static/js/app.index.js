@@ -9,10 +9,10 @@ require(['ko'], function (ko) {
 });
 
 
-function navigate(view) {
+function navigate(view, params) {
     require(['ko', 'navigator'], function (ko, navigator) {
+        navigator.setParams(params ? params : {});
         navigator.setView(view);
-        navigator.setParams({});
     });
 }
 

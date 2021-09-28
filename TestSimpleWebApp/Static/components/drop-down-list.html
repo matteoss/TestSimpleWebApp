@@ -1,0 +1,24 @@
+﻿<div class="drop-down-list">
+    <input type="text" data-bind="value: value, hasFocus: inputHasFocus, valueUpdate: 'afterkeydown', event: {'keyup': upDownEvent} " />
+    <!-- ko if: display -->
+    <div data-bind="attr: { id: scrollDivId }" style="position: fixed; height: 10em; width: fit-content; padding-right: 10px; overflow: hidden; overflow-y: scroll;">
+        <ul data-bind="attr: { id: scrollContentId }">
+            <!-- ko foreach: list1 -->
+            <li>
+                <input type="radio" data-bind="value: id, hasFocus: itemHasFocus, checked: $component.checkedId, attr: { id: htmlId, name: $component.radioGroupName }" />
+                <label data-bind="attr: {for: htmlId}, text: itemText, class: itemClass"></label>
+            </li>
+            <!-- /ko -->
+        </ul>
+    </div>
+    <!-- /ko -->
+    <!--<select>
+        <option value="0">Select car:</option>
+        <option value="1">Audi</option>
+        <option value="2">BMW</option>
+        <option value="3">Citroen</option>
+        <option value="4">Ford</option>
+        <option value="5">Honda</option>
+    </select>
+        -->
+</div>
