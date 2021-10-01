@@ -1,11 +1,11 @@
 ﻿<div class="drop-down-list">
     <input type="text" data-bind="value: value, hasFocus: inputHasFocus, valueUpdate: 'afterkeydown', event: {'keyup': upDownEvent} " />
     <!-- ko if: display -->
-    <div data-bind="attr: { id: scrollDivId }" style="position: fixed; height: 10em; width: fit-content; padding-right: 10px; overflow: hidden; overflow-y: scroll;">
-        <ul data-bind="attr: { id: scrollContentId }">
+    <div class="drop-down-list-scroll-div" data-bind="attr: { id: scrollDivId }" style="position: fixed; height: 10em; width: fit-content; padding-right: 10px; overflow: hidden; overflow-y: scroll;">
+        <ul class="drop-down-list-ul" data-bind="attr: { id: scrollContentId }">
             <!-- ko foreach: list1 -->
-            <li>
-                <input type="radio" data-bind="value: id, hasFocus: itemHasFocus, checked: $component.checkedId, attr: { id: htmlId, name: $component.radioGroupName }" />
+            <li class="drop-down-list-li" data-bind="attr: { id: liHtmlId }">
+                <input type="radio" data-bind="value: id, checked: $component.checkedId, attr: { id: htmlId, name: $component.radioGroupName }" />
                 <label data-bind="attr: {for: htmlId}, text: itemText, class: itemClass"></label>
             </li>
             <!-- /ko -->

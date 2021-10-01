@@ -8,7 +8,7 @@
                 <td>Start date</td>
                 <td>End date</td>
                 <td>Service ID</td>
-                <td>Property ID</td>
+                <td>Property</td>
                 <td>Guest</td>
                 <td>Room Number</td>
                 <!--public int? PreviousStay { get; set; }-->
@@ -23,8 +23,10 @@
                 <td><input type="date" data-bind="value: startDate" /></td>
                 <td><input type="date" data-bind="value: endDate" /></td>
                 <td><input type="text" data-bind="value: serviceId" /></td>
-                <td><input type="number" data-bind="value: propertyId" /></td>
-                <td><input type="number" data-bind="value: guestId" /></td>
+                <!--<td><input type="number" data-bind="value: propertyId" /></td>-->
+                <td><drop-down-list params="componentId: 'property1', id: propertyId, modelName: 'Properties', searchColumns: ['id', 'name'], valueFunction: (e) => e.id + ' - ' + e.name"></drop-down-list></td>
+                <!--<td><input type="number" data-bind="value: guestId" /></td>-->
+                <td><drop-down-list params="componentId: 'guest1', id: guestId, modelName: 'Guests', searchColumns: ['id', 'name', 'surname'], valueFunction: (e) => e.id + ' - ' + e.surname + ' ' + e.name"></drop-down-list></td>
                 <td><input type="number" data-bind="value: roomNumber" /></td>
                 <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
             </tr>

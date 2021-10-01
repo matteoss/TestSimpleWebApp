@@ -205,6 +205,22 @@ login-popup.show {
     background-color: crimson;
 }
 
-.dd-selected-item{
-    background-color:silver;
+.drop-down-list-scroll-div {
+    background-color: white;
+    border: 1px solid gray;
+}
+
+.drop-down-list-ul {
+    padding: 0;
+    margin: 0px;
+}
+
+.drop-down-list-li {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.drop-down-list-selected-item {
+    background-color: silver;
 }
