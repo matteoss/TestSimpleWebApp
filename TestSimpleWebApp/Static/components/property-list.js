@@ -13,12 +13,13 @@
             self.grid.refreshFunction();
         }
         this.property = function () {
-            this.id = ko.observable("");
-            this.name = ko.observable("");
-            this.markedForUpdate = ko.observable(true);
+            return self.grid.initObject(function () {
+                this.id = null;
+                this.name = "";
+            })
         }
         this.newFunction = function () {
-            self.grid.list.push(new self.property());
+            self.grid.list.push(self.property());
         }
         this.deleteAction = function (index, property) {
             console.log("Deleting at " + index + "  " + ko.toJSON(property));
@@ -42,12 +43,7 @@
             });
         };
         this.saveFunction = function () {
-            $.each(self.properties(), function (i, g) {
-                if (g.markedForUpdate()) {
-                    //alert("marker for update: " + ko.toJSON(g));
-                    self.grid.saveFunction(g);
-                }
-            });
+            self.grid.saveFunction();
         };
 
         console.log("property-list loaded");

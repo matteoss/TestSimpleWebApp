@@ -62,6 +62,10 @@ namespace TestSimpleWebApp.Controllers
                 return NotFound();
             }
             property.Patch(entity);
+            if (!TryValidateModel(entity))
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {

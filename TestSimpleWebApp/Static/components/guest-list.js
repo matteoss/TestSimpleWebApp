@@ -13,19 +13,20 @@
             self.grid.refreshFunction("contains(Surname,'" + self.search() + "') or contains(Name,'" + self.search() + "')");
         }
         this.guest = function () {
-            this.id = ko.observable("");
-            this.name = ko.observable("");
-            this.surname = ko.observable("");
-            this.dateOfBirth = ko.observable("");
-            this.documentId = ko.observable("");
-            this.documentType = ko.observable("");
-            this.country = ko.observable("");
-            this.city = ko.observable("");
-            this.address = ko.observable("");
-            this.markedForUpdate = ko.observable(true);
+            return self.grid.initObject(function () {
+                this.id = null;
+                this.name = "";
+                this.surname = "";
+                this.dateOfBirth = "";
+                this.documentId = "";
+                this.documentType = "";
+                this.country = "";
+                this.city = "";
+                this.address = "";
+            })
         }
         this.newFunction = function () {
-            self.grid.list.push(new self.guest());
+            self.grid.list.push(self.guest());
         }
         this.deleteAction = function (index, guest) {
             console.log("Deleting at " + index + "  " + ko.toJSON(guest));
@@ -49,12 +50,7 @@
             });
         };
         this.saveFunction = function () {
-            $.each(self.guests(), function (i, g) {
-                if (g.markedForUpdate()) {
-                    //alert("marker for update: " + ko.toJSON(g));
-                    self.grid.saveFunction(g);
-                }
-            });
+            self.grid.saveFunction();
         };
 
 

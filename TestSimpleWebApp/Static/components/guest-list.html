@@ -1,5 +1,5 @@
 ﻿<div class="guest-list">
-    <table>
+    <table class="grid-table">
         <thead>
             <tr>
                 <td></td>
@@ -15,17 +15,17 @@
             </tr>
         </thead>
         <tbody data-bind="foreach: guests">
-            <tr data-bind="class: (markedForUpdate() ? 'marked-for-update' : '')">
+            <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
                 <td><span data-bind=" text: $index"></span></td>
                 <td><span data-bind=" text: id"></span></td>
-                <td><input type="text" data-bind="value: surname " /></td>
-                <td><input type="text" data-bind="value: name" /></td>
-                <td><input type="date" style="max-width: 10em" data-bind="value: dateOfBirth" /></td>
-                <td><input type="text" style="max-width: 10em" data-bind="value: documentId" /></td>
-                <td><input type="text" style="max-width: 10em" data-bind="value: documentType" /></td>
-                <td><input type="text" maxlength="3" style="max-width: 3em" data-bind="value: country" /></td>
-                <td><input type="text" data-bind="value: city" /></td>
-                <td><input type="text" data-bind="value: address" /></td>
+                <td><input type="text" data-bind="value: surname " /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForSurname"></span></td>
+                <td><input type="text" data-bind="value: name" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForName"></span></td>
+                <td><input type="date" style="max-width: 10em" data-bind="value: dateOfBirth" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForDateOfBirth"></span></td>
+                <td><input type="text" style="max-width: 10em" data-bind="value: documentId" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForDocumentId"></span></td>
+                <td><input type="text" style="max-width: 10em" data-bind="value: documentType" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForDocumentType"></span></td>
+                <td><input type="text" maxlength="3" style="max-width: 3em" data-bind="value: country" /><br /><span class="grid-error-msg" data-bind="gridMetaData.errors.errorTextForCountry"></span></td>
+                <td><input type="text" data-bind="value: city" /><br /><span class="grid-error-msg" data-bind="gridMetaData.errors.errorTextForCity"></span></td>
+                <td><input type="text" data-bind="value: address" /><br /><span class="grid-error-msg" data-bind="gridMetaData.errors.errorTextForAddress"></span></td>
                 <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
             </tr>
         </tbody>

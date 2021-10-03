@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.OData.Formatter;
 using Microsoft.AspNetCore.OData.Query;
 using Microsoft.AspNetCore.OData.Routing.Controllers;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 using System.Linq;
 using System.Net;
 using System.Threading.Tasks;
@@ -17,10 +18,12 @@ namespace TestSimpleWebApp.Controllers
     {
 
         private readonly PropertyManagementSystemDbContext _propertyManagementSystemDbContext;
+        private readonly ILogger<GuestController> _logger;
 
-        public GuestController(PropertyManagementSystemDbContext propertyManagementSystemDbContext)
+        public GuestController(PropertyManagementSystemDbContext propertyManagementSystemDbContext, ILogger<GuestController> logger)
         {
             _propertyManagementSystemDbContext = propertyManagementSystemDbContext;
+            _logger = logger;
         }
 
         [HttpGet("odata/Guests")]
@@ -51,7 +54,7 @@ namespace TestSimpleWebApp.Controllers
 
         [HttpPatch("odata/Guests({id})")]
         public async Task<IActionResult> Patch([FromODataUri]int id, [FromBody]Delta<Guest> guest)
-        {
+        { 
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
@@ -61,7 +64,12 @@ namespace TestSimpleWebApp.Controllers
             {
                 return NotFound();
             }
-            guest.Patch(entity);
+            guest.Patch(entity); 
+            
+            if (!TryValidateModel(entity))
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {

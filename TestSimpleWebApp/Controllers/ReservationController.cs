@@ -67,6 +67,10 @@ namespace TestSimpleWebApp.Controllers
                 return NotFound();
             }
             reservation.Patch(entity);
+            if (!TryValidateModel(entity))
+            {
+                return BadRequest(ModelState);
+            }
 
             try
             {

@@ -16,17 +16,18 @@
             this.hasMorePages = ko.pureComputed(function () {
                 return self.list().length != 0;
             });
+            this.errorTextFieldPrefix = "errorTextFor";
         };
 
         this.grid.prototype.deleteSubscriptions = function (object) {
-            $.each(object.subscriptions, function (i, s) {
+            $.each(object.gridMetaData.subscriptions, function (i, s) {
                 s.dispose();
             });
         }
 
         this.grid.prototype.refreshFunction = function (filter) {
             let self = this;
-            $.each(this.list, function (i, e) {
+            $.each(this.list(), function (i, e) {
                 self.deleteSubscriptions(e);
             });
             this.list.removeAll();
@@ -48,30 +49,10 @@
 
                 $.each(result.value, function (i, e) {
 
-                    e.markedForUpdate = false;
-                    let subscriptions = [];
-
-                    for (var propt in e) {
-                        //console.log(propt + ': ' + typeof e[propt]);
-                        if (self.dateFields.includes(propt)) {
-                            if (e[propt]) {
-                                e[propt] = e[propt].split("T")[0];
-                            }
-                        }
-                        e[propt] = ko.observable(e[propt]);
-                        if (propt != 'markedForUpdate') {
-                            subscriptions.push(
-                                e[propt].subscribe(function (newValue) {
-                                    //alert("subscribe " + ko.toJSON(g));
-                                    e.markedForUpdate(true);
-                                })
-                            );
-                        }
-                    }
-
-                    e.subscriptions = subscriptions;
-
+                    //console.log(JSON.stringify(e));
+                    self.addGridMetaDataFields(e);
                     self.list.push(e);
+
                 });
 
             });
@@ -83,35 +64,63 @@
         }
 
         function prepareForOData(data) {
-            delete data.markedForUpdate;
-            delete data.subscriptions;
+            delete data.gridMetaData;
             return data;
+        }
+
+        function lowerCaseFirstLetter(string) {
+            return string.charAt(0).toLowerCase() + string.slice(1);
+        }
+        function upperCaseFirstLetter(string) {
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        this.grid.prototype.clearErrorTexts = function (object) {
+            for (var propt in object.gridMetaData.errors) {
+                object.gridMetaData.errors[propt]("");
+            }
         }
 
         this.grid.prototype.saveFunction = function (object) {
             ///object["@odata.type"] = "Microsoft.OData.TestSimpleWebApp.Models.Guest";
             let self = this;
-            let data = prepareForOData(Object.assign({}, object));
-            let insert = !data.id();
-            if (insert) {
-                delete data.id;
-            }
-            console.log(ko.toJSON(data));
-            $.ajax({
-                type: insert ? "POST" : "PATCH",
-                url: "/odata/" + self.modelName + (insert ? "" : "(" + data.id() + ")"),
-                contentType: "application/json;odata.metadata=minimal",
-                dataType: "json",
-                data: ko.toJSON(data),
-                success: function (jqXHR) {
-                    object.markedForUpdate(false);
-                    if (insert && jqXHR.id) {
-                        object.id(jqXHR.id);
+            $.each(this.list(), function (i, object) {
+                if (object.gridMetaData.markedForUpdate()) {
+                    //alert("marker for update: " + ko.toJSON(g));
+                    let data = prepareForOData(Object.assign({}, object));
+                    let insert = !data.id();
+                    if (insert) {
+                        delete data.id;
                     }
-                    console.log(JSON.stringify(jqXHR));
-                },
-                error: function (jqXHR) {
-                    console.error(JSON.stringify(jqXHR));
+                    console.log(ko.toJSON(data));
+                    $.ajax({
+                        type: insert ? "POST" : "PATCH",
+                        url: "/odata/" + self.modelName + (insert ? "" : "(" + data.id() + ")"),
+                        contentType: "application/json;odata.metadata=minimal",
+                        dataType: "json",
+                        data: ko.toJSON(data),
+                        success: function (jqXHR) {
+                            if (insert && jqXHR.id) {
+                                object.id(jqXHR.id);
+                            }
+                            self.clearErrorTexts(object);
+                            object.gridMetaData.markedForUpdate(false);
+                            console.log(JSON.stringify(jqXHR));
+                        },
+                        error: function (jqXHR) {
+                            console.error(JSON.stringify(jqXHR.responseText));
+                            self.clearErrorTexts(object);
+
+                            $.each(JSON.parse(jqXHR.responseText).error.details, function (i, e) {
+                                if (e.target && e.message) {
+                                    console.error(upperCaseFirstLetter(e.target) + ": " + e.message);
+                                    object.gridMetaData.errors[self.errorTextFieldPrefix + upperCaseFirstLetter(e.target)](e.message);
+                                } else if (e.message) {
+                                    alert(e.message);
+                                }
+                            });
+                        }
+                    });
                 }
             });
         }
@@ -146,6 +155,42 @@
             }
             
         }
+
+        this.grid.prototype.addGridMetaDataFields = function (e) {
+
+            let gridMetaData = {};
+            gridMetaData.markedForUpdate = ko.observable(false);
+            gridMetaData.errors = {};
+
+            let subscriptions = [];
+
+            for (var propt in e) {
+                //console.log(propt + ': ' + typeof e[propt]);
+                if (this.dateFields.includes(propt)) {
+                    if (typeof e[propt].split === 'function') {
+                        e[propt] = e[propt].split("T")[0];
+                    }
+                }
+                e[propt] = ko.observable(e[propt]);
+                subscriptions.push(
+                    e[propt].subscribe(function (newValue) {
+                        //console.log("subscribe " + ko.toJSON(newValue));
+                        e.gridMetaData.markedForUpdate(true);
+                    })
+                );
+                gridMetaData.errors[this.errorTextFieldPrefix + upperCaseFirstLetter(propt)] = ko.observable("");
+            }
+            gridMetaData.subscriptions = subscriptions;
+
+            e.gridMetaData = gridMetaData;
+        }
+
+        this.grid.prototype.initObject = function (objectFunc) {
+            object = new objectFunc();
+            this.addGridMetaDataFields(object);
+            object.gridMetaData.markedForUpdate(true);
+            return object;
+        }
     }
 
 
@@ -162,7 +207,7 @@
     gridBuilder.prototype.deleteGrid = function (gridName) {
         let list = this.grids[gridName].list;
         let self = this;
-        $.each(list, function (i, e) {
+        $.each(list(), function (i, e) {
             self.grids[gridName].deleteSubscriptions(e);
         });
         delete this.grids[gridName];

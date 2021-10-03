@@ -35,7 +35,7 @@
             }
         }, this);
         this.displayDetails = ko.pureComputed(function () {
-            return self.checkedId() > 0 /*&& self.selectedRes()*/ != null;
+            return self.checkedId() > 0 /*&& self.selectedRes() != null*/;
         });
         console.log("book-table loaded");
     }

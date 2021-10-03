@@ -13,18 +13,19 @@
             self.grid.refreshFunction();
         }
         this.reservation = function () {
-            this.id = ko.observable("");
-            this.status = ko.observable("");
-            this.startDate = ko.observable("");
-            this.endDate = ko.observable("");
-            this.serviceId = ko.observable("");
-            this.propertyId = ko.observable("");
-            this.guestId = ko.observable("");
-            this.roomNumber = ko.observable("");
-            this.markedForUpdate = ko.observable(true);
+            return self.grid.initObject(function () {
+                this.id = null;
+                this.status = "";
+                this.startDate = "";
+                this.endDate = "";
+                this.serviceId = "";
+                this.propertyId = "";
+                this.guestId = null;
+                this.roomNumber = null;
+            })
         }
         this.newFunction = function () {
-            self.grid.list.push(new self.reservation());
+            self.grid.list.push(self.reservation());
         }
         this.deleteAction = function (index, object) {
             console.log("Deleting at " + index + "  " + ko.toJSON(object));
@@ -48,12 +49,7 @@
             });
         };
         this.saveFunction = function () {
-            $.each(self.reservations(), function (i, g) {
-                if (g.markedForUpdate()) {
-                    //alert("marker for update: " + ko.toJSON(g));
-                    self.grid.saveFunction(g);
-                }
-            });
+            self.grid.saveFunction();
         };
 
         console.log("reservation-list loaded");

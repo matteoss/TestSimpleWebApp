@@ -201,8 +201,13 @@ login-popup.show {
         margin: auto;
     }
 
-.marked-for-update{
+.grid-marked-for-update{
     background-color: crimson;
+}
+
+.grid-error-msg {
+    color: white;
+    font-weight: bold;
 }
 
 .drop-down-list-scroll-div {
@@ -223,4 +228,8 @@ login-popup.show {
 
 .drop-down-list-selected-item {
     background-color: silver;
+}
+
+.grid-table td{
+    vertical-align: top;
 }
