@@ -47,7 +47,7 @@ namespace TestSimpleWebApp.Services
             public void Validate(S entity)
             {
                 _validationStep.Validate(entity);
-                NextTask.Validate(entity);
+                if (NextTask != null) { NextTask.Validate(entity); };
             }
         }
 

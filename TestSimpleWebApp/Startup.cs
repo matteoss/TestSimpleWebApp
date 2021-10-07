@@ -11,6 +11,7 @@ using TestSimpleWebApp.Data;
 using TestSimpleWebApp.Hubs;
 using TestSimpleWebApp.Models;
 using TestSimpleWebApp.Security;
+using TestSimpleWebApp.Services;
 
 namespace TestSimpleWebApp
 {
@@ -41,6 +42,7 @@ namespace TestSimpleWebApp
 
             services.Configure<SecuritySettings>(Configuration.GetSection("SecuritySettings"));
             services.AddScoped<IUserService, UserService>();
+            services.AddSingleton<ReservationValidationService>();
             services.AddLogging();
             services.AddSignalR();
             

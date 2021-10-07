@@ -21,13 +21,13 @@ namespace TestSimpleWebApp.Controllers
 
         private readonly PropertyManagementSystemDbContext _propertyManagementSystemDbContext;
         private readonly IHubContext<ReservationHub> _hub;
-        private readonly Validator<Reservation> _reservationValidator;
+        private readonly ReservationValidationService _reservationValidationService;
 
-        public ReservationController(PropertyManagementSystemDbContext propertyManagementSystemDbContext, IHubContext<ReservationHub> hub)
+        public ReservationController(PropertyManagementSystemDbContext propertyManagementSystemDbContext, IHubContext<ReservationHub> hub, ReservationValidationService reservationValidationService)
         {
             _propertyManagementSystemDbContext = propertyManagementSystemDbContext;
             _hub = hub;
-            _reservationValidator = ReservationValidationFactory.getStandardReservationValidator();
+            _reservationValidationService = reservationValidationService;
         }
 
         [HttpGet("odata/Reservations")]
@@ -53,7 +53,7 @@ namespace TestSimpleWebApp.Controllers
             }
             try
             {
-                _reservationValidator.Validate(reservation);
+                _reservationValidationService.ValidateReservation(reservation);
             } catch (ReservationValidationException e)
             {
                 return BadRequest(e.Message);
@@ -83,7 +83,7 @@ namespace TestSimpleWebApp.Controllers
             }
             try
             {
-                _reservationValidator.Validate(entity);
+                _reservationValidationService.ValidateReservation(entity);
             }
             catch (ReservationValidationException e)
             {
