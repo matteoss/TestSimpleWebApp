@@ -111,14 +111,24 @@
                             console.error(JSON.stringify(jqXHR.responseText));
                             self.clearErrorTexts(object);
 
-                            $.each(JSON.parse(jqXHR.responseText).error.details, function (i, e) {
-                                if (e.target && e.message) {
-                                    console.error(upperCaseFirstLetter(e.target) + ": " + e.message);
-                                    object.gridMetaData.errors[self.errorTextFieldPrefix + upperCaseFirstLetter(e.target)](e.message);
-                                } else if (e.message) {
-                                    alert(e.message);
+                            let errorObject = JSON.parse(jqXHR.responseText);
+
+                            if (errorObject.error) {
+                                if (errorObject.error.details) {
+                                    $.each(errorObject.error.details, function (i, e) {
+                                        if (e.target && e.message) {
+                                            console.error(upperCaseFirstLetter(e.target) + ": " + e.message);
+                                            object.gridMetaData.errors[self.errorTextFieldPrefix + upperCaseFirstLetter(e.target)](e.message);
+                                        } else if (e.message) {
+                                            alert(e.message);
+                                        }
+                                    });
+                                } else {
+                                    alert(errorObject.error);
                                 }
-                            });
+                            } else if (errorObject.value) {
+                                alert(errorObject.value);
+                            }
                         }
                     });
                 }

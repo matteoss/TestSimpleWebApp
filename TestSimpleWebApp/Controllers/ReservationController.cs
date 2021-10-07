@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using TestSimpleWebApp.Data;
 using TestSimpleWebApp.Hubs;
 using TestSimpleWebApp.Models;
+using TestSimpleWebApp.Services;
 
 namespace TestSimpleWebApp.Controllers
 {
@@ -20,11 +21,13 @@ namespace TestSimpleWebApp.Controllers
 
         private readonly PropertyManagementSystemDbContext _propertyManagementSystemDbContext;
         private readonly IHubContext<ReservationHub> _hub;
+        private readonly Validator<Reservation> _reservationValidator;
 
         public ReservationController(PropertyManagementSystemDbContext propertyManagementSystemDbContext, IHubContext<ReservationHub> hub)
         {
             _propertyManagementSystemDbContext = propertyManagementSystemDbContext;
             _hub = hub;
+            _reservationValidator = ReservationValidationFactory.getStandardReservationValidator();
         }
 
         [HttpGet("odata/Reservations")]
@@ -47,6 +50,13 @@ namespace TestSimpleWebApp.Controllers
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
+            }
+            try
+            {
+                _reservationValidator.Validate(reservation);
+            } catch (ReservationValidationException e)
+            {
+                return BadRequest(e.Message);
             }
             _propertyManagementSystemDbContext.Reservations.Add(reservation);
             await _propertyManagementSystemDbContext.SaveChangesAsync();
@@ -71,7 +81,14 @@ namespace TestSimpleWebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-
+            try
+            {
+                _reservationValidator.Validate(entity);
+            }
+            catch (ReservationValidationException e)
+            {
+                return BadRequest(e.Message);
+            }
             try
             {
                 await _propertyManagementSystemDbContext.SaveChangesAsync();
