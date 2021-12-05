@@ -2,6 +2,7 @@
     function bookTable(params) {
         //console.log(ko.toJSON(b.reservationRows()));
         let self = this;
+        this.loaded = b.loaded;
         this.params = b.params;
         this.refreshFunction = function () {
             b.refreshFunction();
@@ -36,6 +37,9 @@
         }, this);
         this.displayDetails = ko.pureComputed(function () {
             return self.checkedId() > 0 /*&& self.selectedRes() != null*/;
+        });
+        $(document).ready(function () {
+            self.refreshFunction();
         });
         console.log("book-table loaded");
     }

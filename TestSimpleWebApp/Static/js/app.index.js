@@ -5,7 +5,7 @@ var mainView;
 var mainParams = { params: null };
 
 require(['ko'], function (ko) {
-    mainView = ko.observable("about");
+    mainView = ko.observable("loading");
 });
 
 
@@ -72,8 +72,6 @@ require(['jquery'], function ($) {
                 navigator.setParams({});
                 //navigator.setView('book-table-2');
                 navigator.setView('book-table');
-                b.refreshFunction();
-                b2.refreshFunction();
             });
         }
     );

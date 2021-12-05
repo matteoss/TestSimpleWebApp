@@ -8,6 +8,10 @@
         params: { reservation: selectedRes, checkedId: checkedId }
         } -->
 <!-- /ko -->
+<!-- ko if: !loaded() -->
+<loading></loading>
+<!-- /ko -->
+<!-- ko if: loaded() -->
 <table class="book-table">
     <thead>
         <tr class="book-row-datumi">
@@ -34,3 +38,4 @@
         <!--<tr><td><h3 data-bind="text: propertyId"></h3></td></tr>-->
     </tbody>
 </table>
+<!-- /ko -->

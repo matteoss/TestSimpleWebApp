@@ -1,4 +1,7 @@
-﻿<div class="reservation-list">
+﻿<!-- ko if: !loaded() -->
+<loading></loading>
+<!-- /ko -->
+<div class="reservation-list">
     <table class="grid-table">
         <thead>
             <tr>
@@ -19,7 +22,7 @@
             <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
                 <td><span data-bind=" text: $index"></span></td>
                 <td><span data-bind=" text: id"></span></td>
-                <td><input type="text" data-bind="value: status" /><br/><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForStatus"></span></td>
+                <td><input type="text" data-bind="value: status" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForStatus"></span></td>
                 <td><input type="date" data-bind="value: startDate" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForStartDate"></span></td>
                 <td><input type="date" data-bind="value: endDate" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForEndDate"></span></td>
                 <td><input type="text" data-bind="value: serviceId" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForServiceId"></span></td>

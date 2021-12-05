@@ -7,6 +7,7 @@
             roomNumber: ko.observable(""),
             dateFrom: ko.observable(new Date(2021, 9, 1).toISOString().split("T")[0])
         };
+        this.loaded = ko.observable(false);
         this.reservationRows = ko.observableArray([]);
         this.numberOfDays = 30;
         this.currentDate = ko.observable(new Date().toISOString().split("T")[0]);
@@ -70,6 +71,7 @@
     };
 
     Book.prototype.refreshFunction = function () {
+        this.loaded(false);
         this.reservationRows.removeAll();
         let self = this;
         let dateTo = new Date(this.params.dateFrom());
@@ -137,6 +139,7 @@
                     lastEndIndex = res.endIndex;
                 });
             });
+            self.loaded(true);
 
             //console.log(ko.toJSON(self.reservationRows()));
         });

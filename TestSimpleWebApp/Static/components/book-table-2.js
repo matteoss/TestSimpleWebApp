@@ -24,6 +24,9 @@
         this.displayDetails = ko.pureComputed(function () {
             return self.checkedId() > 0 && self.selectedRes() != null;
         });
+        $(document).ready(function () {
+            b.refreshFunction();
+        });
         console.log("book-table-2 loaded");
     }
 

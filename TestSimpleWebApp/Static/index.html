@@ -9,6 +9,22 @@
     <link rel="stylesheet" href="css/my-css.css">
 </head>
 <body>
+
+    <script id="AboutTemplate" type="text/html">
+        <div>
+            <h2>About</h2>
+            <p data-bind="text: tekst"></p>
+        </div>
+    </script>
+
+    <script id="LoadingTemplate" type="text/html">
+        <div class="popup-containter">
+            <div class="popup-middle">
+                    <div class="loader"></div>
+            </div>
+        </div>
+    </script>
+
     <div class="root-container">
         <navigation-bar params='searchFunction: searchFunction'></navigation-bar>
         <div class="main-container">
@@ -29,6 +45,7 @@
             <button onclick="navigate('reservation-list')">Reservations</button>
             <button onclick="navigate('drop-down-list', { componentId: 1, id: 1, modelName: 'Guests', searchColumns: ['id', 'name', 'surname'], valueFunction: (e) => e.id + ' - ' + e.surname + ' ' + e.name })">Drop down test</button>
             <button onclick="book_2_test()">Book2 Test</button>
+            <button onclick="navigate('loading')">Loading</button>
         </div>
     </div>
 </body>

@@ -7,6 +7,7 @@
         this.grid = function (modelName, dateFields) {
             let self = this;
             this.version = "1.0";
+            this.loaded = ko.observable(false);
             this.modelName = modelName;
             this.dateFields = dateFields;
             this.pageSize = 10;
@@ -27,6 +28,7 @@
 
         this.grid.prototype.refreshFunction = function (filter) {
             let self = this;
+            this.loaded(false);
             $.each(this.list(), function (i, e) {
                 self.deleteSubscriptions(e);
             });
@@ -55,6 +57,7 @@
 
                 });
 
+                self.loaded(true);
             });
         }
 
@@ -84,14 +87,18 @@
         this.grid.prototype.saveFunction = function (object) {
             ///object["@odata.type"] = "Microsoft.OData.TestSimpleWebApp.Models.Guest";
             let self = this;
+            this.loaded(false);
+            let saveCount = 0;
             $.each(this.list(), function (i, object) {
                 if (object.gridMetaData.markedForUpdate()) {
                     //alert("marker for update: " + ko.toJSON(g));
+                    saveCount++;
                     let data = prepareForOData(Object.assign({}, object));
                     let insert = !data.id();
                     if (insert) {
                         delete data.id;
                     }
+
                     console.log(ko.toJSON(data));
                     $.ajax({
                         type: insert ? "POST" : "PATCH",
@@ -106,6 +113,10 @@
                             self.clearErrorTexts(object);
                             object.gridMetaData.markedForUpdate(false);
                             console.log(JSON.stringify(jqXHR));
+                            saveCount--;
+                            if (saveCount <= 0) {
+                                self.loaded(true);
+                            }
                         },
                         error: function (jqXHR) {
                             console.error(JSON.stringify(jqXHR.responseText));
@@ -128,6 +139,10 @@
                                 }
                             } else if (errorObject.value) {
                                 alert(errorObject.value);
+                            }
+                            saveCount--;
+                            if (saveCount <= 0) {
+                                self.loaded(true);
                             }
                         }
                     });

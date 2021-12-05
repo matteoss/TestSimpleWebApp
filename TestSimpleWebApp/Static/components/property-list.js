@@ -5,6 +5,7 @@
         self = this;
         this.gridName = "PropertyGrid";
         this.grid = gcBuilder.getGrid(this.gridName, "Properties", []);
+        this.loaded = this.grid.loaded;
         this.properties = this.grid.list;
         this.search = params.search;
         this.page = this.grid.page;

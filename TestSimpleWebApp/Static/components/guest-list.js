@@ -5,6 +5,7 @@
         self = this;
         this.gridName = "GuestGrid";
         this.grid = gcBuilder.getGrid(this.gridName);
+        this.loaded = this.grid.loaded;
         this.guests = this.grid.list;
         this.search = params.search;
         this.page = this.grid.page;
