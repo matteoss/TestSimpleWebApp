@@ -5,8 +5,9 @@
     <title>Index</title>
     <script type='text/javascript' src='js/lib/require.js'></script>
     <script type='text/javascript' src='js/requirejs-config.js'></script>
-    <script type='text/javascript' >require(["js/app.index"]);</script>
+    <script type='text/javascript'>require(["js/app.index"]);</script>
     <link rel="stylesheet" href="css/my-css.css">
+    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Open+Sans:400,600,300" />
 </head>
 <body>
 
@@ -28,25 +29,25 @@
     <div class="root-container">
         <navigation-bar params='searchFunction: searchFunction'></navigation-bar>
         <div class="main-container">
-            <p>Hello from index.html</p>
+            <!--<p>Hello from index.html</p>-->
             <div data-bind="component: { name: mainView, params: mainParams.params}"></div>
             <!--<book-table-2></book-table-2>-->
             <popup id="main-popup" params="id: 'main-popup'"></popup>
             <login-popup id="login-popup" params="id: 'login-popup'"></login-popup>
             <dialog-yes-no id="dialog-popup" params="id: 'dialog-popup'"></dialog-yes-no>
         </div>
-        <div class="footer">
-            <button onclick="show_popup('main-popup')">Alert</button>
-            <button onclick="d_y_n('yes/no')">Dialog</button>
-            <button onclick="navigate('about')">About</button>
-            <button onclick="navigate('book-table')">Book 1</button>
-            <button onclick="navigate('book-table-2')">Book 2</button>
-            <button onclick="navigate('property-list')">Properties</button>
-            <button onclick="navigate('reservation-list')">Reservations</button>
-            <button onclick="navigate('drop-down-list', { componentId: 1, id: 1, modelName: 'Guests', searchColumns: ['id', 'name', 'surname'], valueFunction: (e) => e.id + ' - ' + e.surname + ' ' + e.name })">Drop down test</button>
-            <button onclick="book_2_test()">Book2 Test</button>
-            <button onclick="navigate('loading')">Loading</button>
-        </div>
+        <!--<div class="footer">
+        <button onclick="show_popup('main-popup')">Alert</button>
+        <button onclick="d_y_n('yes/no')">Dialog</button>
+        <button onclick="navigate('about')">About</button>
+        <button onclick="navigate('book-table')">Book 1</button>
+        <button onclick="navigate('book-table-2')">Book 2</button>
+        <button onclick="navigate('property-list')">Properties</button>
+        <button onclick="navigate('reservation-list')">Reservations</button>
+        <button onclick="navigate('drop-down-list', { componentId: 1, id: 1, modelName: 'Guests', searchColumns: ['id', 'name', 'surname'], valueFunction: (e) => e.id + ' - ' + e.surname + ' ' + e.name })">Drop down test</button>
+        <button onclick="book_2_test()">Book2 Test</button>
+        <button onclick="navigate('loading')">Loading</button>
+    </div>-->
     </div>
 </body>
 </html>

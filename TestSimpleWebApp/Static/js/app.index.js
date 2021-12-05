@@ -8,6 +8,15 @@ require(['ko'], function (ko) {
     mainView = ko.observable("loading");
 });
 
+function dateToString(date) {
+    return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear() + '.';
+}
+
+function dateStringConvert(dateString) {
+    let date = new Date(Date.parse(dateString));
+    return date.getUTCDate() + '.' + (date.getUTCMonth() + 1) + '.' + date.getFullYear() + '.';
+}
+
 
 function navigate(view, params) {
     require(['ko', 'navigator'], function (ko, navigator) {

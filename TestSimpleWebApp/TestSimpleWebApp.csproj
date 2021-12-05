@@ -34,7 +34,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Static\images\" />
     <Folder Include="Static\js\old\" />
   </ItemGroup>
 

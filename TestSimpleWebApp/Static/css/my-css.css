@@ -1,61 +1,125 @@
-﻿body{
+﻿body {
     margin: 0px;
+    font-family: open sans;
+    color: #555;
 }
 
-.root-container {
-
-}
 
 .main-container {
     margin: 0px;
     margin-bottom: 50px;
 }
 
+
+#heD {
+    background-color: #444;
+    padding: 10px 0px;
+}
+
+
+    #heD button {
+        background-color: #444;
+    }
+
+
+#me {
+    background-color: #777;
+    text-align: right;
+    margin: 0;
+    padding: 3px 30px 3px 0px;
+}
+
+
+    #me button {
+        background-color: #777;
+        color: #fff;
+    }
+
+
+        #me button:hover {
+            color: #fdc;
+            cursor: pointer;
+        }
+
+button:hover {
+    color: #fdc;
+    cursor: pointer;
+}
+
+
+#infos {
+    width: 90%;
+    margin: 0px auto;
+    background-color: #aaa;
+    font-size: 0.9em;
+}
+
+.book-params {
+    /*display:inline-block;*/
+    float: left;
+    margin: 100px 100px 50px 0px;
+}
+
+    .book-params button {
+        background-color: #777;
+        padding: 8px;
+        border-radius: 2px;
+    }
+
+.book-details {
+    /*display: inline-block;*/
+    float: left;
+    margin: 100px 0px 50px 0px;
+}
+
+
+
 .main-nav-bar {
-    width: 100%;
     margin: 0;
     padding: 0;
-    position: fixed;
+    /*position: fixed;*/
     background-color: white;
     top: 0px;
 }
 
-.main-nav-bar table{
-    width: 100%;
-}
+
+    .main-nav-bar table {
+        width: 100%;
+    }
 
 .main-nav-bar-home {
     width: 1%;
 }
 
-.main-nav-bar-home a {
-    display: block;
-    padding: 8px;
-    background-color: aqua;
-}
+    .main-nav-bar-home img {
+        display: block;
+        margin: 10px 50px 10px 30px;
+    }
+
+    .main-nav-bar-home a {
+        display: block;
+        padding: 8px;
+    }
 
 .main-nav-bar-search {
     width: 50%;
 }
 
-.main-nav-bar-search input {
-    width: 100%;
-}
+    .main-nav-bar-search input {
+        width: 100%;
+    }
 
 .main-nav-bar-search-button {
     width: 49%;
 }
 
-.main-nav-bar-search-button button {
-    
+    .main-nav-bar-search-button button {
+    }
+
+.main-nav-bar-user {
+    padding-right: 30px;
 }
 
-.footer {
-    position: fixed;
-    bottom: 0px;
-    width: 100%;
-    background-color: aqua;
-}
 
 popup {
     visibility: hidden;
@@ -85,15 +149,12 @@ popup {
 }
 
 .popup-subject {
-
 }
 
 .popup-text {
-
 }
 
 .popup-view button {
-
 }
 
 popup.show {
@@ -105,9 +166,9 @@ dialog-yes-no {
     z-index: 1;
 }
 
-dialog-yes-no.show {
-    visibility: visible;
-}
+    dialog-yes-no.show {
+        visibility: visible;
+    }
 
 login-popup {
     visibility: hidden;
@@ -135,73 +196,103 @@ login-popup.show {
     visibility: visible;
 }
 
+.book-table {
+    font-size: 0.9em;
+    width: 90%;
+    margin: 0px auto;
+    clear: both;
+}
+
 .book-table, .book-row, .book-bar-td, .book-row-datumi td {
-    border: 1px solid black;
+    /*border: 1px solid #eee;*/
+    text-align: center;
     border-spacing: 0;
-    padding: 0px;
-    margin: 0px;
+}
+
+
+.book-row-datumi {
+    border-top: 1px solid #444;
+    border-bottom: 1px solid #444;
+    border: none;
+    color: #fff;
+    background-color: #2098B3;
+}
+
+    .book-row-datumi td {
+        padding: 0px 7px;
+        border: none;
+    }
+
+.idHotela, .brSobe {
+    background-color: #08424C;
+}
+
+.book-bar-td {
+    background-color: #6C8D93;
+    color: #fff;
 }
 
 .book-bar-chk {
     visibility: hidden;
     margin: 0px;
     display: inline-block;
-    width:0%;
-    height:0%;
+    width: 0%;
+    height: 0%;
 }
 
 .book-bar {
     cursor: pointer;
-    display: inline-block;
+    font-weight: bold;
+    color: #fff;
+    /*display: inline-block;
     background-color: aqua;
-    width: 99%;
-    padding: 5px 0px;
+    width: 50%;
+    padding: 5px 0px;*/
 }
 
-.book-bar-reserved{
-    background-color: yellow;
+.book-bar-reserved {
+    background-color: #bbb;
 }
 
-.book-bar-checked-in{
-    background-color: orangered;
+.book-bar-checked-in {
+    background-color: #cc7799;
 }
 
 .book-bar-chk:checked + .book-bar {
-    background-color: red;
+    color: #333;
     font-weight: bold;
 }
 
 .current-date {
     background-color: chartreuse;
 }
+
+.default-date {
+    background-color: #2098B3;
+}
+
+
 .weekend-date {
-    background-color: aqua;
+    background-color: #fdc;
+    color: #333;
+    font-weight: bold;
 }
 
-.book-params {
-    display:inline-block;
-    margin-left: 10px;
-    margin-right: 20px;
-}
 
-.book-details {
-    display: inline-block;
-    margin-left: 10px;
-}
 
 
 .page-number-container {
     position: fixed;
-    bottom: 20px;
+    bottom: 0px;
     width: 100%;
-    background-color: aqua;
+    background-color: #777;
 }
 
     .page-number-container table {
         margin: auto;
     }
 
-.grid-marked-for-update{
+.grid-marked-for-update {
     background-color: crimson;
 }
 
@@ -230,9 +321,50 @@ login-popup.show {
     background-color: silver;
 }
 
-.grid-table td{
+.grid-table {
+    border-spacing: 0px;
+}
+
+.grid-table td {
     vertical-align: top;
 }
+
+button {
+    font-family: open sans;
+    padding: 10px;
+    background-color: #666;
+    border: none;
+    color: #fff;
+    font-size: 0.9em;
+    border-radius: 8px;
+}
+
+
+
+.main-nav-bar-search-button {
+    padding: 5px 0px 5px 20px;
+}
+
+
+h3 {
+    font-size: 0.9em;
+}
+
+
+/*
+.footer {
+    position: fixed;
+	text-align: center;
+    bottom: 0px;
+    width: 100%;
+    background-color: #666;
+	padding: 14px 0px;
+}
+
+.footer button{
+	margin: 0px 10px 0px 10px;
+}
+*/
 
 .loader {
     margin: auto;

@@ -26,7 +26,8 @@
                     dateClass = "default-date";
                 }
                 d.push({
-                    date: dateString,
+                    date: date,
+                    dateString: dateString,
                     dateClass: dateClass
                 });
             }
@@ -113,7 +114,7 @@
                     res.lastEndIndex = lastEndIndex;
 
                     res.offset = ko.computed(function () {
-                        let offset = self.dates().findIndex((e) => e.date == res.startDate().split('T')[0]);
+                        let offset = self.dates().findIndex((e) => e.dateString == res.startDate().split('T')[0]);
                         if (offset == -1) {
                             offset = 0;
                         }
@@ -121,7 +122,7 @@
                         return offset;
                     });
                     res.size = ko.computed(function () {
-                        let size = self.dates().findIndex((e) => e.date == res.endDate().split('T')[0]);
+                        let size = self.dates().findIndex((e) => e.dateString == res.endDate().split('T')[0]);
                         if (size > -1) {
                             size = size - res.offset() + res.lastEndIndex();
                         } else {

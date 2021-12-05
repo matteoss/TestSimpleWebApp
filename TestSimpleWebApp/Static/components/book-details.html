@@ -5,7 +5,7 @@
             <tr><td>Id</td><td data-bind="if: typeof id !== 'undefined' "><span data-bind="text: id"></span></td></tr>
             <tr><td>Status</td><td data-bind="if: typeof status !== 'undefined' "><span data-bind="text: status"></span></td></tr>
             <tr><td>Guest</td><td data-bind="if: typeof guest === 'function' " ><span data-bind="text: guest().surname + ' ' + guest().name"></span></td></tr>
-            <tr><td>From - To</td><td data-bind="if: typeof startDate !== 'undefined'"><span data-bind="text: startDate().split('T')[0] + ' - ' + endDate().split('T')[0]"></span></td></tr>
+            <tr><td>From - To</td><td data-bind="if: typeof startDate !== 'undefined'"><span data-bind="text: dateStringConvert(startDate()) + ' - ' + dateStringConvert(endDate())"></span></td></tr>
             <tr><td>Room</td><td data-bind="if: typeof roomNumber !== 'undefined'"><span data-bind="text: roomNumber"></span></td></tr>
         </tbody>
     </table>

@@ -1,13 +1,15 @@
-﻿<!-- ko component: {
-        name: "book-params",
-        params: { params: params, refreshFunction: refreshFunction }
-        } -->
-<!-- /ko -->
-<!-- ko component: {
-        name: "book-details",
-        params: { reservation: selectedRes, checkedId: checkedId }
-        } -->
-<!-- /ko -->
+﻿<div id="infos">
+    <!-- ko component: {
+            name: "book-params",
+            params: { params: params, refreshFunction: refreshFunction }
+            } -->
+    <!-- /ko -->
+    <!-- ko component: {
+            name: "book-details",
+            params: { reservation: selectedRes, checkedId: checkedId }
+            } -->
+    <!-- /ko -->
+</div>
 <!-- ko if: !loaded() -->
 <loading></loading>
 <!-- /ko -->
@@ -15,15 +17,19 @@
 <table class="book-table">
     <thead>
         <tr class="book-row-datumi">
-            <td>
-                <p>ID hotela</p>
+            <td class="idHotela">
+                <p>ID <br> hotela</p>
             </td>
-            <td>
-                <p>Broj sobe</p>
+            <td class="brSobe">
+                <p>Broj <br> sobe</p>
             </td>
             <!-- ko foreach: dates -->
             <td data-bind="class: dateClass">
-                <p data-bind="text: date "></p>
+                <p>
+                    <span data-bind="text: (date.getUTCDate()) + '.' + (date.getUTCMonth() + 1) + '.' "></span>
+                    <br>
+                    <span data-bind="text: date.getFullYear() + '.'"></span>
+                </p>
             </td>
             <!-- /ko -->
         </tr>

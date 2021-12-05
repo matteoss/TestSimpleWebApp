@@ -1,8 +1,8 @@
 ﻿<div class="main-nav-bar">
-    <table>
+    <table id="heD">
         <tr>
             <td class="main-nav-bar-home">
-                <a href="index.html">Home</a>
+                <a href="index.html"><img src="../images/mg_logo.png" width="60" alt="Mateo Glavičić"></a>
             </td>
             <td class="main-nav-bar-search">
                 <form data-bind="submit: searchFunction"><input type="text" data-bind="value: search" /></form>
@@ -11,8 +11,22 @@
                 <button data-bind="click: searchFunction">Traži</button>
             </td>
             <td class="main-nav-bar-user">
-                <button data-bind="text: username, click: authorizationAction"></button> 
+                <button data-bind="text: username, click: authorizationAction"></button>
             </td>
         </tr>
     </table>
+</div>
+<div id="me">
+
+        <button onclick="show_popup('main-popup')">Alert</button>
+        <button onclick="d_y_n('yes/no')">Dialog</button>
+        <button onclick="navigate('about')">About</button>
+        <button onclick="navigate('book-table')">Book 1</button>
+        <button onclick="navigate('book-table-2')">Book 2</button>
+        <button onclick="navigate('property-list')">Properties</button>
+        <button onclick="navigate('reservation-list')">Reservations</button>
+        <button onclick="navigate('drop-down-list', { componentId: 1, id: 1, modelName: 'Guests', searchColumns: ['id', 'name', 'surname'], valueFunction: (e) => e.id + ' - ' + e.surname + ' ' + e.name })">Drop down test</button>
+        <button onclick="book_2_test()">Book2 Test</button>
+        <button onclick="navigate('loading')">Loading</button>
+
 </div>
