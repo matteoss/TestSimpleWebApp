@@ -17,9 +17,11 @@ namespace TestSimpleWebApp.Models
         {
         }
 
+        public virtual DbSet<Color> Colors { get; set; }
         public virtual DbSet<Guest> Guests { get; set; }
         public virtual DbSet<Property> Properties { get; set; }
         public virtual DbSet<Reservation> Reservations { get; set; }
+        public virtual DbSet<ResStatus> ResStatuses { get; set; }
         public virtual DbSet<Room> Rooms { get; set; }
         public virtual DbSet<RoomType> RoomTypes { get; set; }
         public virtual DbSet<User> Users { get; set; }
@@ -36,6 +38,21 @@ namespace TestSimpleWebApp.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "en_US.UTF-8");
+
+
+            modelBuilder.Entity<Color>(entity =>
+            {
+                entity.ToTable("Color");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.Name).HasColumnName("Name");
+
+                entity.Property(e => e.Definition).HasColumnName("Definition");
+
+            });
 
             modelBuilder.Entity<Guest>(entity =>
             {
@@ -97,6 +114,8 @@ namespace TestSimpleWebApp.Models
 
                 entity.Property(e => e.PropertyId).HasColumnName("PropertyID");
 
+                entity.Property(e => e.ResStatusId).HasColumnName("ResStatusID");
+
                 entity.Property(e => e.ServiceId).HasColumnName("ServiceID");
 
                 entity.Property(e => e.StartDate).HasColumnType("date");
@@ -122,6 +141,32 @@ namespace TestSimpleWebApp.Models
                     .HasForeignKey(d => new { d.PropertyId, d.RoomNumber })
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("fk_Room");
+
+                entity.HasOne(d => d.ResStatus)
+                    .WithMany(p => p.Reservations)
+                    .HasForeignKey(d => d.ResStatusId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_ResStatus");
+            });
+
+            modelBuilder.Entity<ResStatus>(entity =>
+            {
+                entity.ToTable("ResStatus");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("ID");
+
+                entity.Property(e => e.ColorId).HasColumnName("ColorID");
+
+                entity.Property(e => e.Name).HasColumnName("Name");
+
+                entity.HasOne(d => d.Color)
+                    .WithMany(p => p.ResStatuses)
+                    .HasForeignKey(d => d.ColorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("fk_Color");
+
             });
 
             modelBuilder.Entity<Room>(entity =>

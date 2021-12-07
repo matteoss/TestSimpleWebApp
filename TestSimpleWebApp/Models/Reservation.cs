@@ -22,9 +22,11 @@ namespace TestSimpleWebApp.Models
         public int? PreviousStay { get; set; }
         public int? NextStay { get; set; }
         public int RoomNumber { get; set; }
+        public int ResStatusId { get; set; }
 
         public virtual Guest Guest { get; set; }
         public virtual Property Property { get; set; }
         public virtual Room Room { get; set; }
+        public virtual ResStatus ResStatus { get; set; }
     }
 }
