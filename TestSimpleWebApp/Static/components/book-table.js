@@ -10,7 +10,7 @@
         };
         this.dates = b.dates;
         this.reservationRows = b.reservationRows;
-        this.legendItems = b.legendItems
+        this.legendItems = b.legendItems;
         this.checkedId = ko.observable("");
         this.selectedRes = ko.pureComputed(function () {
             let chkId = self.checkedId();

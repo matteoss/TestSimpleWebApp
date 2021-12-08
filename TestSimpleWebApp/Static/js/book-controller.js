@@ -75,7 +75,7 @@
     Book.prototype.addLegendItemIfNotExists = function (legendItem){
         let found = false;
         for (let i = 0; i < this.legendItems().length;i++) {
-            if (legendItem.name = this.legendItems()[i].name) {
+            if (legendItem.name == this.legendItems()[i].name) {
                 found = true;
                 break;
             }
