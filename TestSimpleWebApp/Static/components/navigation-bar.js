@@ -2,6 +2,7 @@
     function MyComponentViewModel(params) {
         var self = this;
         this.search = ko.observable("");
+        this.isLoggedIn = security.isLoggedIn;
         this.searchFunction = function () {
             params.searchFunction(self.search);
         }

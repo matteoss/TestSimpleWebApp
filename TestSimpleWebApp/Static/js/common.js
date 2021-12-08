@@ -73,6 +73,9 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('reservation-list', {
             require: '/components/reservation-list.js'
         });
+        ko.components.register('res-status-list', {
+            require: '/components/res-status-list.js'
+        });
         ko.components.register('drop-down-list', {
             require: '/components/drop-down-list.js'
         });

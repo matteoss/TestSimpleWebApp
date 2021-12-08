@@ -88,7 +88,7 @@
         let query = "/odata/Rooms/?$expand=Reservations($filter=EndDate gt "
             + new Date(this.params.dateFrom()).toISOString()
             + " and StartDate le " + dateTo.toISOString()
-            + ";$expand=Guest;$orderby=StartDate)"
+            + ";$expand=Guest,ResStatus($expand=Color);$orderby=StartDate)"
             + (additionalQueryFilter.length > 0 ? "&$filter=" + additionalQueryFilter.join(' and ') : "")
             + "&$orderby=PropertyId,RoomNumber";
         console.log(query);

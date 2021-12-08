@@ -19,7 +19,7 @@ namespace TestSimpleWebApp.Controllers
         }
 
         [HttpGet("odata/Rooms")]
-        [EnableQuery]
+        [EnableQuery(MaxExpansionDepth = 3)]
         public IActionResult Get()
         {
             return Ok(_propertyManagementSystemDbContext.Rooms);

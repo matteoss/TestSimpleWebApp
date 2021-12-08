@@ -1,13 +1,13 @@
-﻿define(['ko', 'text!./reservation-list.html', 'grid_controller'], function (ko, htmlString, gcBuilder) {
+﻿define(['ko', 'text!./res-status-list.html', 'grid_controller'], function (ko, htmlString, gcBuilder) {
 
-    function reservation(params) {
+    function resStatus(params) {
         console.log(ko.toJSON(params));
         self = this;
-        this.gridName = "ReservationGrid";
-        this.grid = gcBuilder.getGrid(this.gridName, "Reservations", ['startDate', 'endDate']);
+        this.gridName = "ResStatusGrid";
+        this.grid = gcBuilder.getGrid(this.gridName, "ResStatuses", []);
         this.loaded = this.grid.loaded;
-        this.reservations = this.grid.list;
-        this.resId = (params.id) ? params.id : null;
+        this.resStatuses = this.grid.list;
+        this.resStatusId = (params.id) ? params.id : null;
         this.page = this.grid.page;
         this.hasMorePages = this.grid.hasMorePages;
         this.refreshFunction = function () {
@@ -16,14 +16,8 @@
         this.reservation = function () {
             return self.grid.initObject(function () {
                 this.id = null;
-                this.status = "";
-                this.startDate = "";
-                this.endDate = "";
-                this.serviceId = "";
-                this.propertyId = "";
-                this.guestId = null;
-                this.roomNumber = null;
-                this.resStatusId = null;
+                this.name = "";
+                this.colorId = "";
             })
         }
         this.newFunction = function () {
@@ -37,7 +31,7 @@
             console.log(index + "  " + ko.toJSON(object));
             require(['dialog_yes_no_controller'], function (d) {
                 d.setSubject("Delete?");
-                d.setText("Delete reservation " + object.id());
+                d.setText("Delete status " + object.id());
                 d.setYesFunction(
                     function () {
                         self.grid.deleteFunction(index, object);
@@ -54,7 +48,7 @@
             self.grid.saveFunction();
         };
 
-        console.log("reservation-list loaded");
+        console.log("res-status-list loaded");
 
         $(document).ready(
             function () {
@@ -63,9 +57,9 @@
         );
     }
 
-    reservation.prototype.dispose = function () {
+    resStatus.prototype.dispose = function () {
         gcBuilder.deleteGrid(this.gridName);
     }
 
-    return { viewModel: reservation, template: htmlString };
+    return { viewModel: resStatus, template: htmlString };
 });

@@ -9,20 +9,21 @@ define([], function () {
         logout: null,
         makeRequest: null,
         authorizationAction: null,
+        isLoggedIn: null,
     };
     require(['jquery', 'ko'], function ($, ko) {
         Security.version = "1.0";
         Security.username = ko.observable("");
         Security.beforeSendFunction = function (xhr) {
-            var token = document.cookie.match('(^|;)\\s*' + 'token' + '\\s*=\\s*([^;]+)')?.pop() || '';
+            let token = document.cookie.match('(^|;)\\s*' + 'token' + '\\s*=\\s*([^;]+)')?.pop() || '';
             if (token != null) {
                 xhr.setRequestHeader('Authorization', 'Bearer ' + token);
             }
         };
 
-        var beforeSendFunctionLocal = Security.beforeSendFunction;
-        var usernameLocal = Security.username;
-        var logoutLocal = function () {
+        let beforeSendFunctionLocal = Security.beforeSendFunction;
+        let usernameLocal = Security.username;
+        let logoutLocal = function () {
             document.cookie = "username= ; expires=Thu, 01 Jan 1970 00:00:01 GMT";
             document.cookie = "token= ; expires=Thu, 01 Jan 1970 00:00:01 GMT";
             usernameLocal("");
@@ -104,6 +105,13 @@ define([], function () {
             }
         };
 
+        Security.isLoggedIn = ko.pureComputed(function () {
+            if (usernameLocal()) {
+                return true;
+            } else {
+                return false;
+            }
+        });
     });
     return Security;
 });

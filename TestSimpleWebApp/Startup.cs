@@ -80,8 +80,10 @@ namespace TestSimpleWebApp
             var odataBuilder = new ODataConventionModelBuilder();
             odataBuilder.EnableLowerCamelCase();
             //odataBuilder.EntitySet<Oglas>("Oglasi").EntityType.HasKey(x => x.ID);
+            odataBuilder.EntitySet<Color>("Colors").EntityType.HasKey(x => x.Id);
             odataBuilder.EntitySet<Guest>("Guests").EntityType.HasKey(x => x.Id);
             odataBuilder.EntitySet<Reservation>("Reservations").EntityType.HasKey(x => x.Id);
+            odataBuilder.EntitySet<ResStatus>("ResStatuses").EntityType.HasKey(x => x.Id);
             odataBuilder.EntitySet<Property>("Properties").EntityType.HasKey(x => x.Id);
             odataBuilder.EntitySet<Room>("Rooms").EntityType.HasKey(x => new { x.PropertyId, x.RoomNumber });
             odataBuilder.EntitySet<RoomType>("RoomTypes").EntityType.HasKey(x => x.Id);
