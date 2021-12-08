@@ -5,13 +5,7 @@
         this.id = params.reservation.id;
         this.checkedId = params.checkedId;
         this.barClass = ko.pureComputed(function () {
-            let bc = 'book-bar-td';
-            if (params.reservation.status() == 'Reserved') {
-                bc = bc + ' book-bar-reserved';
-            } else if (params.reservation.status() == 'CheckedIn') {
-                bc = bc + ' book-bar-checked-in';
-            }
-            return bc;
+            return 'book-bar-td ' + params.reservation.resStatus().color.definition;
         });
         this.reservationText = ko.pureComputed(function () {
             return params.reservation.guest().surname + " " + params.reservation.guest().name

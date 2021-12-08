@@ -249,13 +249,33 @@ login-popup.show {
     width: 50%;
     padding: 5px 0px;*/
 }
-
+/*
 .book-bar-reserved {
     background-color: #bbb;
 }
 
 .book-bar-checked-in {
     background-color: #cc7799;
+}*/
+
+.color_cc7699 {
+    background-color: #cc7799;
+}
+
+.color_b59caa {
+    background-color: #b59caa;
+}
+
+.color_bba3c8 {
+    background-color: #bba3c8;
+}
+
+.color_f6978a {
+    background-color: #f6978a;
+}
+
+.color_fab27e {
+    background-color: #fab27e;
 }
 
 .book-bar-chk:checked + .book-bar {

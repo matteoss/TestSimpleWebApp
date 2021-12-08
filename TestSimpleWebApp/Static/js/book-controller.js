@@ -9,6 +9,7 @@
         };
         this.loaded = ko.observable(false);
         this.reservationRows = ko.observableArray([]);
+        this.legendItems = ko.observableArray([]);
         this.numberOfDays = 30;
         this.currentDate = ko.observable(new Date().toISOString().split("T")[0]);
         this.dates = ko.pureComputed(function () {
@@ -71,9 +72,23 @@
         );
     };
 
+    Book.prototype.addLegendItemIfNotExists = function (legendItem){
+        let found = false;
+        for (let i = 0; i < this.legendItems().length;i++) {
+            if (legendItem.name = this.legendItems()[i].name) {
+                found = true;
+                break;
+            }
+        }
+        if (!found) {
+            this.legendItems.push(legendItem);
+        }
+    }
+
     Book.prototype.refreshFunction = function () {
         this.loaded(false);
         this.reservationRows.removeAll();
+        this.legendItems.removeAll();
         let self = this;
         let dateTo = new Date(this.params.dateFrom());
         dateTo.setDate(dateTo.getDate() + this.numberOfDays);
@@ -101,11 +116,14 @@
             $.each(self.reservationRows(), function (i, room) {
                 //console.log(JSON.stringify(res));
 
+
                 let lastEndIndex = ko.observable(0);
 
                 room.reservations = ko.observableArray(room.reservations);
 
                 $.each(room.reservations(), function (i, res) {
+
+                    self.addLegendItemIfNotExists({ name: res.resStatus.name, colorClass: res.resStatus.color.definition });
 
                     for (var propt in res) {
                         res[propt] = ko.observable(res[propt]);

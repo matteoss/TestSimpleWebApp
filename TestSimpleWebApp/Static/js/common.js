@@ -67,6 +67,9 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('guest-list', {
             require: '/components/guest-list.js'
         });
+        ko.components.register('legend', {
+            require: '/components/legend.js'
+        });
         ko.components.register('property-list', {
             require: '/components/property-list.js'
         });
