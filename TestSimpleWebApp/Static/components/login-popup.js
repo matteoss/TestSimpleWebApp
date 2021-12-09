@@ -8,7 +8,10 @@
         var usernameLocal = this.username;
         var passwordLocal = this.password;
         this.login = function () {
-            security.login(usernameLocal(), passwordLocal(), function (result) { console.error(JSON.stringify(result)) });
+            security.login(usernameLocal(), passwordLocal(), function (result) {
+                console.error(JSON.stringify(result));
+                alert(result.responseText);
+            });
             var popup = document.getElementById(params.id);
             popup.classList.toggle("show");
         };
