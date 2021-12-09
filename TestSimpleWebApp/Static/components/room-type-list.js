@@ -1,27 +1,26 @@
-﻿define(['ko', 'text!./res-status-list.html', 'grid_controller'], function (ko, htmlString, gcBuilder) {
+﻿define(['ko', 'text!./room-type-list.html', 'grid_controller'], function (ko, htmlString, gcBuilder) {
 
-    function resStatus(params) {
+    function roomType(params) {
         console.log(ko.toJSON(params));
         self = this;
-        this.gridName = "ResStatusGrid";
-        this.grid = gcBuilder.getGrid(this.gridName, "ResStatuses", []);
+        this.gridName = "RoomTypeGrid";
+        this.grid = gcBuilder.getGrid(this.gridName, "RoomTypes", []);
         this.loaded = this.grid.loaded;
-        this.resStatuses = this.grid.list;
-        this.resStatusId = (params.id) ? params.id : null;
+        this.roomTypes = this.grid.list;
+        this.roomTypeId = (params.id) ? params.id : null;
         this.page = this.grid.page;
         this.hasMorePages = this.grid.hasMorePages;
         this.refreshFunction = function () {
             self.grid.refreshFunction();
         }
-        this.resStatus = function () {
+        this.roomType = function () {
             return self.grid.initObject(function () {
                 this.id = null;
                 this.name = "";
-                this.colorId = "";
             })
         }
         this.newFunction = function () {
-            self.grid.list.push(self.resStatus());
+            self.grid.list.push(self.roomType());
         }
         this.deleteAction = function (index, object) {
             console.log("Deleting at " + index + "  " + ko.toJSON(object));
@@ -31,7 +30,7 @@
             console.log(index + "  " + ko.toJSON(object));
             require(['dialog_yes_no_controller'], function (d) {
                 d.setSubject("Delete?");
-                d.setText("Delete status " + object.id());
+                d.setText("Delete room type " + object.id());
                 d.setYesFunction(
                     function () {
                         self.grid.deleteFunction(index, object);
@@ -48,7 +47,7 @@
             self.grid.saveFunction();
         };
 
-        console.log("res-status-list loaded");
+        console.log("room-type-list loaded");
 
         $(document).ready(
             function () {
@@ -57,9 +56,9 @@
         );
     }
 
-    resStatus.prototype.dispose = function () {
+    roomType.prototype.dispose = function () {
         gcBuilder.deleteGrid(this.gridName);
     }
 
-    return { viewModel: resStatus, template: htmlString };
+    return { viewModel: roomType, template: htmlString };
 });

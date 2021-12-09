@@ -79,6 +79,12 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('res-status-list', {
             require: '/components/res-status-list.js'
         });
+        ko.components.register('room-list', {
+            require: '/components/room-list.js'
+        });
+        ko.components.register('room-type-list', {
+            require: '/components/room-type-list.js'
+        });
         ko.components.register('drop-down-list', {
             require: '/components/drop-down-list.js'
         });

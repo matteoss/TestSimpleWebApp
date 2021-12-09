@@ -4,12 +4,13 @@
         this.grids = {};
 
 
-        this.grid = function (modelName, dateFields) {
+        this.grid = function (modelName, dateFields, orderByFields) {
             let self = this;
             this.version = "1.0";
             this.loaded = ko.observable(false);
             this.modelName = modelName;
             this.dateFields = dateFields;
+            this.orderByFields = orderByFields;
             this.pageSize = 10;
             this.list = ko.observableArray();
             this.subscriptions = [];
@@ -40,7 +41,11 @@
             }
             args.push("$skip=" + (this.pageSize * (this.page() - 1)));
             args.push("$top=" + (this.pageSize));
-            args.push("$orderby=Id");
+            if (this.orderByFields) {
+                args.push("$orderby=" + this.orderByFields.join(","));
+            } else {
+                args.push("$orderby=Id");
+            }
 
             let query = "/odata/" + this.modelName + "/?" + args.join("&");
             console.log(query);
@@ -219,12 +224,12 @@
     }
 
 
-    gridBuilder.prototype.getGrid = function (gridName, modelName, dateFields) {
+    gridBuilder.prototype.getGrid = function (gridName, modelName, dateFields, orderByFields) {
         if (this.grids[gridName]) {
 
         } else {
-            this.grids[gridName] = new this.grid(modelName, dateFields);
-            console.log("grid " + gridName + " created. Params: " + JSON.stringify({ modelName: modelName, dateFields: dateFields }));
+            this.grids[gridName] = new this.grid(modelName, dateFields, orderByFields);
+            console.log("grid " + gridName + " created. Params: " + JSON.stringify({ modelName: modelName, dateFields: dateFields, orderByFields: orderByFields }));
         }
         return this.grids[gridName];
     }
