@@ -1,7 +1,7 @@
 ﻿<div class="drop-down-list">
-    <input type="text" data-bind="value: value, hasFocus: inputHasFocus, valueUpdate: 'afterkeydown', event: {'keyup': upDownEvent} " />
+    <input type="text" data-bind="value: value, enable: enable, hasFocus: inputHasFocus, valueUpdate: 'afterkeydown', event: {'keyup': upDownEvent} " />
     <!-- ko if: display -->
-    <div class="drop-down-list-scroll-div" data-bind="attr: { id: scrollDivId }" style="position: fixed; height: 10em; width: fit-content; padding-right: 10px; overflow: hidden; overflow-y: scroll;">
+    <div class="drop-down-list-scroll-div" data-bind="attr: { id: scrollDivId }" style="position: absolute; height: 10em; width: fit-content; padding-right: 10px; overflow: hidden; overflow-y: scroll;">
         <ul class="drop-down-list-ul" data-bind="attr: { id: scrollContentId }">
             <!-- ko foreach: list1 -->
             <li class="drop-down-list-li" data-bind="attr: { id: liHtmlId }">

@@ -4,7 +4,7 @@
         console.log(ko.toJSON(params));
         self = this;
         this.gridName = "ResStatusGrid";
-        this.grid = gcBuilder.getGrid(this.gridName, "ResStatuses", []);
+        this.grid = gcBuilder.getGrid(this.gridName, "ResStatuses", ['id'], []);
         this.loaded = this.grid.loaded;
         this.resStatuses = this.grid.list;
         this.resStatusId = (params.id) ? params.id : null;

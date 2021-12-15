@@ -1,4 +1,4 @@
-﻿define(['ko', 'text!./navigation-bar.html', 'security'], function (ko, htmlString, security) {
+﻿define(['ko', 'text!./navigation-bar.html', 'security', 'navigator'], function (ko, htmlString, security, navigator) {
     function MyComponentViewModel(params) {
         var self = this;
         this.search = ko.observable("");
@@ -13,7 +13,11 @@
                 return "Login"
             }
         }); 
-        this.authorizationAction = security.authorizationAction;
+        this.authorizationAction = function () {
+            security.authorizationAction(function () {
+                navigator.setView('login');
+            });
+        }
     }
 
 return { viewModel: MyComponentViewModel, template: htmlString };

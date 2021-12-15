@@ -4,7 +4,7 @@
         console.log(ko.toJSON(params));
         self = this;
         this.gridName = "ReservationGrid";
-        this.grid = gcBuilder.getGrid(this.gridName, "Reservations", ['startDate', 'endDate']);
+        this.grid = gcBuilder.getGrid(this.gridName, "Reservations", ['id'], ['startDate', 'endDate']);
         this.loaded = this.grid.loaded;
         this.reservations = this.grid.list;
         this.resId = (params.id) ? params.id : null;

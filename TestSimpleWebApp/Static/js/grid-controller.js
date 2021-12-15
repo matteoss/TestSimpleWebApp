@@ -4,11 +4,12 @@
         this.grids = {};
 
 
-        this.grid = function (modelName, dateFields, orderByFields) {
+        this.grid = function (modelName, primaryKeyFields, dateFields, orderByFields) {
             let self = this;
             this.version = "1.0";
             this.loaded = ko.observable(false);
             this.modelName = modelName;
+            this.primaryKeyFields = primaryKeyFields;
             this.dateFields = dateFields;
             this.orderByFields = orderByFields;
             this.pageSize = 10;
@@ -44,7 +45,7 @@
             if (this.orderByFields) {
                 args.push("$orderby=" + this.orderByFields.join(","));
             } else {
-                args.push("$orderby=Id");
+                args.push("$orderby=" + this.primaryKeyFields.join(","));
             }
 
             let query = "/odata/" + this.modelName + "/?" + args.join("&");
@@ -99,24 +100,42 @@
                     //alert("marker for update: " + ko.toJSON(g));
                     saveCount++;
                     let data = prepareForOData(Object.assign({}, object));
-                    let insert = !data.id();
-                    if (insert) {
+                    if (object.gridMetaData.insert) {
                         delete data.id;
+                        /*$.each(self.primaryKeyFields, function (i, f) {
+                            delete data[f];
+                        });*/
                     }
+
+                    let pks = [];
+
+                    $.each(self.primaryKeyFields, function (i, f) {
+                        if (typeof data[f] === 'function') {
+                            pks.push(data[f]());
+                        }
+                    });
 
                     console.log(ko.toJSON(data));
                     $.ajax({
-                        type: insert ? "POST" : "PATCH",
-                        url: "/odata/" + self.modelName + (insert ? "" : "(" + data.id() + ")"),
+                        type: object.gridMetaData.insert ? "POST" : "PATCH",
+                        url: "/odata/" + self.modelName + (object.gridMetaData.insert ? "" : "(" + pks.join(",") + ")"),
                         contentType: "application/json;odata.metadata=minimal",
                         dataType: "json",
                         data: ko.toJSON(data),
                         success: function (jqXHR) {
-                            if (insert && jqXHR.id) {
+                            /*if (insert && jqXHR.id) {
                                 object.id(jqXHR.id);
+                            }*/
+                            if (object.gridMetaData.insert) {
+                                $.each(self.primaryKeyFields, function (i, f) {
+                                    if (f === 'id') {
+                                        object[f](jqXHR[f]);
+                                    }
+                                });
                             }
                             self.clearErrorTexts(object);
                             object.gridMetaData.markedForUpdate(false);
+                            object.gridMetaData.insert = false;
                             console.log(JSON.stringify(jqXHR));
                             saveCount--;
                             if (saveCount <= 0) {
@@ -153,6 +172,9 @@
                     });
                 }
             });
+            if (saveCount == 0) {
+                self.loaded(true);
+            }
         }
 
         this.grid.prototype.removeFromList = function (index, object) {
@@ -163,12 +185,21 @@
         this.grid.prototype.deleteFunction = function (index, object) {
             ///object["@odata.type"] = "Microsoft.OData.TestSimpleWebApp.Models.Guest";
             let self = this;
-            if (typeof object.id() === 'number') {
+
+            let pks = [];
+            let dbdel = true;
+            $.each(self.primaryKeyFields, function (i, f) {
+                pks.push(object[f]());
+                if (!object[f]()) {
+                    dbdel = false;
+                }
+            });
+            if (dbdel) {
                 let data = prepareForOData(Object.assign({}, object));
                 console.log(ko.toJSON(data));
                 $.ajax({
                     type: "DELETE",
-                    url: "/odata/" + this.modelName + "(" + data.id() + ")",
+                    url: "/odata/" + this.modelName + "(" + pks.join(",") + ")",
                     contentType: "application/json;odata.metadata=minimal",
                     dataType: "json",
                     data: ko.toJSON(data),
@@ -190,6 +221,7 @@
 
             let gridMetaData = {};
             gridMetaData.markedForUpdate = ko.observable(false);
+            gridMetaData.insert = false;
             gridMetaData.errors = {};
 
             let subscriptions = [];
@@ -219,17 +251,18 @@
             object = new objectFunc();
             this.addGridMetaDataFields(object);
             object.gridMetaData.markedForUpdate(true);
+            object.gridMetaData.insert = true;
             return object;
         }
     }
 
 
-    gridBuilder.prototype.getGrid = function (gridName, modelName, dateFields, orderByFields) {
+    gridBuilder.prototype.getGrid = function (gridName, modelName, primaryKeyFields, dateFields, orderByFields) {
         if (this.grids[gridName]) {
 
         } else {
-            this.grids[gridName] = new this.grid(modelName, dateFields, orderByFields);
-            console.log("grid " + gridName + " created. Params: " + JSON.stringify({ modelName: modelName, dateFields: dateFields, orderByFields: orderByFields }));
+            this.grids[gridName] = new this.grid(modelName, primaryKeyFields, dateFields, orderByFields);
+            console.log("grid " + gridName + " created. Params: " + JSON.stringify({ modelName: modelName, primaryKeyFields: primaryKeyFields, dateFields: dateFields, orderByFields: orderByFields }));
         }
         return this.grids[gridName];
     }

@@ -2,7 +2,7 @@
 <loading></loading>
 <!-- /ko -->
 <div class="room-type-list">
-    <table class="grid-table">
+    <table class="grid-table" cellspacing="0">
         <thead>
             <tr>
                 <!--<td></td>-->
@@ -10,17 +10,25 @@
                 <td>Name</td>
             </tr>
         </thead>
-        <tbody data-bind="foreach: roomTypes">
+        <tbody>
+            <!-- ko foreach: roomTypes -->
             <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
                 <!--<td><span data-bind=" text: $index"></span></td>-->
                 <td><span data-bind=" text: id"></span></td>
                 <td><input type="text" data-bind="value: name" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForName"></span></td>
-                <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+                <td class="del"><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+            </tr>
+            <!-- /ko -->
+
+            <tr><td colspan="2"></tr>
+            <tr>
+                <td colspan="2" class="butt">
+                    <button data-bind="click: newFunction">Add</button>
+                    <button data-bind="click: saveFunction">Save</button>
+                    <button data-bind="click: refreshFunction">Refresh</button>
+                </td>
             </tr>
         </tbody>
     </table>
-    <button data-bind="click: newFunction">Add</button>
-    <button data-bind="click: saveFunction">Save</button>
-    <button data-bind="click: refreshFunction">Refresh</button>
     <page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>
 </div>

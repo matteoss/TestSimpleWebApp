@@ -30,7 +30,7 @@ var searchFunction = function (search) {
     require(['navigator', 'grid_controller'], function (navigator, gs) {
         navigator.setParams({ search: search });
         navigator.setView('guest-list');
-        gs.getGrid("GuestGrid", "Guests", ['dateOfBirth']).searchFunction("contains(Surname,'" + search() + "') or contains(Name,'" + search() + "')");
+        gs.getGrid("GuestGrid", "Guests", ['id'], ['dateOfBirth'], ['id']).searchFunction("contains(Surname,'" + search() + "') or contains(Name,'" + search() + "')");
     });
 }
 
@@ -74,13 +74,15 @@ function book_2_test() {
 require(['jquery'], function ($) {
     $(document).ready(
         function () {
-            require(['security', 'navigator', 'book_controller', 'book_controller_2'], function (security, navigator, b, b2) {
-                security.checkLogin();
+            require(['security', 'navigator'], function (security, navigator) {
                 navigator.mainView = mainView;
                 navigator.mainParams = mainParams;
-                navigator.setParams({});
+                security.setNavigator(navigator);
+                security.checkLogin(function () {
+                    navigator.setParams({});
+                    navigator.setView('book-table');
+                });
                 //navigator.setView('book-table-2');
-                navigator.setView('book-table');
             });
         }
     );

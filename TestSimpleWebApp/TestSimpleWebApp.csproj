@@ -5,6 +5,19 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Static\NewFolder1\**" />
+    <Compile Remove="Static\NewFolder\**" />
+    <Content Remove="Static\NewFolder1\**" />
+    <Content Remove="Static\NewFolder\**" />
+    <EmbeddedResource Remove="Static\NewFolder1\**" />
+    <EmbeddedResource Remove="Static\NewFolder\**" />
+    <None Remove="Static\NewFolder1\**" />
+    <None Remove="Static\NewFolder\**" />
+    <TypeScriptCompile Remove="Static\NewFolder1\**" />
+    <TypeScriptCompile Remove="Static\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="Static\components\notification.ts" />
   </ItemGroup>
 

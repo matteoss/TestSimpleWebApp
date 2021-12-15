@@ -1,9 +1,7 @@
 ﻿<div class="page-number-container">
-    <table>
-        <tr>
-            <td><button data-bind="click: previousPage, enable: showFirstPage">&lt;</button></td>
-            <td><p data-bind="text: page"></p></td>
-            <td><button data-bind="click: nextPage, enable: hasMorePages">&gt;</button></td>
-        </tr>
-    </table>
+    <div id="arrows">
+        <button data-bind="click: previousPage, enable: showFirstPage" disabled="">&#8676;</button>
+        <div data-bind="text: page"></div>
+        <button data-bind="click: nextPage, enable: hasMorePages">&#8677;</button>
+    </div>
 </div>

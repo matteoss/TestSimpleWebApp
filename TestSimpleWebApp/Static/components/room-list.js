@@ -4,7 +4,7 @@
         console.log(ko.toJSON(params));
         self = this;
         this.gridName = "RoomGrid";
-        this.grid = gcBuilder.getGrid(this.gridName, "Rooms", [], ['propertyId']);
+        this.grid = gcBuilder.getGrid(this.gridName, "Rooms", ['propertyId', 'roomNumber'], ['propertyId']);
         this.loaded = this.grid.loaded;
         this.rooms = this.grid.list;
         this.roomId = (params.id) ? params.id : null;
@@ -32,7 +32,7 @@
             console.log(index + "  " + ko.toJSON(object));
             require(['dialog_yes_no_controller'], function (d) {
                 d.setSubject("Delete?");
-                d.setText("Delete room " + object.id());
+                d.setText("Delete room " + object.roomNumber());
                 d.setYesFunction(
                     function () {
                         self.grid.deleteFunction(index, object);

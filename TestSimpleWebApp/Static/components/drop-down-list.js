@@ -10,6 +10,12 @@
             this.checkedId = ko.observable(params.id);
         }
 
+        if (typeof params.enable === 'function' || typeof params.enable === 'boolean') {
+            this.enable = params.enable;
+        } else {
+            this.enable = true;
+        }
+
         this.valueRateLimitIgnore = false;
         this.valueRateLimit = function (action, timeout) {
             var timeoutInstance;
@@ -189,7 +195,7 @@
 
         this.selectFunction = function(){
             $.each(self.list1(), (i, e) => e.itemClass(""));
-            if (self.selected != null) {
+            if (self.list1()[self.selected] != null) {
                 self.list1()[self.selected].itemClass("drop-down-list-selected-item");
             }
         }

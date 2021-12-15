@@ -57,7 +57,7 @@ namespace TestSimpleWebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
-            var entity = await _propertyManagementSystemDbContext.Rooms.FindAsync(new { propertyId, roomNumber });
+            var entity = await _propertyManagementSystemDbContext.Rooms.FindAsync(new object[] { propertyId, roomNumber });
             if (entity == null)
             {
                 return NotFound();

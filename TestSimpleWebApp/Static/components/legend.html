@@ -1,3 +1,9 @@
-﻿<div class="legend" data-bind="foreach:  {data: legendItems, as: 'legendItem' }">
-    <p><span data-bind="class: legendItem.colorClass">O</span><span data-bind="text: legendItem.name"></span></p>
+﻿
+<div id="fc">
+
+    <!-- ko foreach:  {data: legendItems, as: 'legendItem' }-->
+    <div class="fc-img-div" data-bind="class: legendItem.colorClass" style="width: 20px; height: 20px; margin: 0px 10px;"><!--<img src="Index_files/sq_2.png" width="20">--> </div>
+    <div  data-bind="text: legendItem.name"></div>
+    <!-- /ko -->
+
 </div>

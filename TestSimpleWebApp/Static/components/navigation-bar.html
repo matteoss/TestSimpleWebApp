@@ -1,24 +1,24 @@
-﻿<div class="main-nav-bar">
+﻿<!-- ko if: isLoggedIn() -->
+<div class="main-nav-bar">
     <table id="heD">
         <tr>
             <td class="main-nav-bar-home">
                 <a href="index.html"><img src="../images/mg_logo.png" width="60" alt="Mateo Glavičić"></a>
             </td>
 
-            <!-- ko if: isLoggedIn() -->
             <td class="main-nav-bar-search">
                 <form data-bind="submit: searchFunction"><input type="text" data-bind="value: search" /></form>
             </td>
             <td class="main-nav-bar-search-button">
                 <button data-bind="click: searchFunction">Traži</button>
             </td>
-            <!-- /ko -->
             <td class="main-nav-bar-user">
                 <button data-bind="text: username, click: authorizationAction"></button>
             </td>
         </tr>
     </table>
 </div>
+<!-- /ko -->
 <!-- ko if: isLoggedIn() -->
 <div id="me">
 

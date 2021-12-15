@@ -2,10 +2,10 @@
 <loading></loading>
 <!-- /ko -->
 <div class="guest-list">
-    <table class="grid-table">
+    <table class="grid-table" cellspacing="0">
         <thead>
             <tr>
-                <td></td>
+                <!--<td></td>-->
                 <td>ID</td>
                 <td>Surname</td>
                 <td>Name</td>
@@ -17,9 +17,10 @@
                 <td>Address</td>
             </tr>
         </thead>
-        <tbody data-bind="foreach: guests">
+        <tbody>
+            <!-- ko foreach: guests -->
             <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
-                <td><span data-bind=" text: $index"></span></td>
+                <!--<td><span data-bind=" text: $index"></span></td>-->
                 <td><span data-bind=" text: id"></span></td>
                 <td><input type="text" data-bind="value: surname " /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForSurname"></span></td>
                 <td><input type="text" data-bind="value: name" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForName"></span></td>
@@ -29,12 +30,19 @@
                 <td><input type="text" maxlength="3" style="max-width: 3em" data-bind="value: country" /><br /><span class="grid-error-msg" data-bind="gridMetaData.errors.errorTextForCountry"></span></td>
                 <td><input type="text" data-bind="value: city" /><br /><span class="grid-error-msg" data-bind="gridMetaData.errors.errorTextForCity"></span></td>
                 <td><input type="text" data-bind="value: address" /><br /><span class="grid-error-msg" data-bind="gridMetaData.errors.errorTextForAddress"></span></td>
-                <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+                <td class="del"><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+            </tr>
+            <!-- /ko -->
+
+            <tr><td colspan="9"></tr>
+            <tr>
+                <td colspan="9" class="butt">
+                    <button data-bind="click: newFunction">Add</button>
+                    <button data-bind="click: saveFunction">Save</button>
+                    <button data-bind="click: refreshFunction">Refresh</button>
+                </td>
             </tr>
         </tbody>
     </table>
-    <button data-bind="click: newFunction">Add</button>
-    <button data-bind="click: saveFunction">Save</button>
-    <button data-bind="click: refreshFunction">Refresh</button>
     <page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>
 </div>

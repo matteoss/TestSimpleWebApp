@@ -1,19 +1,22 @@
-﻿<div id="infos">
+﻿
+<div id="infos">
     <!-- ko component: {
-            name: "book-params",
-            params: { params: params, refreshFunction: refreshFunction }
-            } -->
+        name: "book-params",
+        params: { params: params, refreshFunction: refreshFunction }
+        } -->
     <!-- /ko -->
     <!-- ko component: {
-            name: "book-details",
-            params: { reservation: selectedRes, checkedId: checkedId }
-            } -->
+        name: "book-details",
+        params: { reservation: selectedRes, checkedId: checkedId }
+        } -->
     <!-- /ko -->
-    <!-- ko component: {
+    <div class="legend-container">
+        <!-- ko component: {
             name: "legend",
             params: { legendItems: legendItems }
-            } -->
-    <!-- /ko -->
+        } -->
+        <!-- /ko -->
+    </div>
 </div>
 <!-- ko if: !loaded() -->
 <loading></loading>
@@ -21,6 +24,13 @@
 <!-- ko if: loaded() -->
 <table class="book-table">
     <thead>
+
+        <!--<tr>
+            <td colspan="32">
+
+            </td>
+        </tr>-->
+
         <tr class="book-row-datumi">
             <td class="idHotela">
                 <p>ID <br> hotela</p>

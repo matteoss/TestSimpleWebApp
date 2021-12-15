@@ -2,10 +2,10 @@
 <loading></loading>
 <!-- /ko -->
 <div class="reservation-list">
-    <table class="grid-table">
+    <table class="grid-table"  cellspacing="0">
         <thead>
             <tr>
-                <td></td>
+                <!--<td></td>-->
                 <td>ID</td>
                 <td>Status</td>
                 <td>Start date</td>
@@ -18,9 +18,10 @@
                 <!--public int? NextStay { get; set; }-->
             </tr>
         </thead>
-        <tbody data-bind="foreach: reservations">
+        <tbody>
+            <!-- ko foreach: reservations -->
             <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
-                <td><span data-bind=" text: $index"></span></td>
+                <!--<td><span data-bind=" text: $index"></span></td>-->
                 <td><span data-bind=" text: id"></span></td>
                 <td><drop-down-list params="componentId: 'resStatus1', id: resStatusId, modelName: 'ResStatuses', searchColumns: ['id', 'name'], valueFunction: (e) => e.id + ' - ' + e.name"></drop-down-list><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForResStatusId"></span></td>
                 <!--<td><input type="text" data-bind="value: status" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForStatus"></span></td>-->
@@ -32,12 +33,18 @@
                 <!--<td><input type="number" data-bind="value: guestId" /></td>-->
                 <td><drop-down-list params="componentId: 'guest1', id: guestId, modelName: 'Guests', searchColumns: ['id', 'name', 'surname'], valueFunction: (e) => e.id + ' - ' + e.surname + ' ' + e.name"></drop-down-list><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForGuestId"></span></td>
                 <td><input type="number" data-bind="value: roomNumber" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForRoomNumber"></span></td>
-                <td><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+                <td class="del"><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+            </tr>
+            <!-- /ko -->
+            <tr><td colspan="10"></tr>
+            <tr>
+                <td colspan="10" class="butt">
+                    <button data-bind="click: newFunction">Add</button>
+                    <button data-bind="click: saveFunction">Save</button>
+                    <button data-bind="click: refreshFunction">Refresh</button>
+                </td>
             </tr>
         </tbody>
     </table>
-    <button data-bind="click: newFunction">Add</button>
-    <button data-bind="click: saveFunction">Save</button>
-    <button data-bind="click: refreshFunction">Refresh</button>
     <page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>
 </div>

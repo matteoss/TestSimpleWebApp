@@ -8,7 +8,7 @@
         var usernameLocal = this.username;
         var passwordLocal = this.password;
         this.login = function () {
-            security.login(usernameLocal(), passwordLocal(), function (result) {
+            security.login(usernameLocal(), passwordLocal(), null, function (result) {
                 console.error(JSON.stringify(result));
                 alert(result.responseText);
             });
