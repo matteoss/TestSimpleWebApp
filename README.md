@@ -9,5 +9,6 @@ classified advertising to property management proof of work concept.
 As a result, there is some unused code. 
 
 Technologies used:
-C#, EntityFramework
-JavaScript, Knockout.js, Require.js
+- C#, EntityFramework
+- JavaScript, Knockout.js, Require.js
+- Postgres database
