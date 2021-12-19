@@ -5,6 +5,7 @@ define(['jquery', 'ko'], function ($, ko) {
         let self = this;
         this.version = "1.0";
         this.username = ko.observable("");
+        this.role = ko.observable("");
         this.navigator = null;
         this.isLoggedIn = ko.pureComputed(function () {
             if (self.username()) {
@@ -30,7 +31,9 @@ define(['jquery', 'ko'], function ($, ko) {
         console.log('security logout');
         document.cookie = "username= ; expires=Thu, 01 Jan 1970 00:00:01 GMT";
         document.cookie = "token= ; expires=Thu, 01 Jan 1970 00:00:01 GMT";
+        document.cookie = "role= ; expires=Thu, 01 Jan 1970 00:00:01 GMT";
         this.username("");
+        this.role("");
         if (onSuccess) {
             onSuccess();
         }
@@ -45,6 +48,7 @@ define(['jquery', 'ko'], function ($, ko) {
             beforeSend: self.beforeSendFunction,
             success: function (result) {
                 self.username(document.cookie.match('(^|;)\\s*' + 'username' + '\\s*=\\s*([^;]+)')?.pop() || '');
+                self.role(document.cookie.match('(^|;)\\s*' + 'role' + '\\s*=\\s*([^;]+)')?.pop() || '');
                 if (onSuccess) {
                     onSuccess();
                 }
@@ -73,8 +77,10 @@ define(['jquery', 'ko'], function ($, ko) {
                 console.log(JSON.stringify(result));
                 var expires = new Date(result.expires).toUTCString();
                 document.cookie = "username=" + username + "; expires=" + expires;
+                document.cookie = "role=" + result.role + "; expires=" + expires;
                 document.cookie = "token=" + result.token + "; expires=" + expires;
                 self.username(username);
+                self.role(result.role);
                 if (onSuccess) {
                     onSuccess();
                 }

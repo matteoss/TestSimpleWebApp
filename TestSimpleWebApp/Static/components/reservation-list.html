@@ -14,11 +14,13 @@
                 <td>Property</td>
                 <td>Guest</td>
                 <td>Room Number</td>
+                <td></td>
                 <!--public int? PreviousStay { get; set; }-->
                 <!--public int? NextStay { get; set; }-->
             </tr>
         </thead>
         <tbody>
+            <tr><td colspan="9"></tr>
             <!-- ko foreach: reservations -->
             <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
                 <!--<td><span data-bind=" text: $index"></span></td>-->
@@ -36,9 +38,9 @@
                 <td class="del"><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
             </tr>
             <!-- /ko -->
-            <tr><td colspan="10"></tr>
+            <tr><td colspan="9"></tr>
             <tr>
-                <td colspan="10" class="butt">
+                <td colspan="9" class="butt">
                     <button data-bind="click: newFunction">Add</button>
                     <button data-bind="click: saveFunction">Save</button>
                     <button data-bind="click: refreshFunction">Refresh</button>

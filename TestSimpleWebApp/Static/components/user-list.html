@@ -1,29 +1,34 @@
 ﻿<!-- ko if: !loaded() -->
 <loading></loading>
 <!-- /ko -->
-<div class="property-list">
+<div class="user-list">
     <table class="grid-table" cellspacing="0">
         <thead>
             <tr>
                 <!--<td></td>-->
                 <td>ID</td>
-                <td>Name</td>
+                <td>Username</td>
+                <td>Description</td>
+                <td>Role</td>
                 <td></td>
             </tr>
         </thead>
         <tbody>
-            <tr><td colspan="3"></tr>
-            <!-- ko foreach: properties -->
+            <tr><td colspan="5"></tr>
+            <!-- ko foreach: users -->
             <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
                 <!--<td><span data-bind=" text: $index"></span></td>-->
                 <td><span data-bind=" text: id"></span></td>
-                <td><input type="text" data-bind="value: name" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForName"></span></td>
+                <td><input type="text" data-bind="value: username" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForUsername"></span></td>
+                <td><input type="text" data-bind="value: description" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForDescription"></span></td>
+                <td><input type="text" data-bind="value: role" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForRole"></span></td>
                 <td class="del"><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
             </tr>
             <!-- /ko -->
-            <tr><td colspan="3"></tr>
+
+            <tr><td colspan="5"></tr>
             <tr>
-                <td colspan="3" class="butt">
+                <td colspan="5" class="butt">
                     <button data-bind="click: newFunction">Add</button>
                     <button data-bind="click: saveFunction">Save</button>
                     <button data-bind="click: refreshFunction">Refresh</button>

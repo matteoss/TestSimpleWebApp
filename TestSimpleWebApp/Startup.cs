@@ -87,6 +87,7 @@ namespace TestSimpleWebApp
             odataBuilder.EntitySet<Property>("Properties").EntityType.HasKey(x => x.Id);
             odataBuilder.EntitySet<Room>("Rooms").EntityType.HasKey(x => new { x.PropertyId, x.RoomNumber });
             odataBuilder.EntitySet<RoomType>("RoomTypes").EntityType.HasKey(x => x.Id);
+            odataBuilder.EntitySet<User>("Users").EntityType.HasKey(x => x.Id);
             return odataBuilder.GetEdmModel();
         }
     }

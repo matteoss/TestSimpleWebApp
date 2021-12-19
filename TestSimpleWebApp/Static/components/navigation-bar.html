@@ -29,6 +29,9 @@
     <button onclick="navigate('res-status-list')">Reservation statuses</button>
     <button onclick="navigate('room-list')">Rooms</button>
     <button onclick="navigate('room-type-list')">Room types</button>
+    <!-- ko if: role() == 'Admin' -->
+    <button onclick="navigate('user-list')">Users </button>
+    <!-- /ko -->
     <button onclick="navigate('about')">About</button>
     <button onclick="navigate('drop-down-list', { componentId: 1, id: 1, modelName: 'Guests', searchColumns: ['id', 'name', 'surname'], valueFunction: (e) => e.id + ' - ' + e.surname + ' ' + e.name })">Drop down test</button>
     <!--<button onclick="book_2_test()">Book2 Test</button>-->

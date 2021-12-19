@@ -3,6 +3,7 @@
         var self = this;
         this.search = ko.observable("");
         this.isLoggedIn = security.isLoggedIn;
+        this.role = security.role;
         this.searchFunction = function () {
             params.searchFunction(self.search);
         }

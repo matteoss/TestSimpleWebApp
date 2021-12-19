@@ -91,6 +91,9 @@ require(['ko', 'jquery', 'security'], function (ko, $, s) {
         ko.components.register('drop-down-list', {
             require: '/components/drop-down-list.js'
         });
+        ko.components.register('user-list', {
+            require: '/components/user-list.js'
+        });
         ko.components.register('book-table-2', {
             require: '/components/book-table-2.js'
         });

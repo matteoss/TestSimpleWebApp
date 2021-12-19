@@ -106,7 +106,7 @@ namespace TestSimpleWebApp.Security
 
             var token = GenerateJwtToken(user);
 
-            return new AuthResponse(token, DateTime.Now.AddHours(_securitySettings.TokenDurationHours).ToUniversalTime());
+            return new AuthResponse(token, DateTime.Now.AddHours(_securitySettings.TokenDurationHours).ToUniversalTime(), user.Role);
         }
 
         public User GetById(int id)

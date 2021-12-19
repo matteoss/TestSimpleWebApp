@@ -286,6 +286,36 @@ table {
     overflow-x: auto;
 }
 
+.guest-list {
+    width: 90%;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.property-list {
+    width: 90%;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.res-status-list {
+    width: 90%;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.room-list {
+    width: 90%;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
+.room-type-list {
+    width: 90%;
+    margin: 0 auto;
+    overflow-x: auto;
+}
+
 popup {
     visibility: hidden;
     z-index: 1;
