@@ -1,4 +1,4 @@
-﻿-define(['ko'], function (ko) {
+﻿-define(['ko', 'security'], function (ko, security) {
     function gridBuilder() {
 
         this.grids = {};
@@ -51,7 +51,29 @@
             let query = "/odata/" + this.modelName + "/?" + args.join("&");
             console.log(query);
 
-            $.getJSON(query, function (result) {
+            security.makeRequest({
+                url: query,
+                type: 'GET',
+                success: function (result) {
+                    //console.log(JSON.stringify(result));
+                    //self.guests(result.value);
+
+                    $.each(result.value, function (i, e) {
+
+                        //console.log(JSON.stringify(e));
+                        self.addGridMetaDataFields(e);
+                        self.list.push(e);
+
+                    });
+
+                    self.loaded(true);
+                },
+                error: function (jqXHR) {
+                    self.loaded(true);
+                }
+            });
+
+            /*$.getJSON(query, function (result) {
                 //console.log(JSON.stringify(result));
                 //self.guests(result.value);
 
@@ -64,7 +86,7 @@
                 });
 
                 self.loaded(true);
-            });
+            });*/
         }
 
         this.grid.prototype.searchFunction = function (filter) {
@@ -116,16 +138,17 @@
                     });
 
                     console.log(ko.toJSON(data));
-                    $.ajax({
+
+                    security.makeRequest({
                         type: object.gridMetaData.insert ? "POST" : "PATCH",
                         url: "/odata/" + self.modelName + (object.gridMetaData.insert ? "" : "(" + pks.join(",") + ")"),
                         contentType: "application/json;odata.metadata=minimal",
                         dataType: "json",
                         data: ko.toJSON(data),
                         success: function (jqXHR) {
-                            /*if (insert && jqXHR.id) {
-                                object.id(jqXHR.id);
-                            }*/
+                            //if (insert && jqXHR.id) {
+                            //    object.id(jqXHR.id);
+                            //}
                             if (object.gridMetaData.insert) {
                                 $.each(self.primaryKeyFields, function (i, f) {
                                     if (f === 'id') {
@@ -170,6 +193,7 @@
                             }
                         }
                     });
+
                 }
             });
             if (saveCount == 0) {
@@ -197,7 +221,8 @@
             if (dbdel) {
                 let data = prepareForOData(Object.assign({}, object));
                 console.log(ko.toJSON(data));
-                $.ajax({
+                //$.ajax(
+                security.makeRequest( {
                     type: "DELETE",
                     url: "/odata/" + this.modelName + "(" + pks.join(",") + ")",
                     contentType: "application/json;odata.metadata=minimal",

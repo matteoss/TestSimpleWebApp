@@ -19,6 +19,7 @@
                 this.username = "";
                 this.description = "";
                 this.role = "";
+                this.password = "";
             })
         }
         this.newFunction = function () {

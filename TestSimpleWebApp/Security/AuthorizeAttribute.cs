@@ -9,12 +9,12 @@ namespace TestSimpleWebApp.Security
     [AttributeUsage(AttributeTargets.Class | AttributeTargets.Method)]
     public class AuthorizeAttribute : Attribute, IAuthorizationFilter
     {
-        public string role;
+        public string[] role;
 
         public void OnAuthorization(AuthorizationFilterContext context)
         {
             var korisnik = (User)context.HttpContext.Items["User"];
-            if (korisnik == null || (role != null && korisnik.Role != role))
+            if (korisnik == null || (role != null && !isRoleInList( korisnik.Role )))
             {
                 // not logged in
                 context.Result = new JsonResult(
@@ -23,8 +23,22 @@ namespace TestSimpleWebApp.Security
             }
         }
 
+        private Boolean isRoleInList(String role)
+        {
+            Boolean ret = false;
+            for(int i = 0; i<this.role.Length; i++)
+            {
+                if (role.Equals(this.role[i]))
+                {
+                    ret = true;
+                    break;
+                }
+            }
+            return ret;
+        }
 
-        public virtual string Role
+
+        public virtual string[] Role
         {
             get { return role; }
             set { role = value; }

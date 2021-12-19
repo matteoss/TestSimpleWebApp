@@ -1,41 +1,44 @@
 ﻿<!-- ko if: !loaded() -->
 <loading></loading>
 <!-- /ko -->
-<div class="res-status-list">
-    <table class="grid-table" cellspacing="0">
-        <thead>
-            <tr>
-                <!--<td></td>-->
-                <td>ID</td>
-                <td>Name</td>
-                <td>Color</td>
-                <td></td>
-                <!--public int? PreviousStay { get; set; }-->
-                <!--public int? NextStay { get; set; }-->
-            </tr>
-        </thead>
-        <tbody>
-            <tr><td colspan="4"></tr>
-            <!-- ko foreach: resStatuses -->
-            <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
-                <!--<td><span data-bind=" text: $index"></span></td>-->
-                <td><span data-bind=" text: id"></span></td>
-                <td><input type="text" data-bind="value: name" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForName"></span></td>
-                <!--<td><input type="number" data-bind="value: propertyId" /></td>-->
-                <td><drop-down-list params="componentId: 'color1', id: colorId, modelName: 'Colors', searchColumns: ['id', 'name'], valueFunction: (e) => e.id + ' - ' + e.name"></drop-down-list><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForColorId"></span></td>
-                <td class="del"><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
-            </tr>
-            <!-- /ko -->
+<div class="container-list">
+    <div class="res-status-list">
+        <table class="grid-table" id="rs" cellspacing="0">
+            <thead>
+                <tr>
+                    <td></td>
+                    <td>ID</td>
+                    <td>Name</td>
+                    <td>Color</td>
+                    <td></td>
+                    <!--public int? PreviousStay { get; set; }-->
+                    <!--public int? NextStay { get; set; }-->
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td colspan="5"></tr>
+                <!-- ko foreach: resStatuses -->
+                <tr data-bind="class: (gridMetaData.markedForUpdate() ? 'grid-marked-for-update' : '')">
+                    <!--<td><span data-bind=" text: $index"></span></td>-->
+                    <td></td>
+                    <td><span data-bind=" text: id"></span></td>
+                    <td><input type="text" data-bind="value: name" /><br /><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForName"></span></td>
+                    <!--<td><input type="number" data-bind="value: propertyId" /></td>-->
+                    <td><drop-down-list params="componentId: 'color1', id: colorId, modelName: 'Colors', searchColumns: ['id', 'name'], valueFunction: (e) => e.id + ' - ' + e.name"></drop-down-list><span class="grid-error-msg" data-bind="text: gridMetaData.errors.errorTextForColorId"></span></td>
+                    <td class="del"><button data-bind="click: function(data, event) { $component.deleteFunction($index(), data, event) } ">Delete</button></td>
+                </tr>
+                <!-- /ko -->
 
-            <tr><td colspan="4"></tr>
-            <tr>
-                <td colspan="4" class="butt">
-                    <button data-bind="click: newFunction">Add</button>
-                    <button data-bind="click: saveFunction">Save</button>
-                    <button data-bind="click: refreshFunction">Refresh</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>
+                <tr><td colspan="5"></tr>
+                <tr>
+                    <td colspan="5" class="butt">
+                        <button data-bind="click: newFunction">Add</button>
+                        <button data-bind="click: saveFunction">Save</button>
+                        <button data-bind="click: refreshFunction">Refresh</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
 </div>
+<page-number params='page: page, hasMorePages: hasMorePages, refreshFunction: refreshFunction'></page-number>

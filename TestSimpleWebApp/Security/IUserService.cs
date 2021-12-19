@@ -33,10 +33,12 @@ namespace TestSimpleWebApp.Security
         private readonly List<User> _users;
 
         private readonly SecuritySettings _securitySettings;
+        private readonly PropertyManagementSystemDbContext _propertyManagementSystemDbContext;
 
-        public UserService(IOptions<SecuritySettings> securitySettings)
+        public UserService(IOptions<SecuritySettings> securitySettings, PropertyManagementSystemDbContext propertyManagementSystemDbContext)
         {
             _securitySettings = securitySettings.Value;
+            _propertyManagementSystemDbContext = propertyManagementSystemDbContext;
 
             _users = new List<User>
             {
@@ -97,7 +99,8 @@ namespace TestSimpleWebApp.Security
         public AuthResponse Authenticate(AuthRequest model)
         {
 
-            var user = _users.SingleOrDefault(x => x.Username == model.Username);
+            //var user = _users.SingleOrDefault(x => x.Username == model.Username);
+            var user = _propertyManagementSystemDbContext.Users.FirstOrDefault(x => x.Username == model.Username);
 
             if (user == null || !VerifyPassword(user.Password, model.Password))
             {

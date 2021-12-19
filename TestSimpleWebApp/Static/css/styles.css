@@ -24,6 +24,15 @@ button:hover {
     cursor: pointer;
 }
 
+input[type=text], input[type=number] {
+    padding: 4px;
+}
+
+input[type=date] {
+    padding: 2px;
+}
+
+/* treba provjeriti */
 table {
     width: 100%;
 }
@@ -37,8 +46,27 @@ table {
     float: right;
     font-size: 0.9em;
     padding: 0px 0px 10px 0px;
-    ;
-    /*font-size: 0.7vw;*/
+}
+
+.color_bba3c8 {
+    width: 20px;
+    height: 20px;
+    margin: 0px 10px;
+    background-color: #bba3c8;
+}
+
+.color_fab27e {
+    width: 20px;
+    height: 20px;
+    margin: 0px 10px;
+    background-color: #fab27e;
+}
+
+.color_cc7699 {
+    width: 20px;
+    height: 20px;
+    margin: 0px 10px;
+    background-color: #cc7699;
 }
 
     #fc div {
@@ -141,20 +169,18 @@ table {
     transform: translate(-50%, -50%);
 }
 
-@keyframes bounce {
-    0% {
-        transform: translateY(0);
+@keyframes fadeIn {
+    from {
+        opacity: 0;
     }
 
-    100% {
-        transform: translateY(-50px);
+    to {
+        opacity: 1;
     }
 }
 
 #logIn {
-    animation: bounce 0.8s;
-    animation-direction: alternate;
-    animation-iteration-count: 2;
+    animation: fadeIn 3s;
     padding: 20px;
     text-align: center;
     position: relative;
@@ -171,7 +197,7 @@ table {
 
 .koIme, .loZz {
     width: 100%;
-    padding: 15px 25px;
+    padding: 15px 25px !important;
     margin: 8px 0px 35px 0px;
     box-sizing: border-box;
     background-color: #eee;
@@ -214,7 +240,7 @@ table {
 	}*/
 
 #infos {
-    width: 90%;
+    width: 80%;
     margin: 0px auto;
     background-color: #aaa;
     font-size: 0.9em;
@@ -280,38 +306,8 @@ table {
     padding-right: 30px;
 }
 
-.reservation-list {
-    width: 90%;
-    margin: 0 auto;
-    overflow-x: auto;
-}
-
-.guest-list {
-    width: 90%;
-    margin: 0 auto;
-    overflow-x: auto;
-}
-
-.property-list {
-    width: 90%;
-    margin: 0 auto;
-    overflow-x: auto;
-}
-
-.res-status-list {
-    width: 90%;
-    margin: 0 auto;
-    overflow-x: auto;
-}
-
-.room-list {
-    width: 90%;
-    margin: 0 auto;
-    overflow-x: auto;
-}
-
-.room-type-list {
-    width: 90%;
+.container-list {
+    width: 80%;
     margin: 0 auto;
     overflow-x: auto;
 }
@@ -338,10 +334,22 @@ popup {
 .popup-view {
     margin: auto;
     background-color: white;
-    width: 30%;
+    width: 20%;
     text-align: center;
-    padding: 4px;
+    padding: 4px 0px 30px 0px;
 }
+
+.popup-view button {
+    background-color: #444;
+    border: none;
+    color: #fff;
+    border-radius: 3px;
+    padding: 10px 14px;
+}
+
+    .popup-view button:hover {
+        color: #fdc;
+    }
 
 popup.show {
     visibility: visible;
@@ -360,7 +368,7 @@ login-popup {
     visibility: hidden;
     z-index: 1;
 }
-
+/*
 .login-popup-containter {
     position: absolute;
     display: table;
@@ -381,7 +389,7 @@ login-popup {
 login-popup.show {
     visibility: visible;
 }
-
+*/
 .book-table {
     font-size: 0.9em;
     width: 90%;
@@ -493,14 +501,20 @@ table {
 
     .grid-table thead {
         text-align: center;
-        font-size: 1em;
+        font-size: 0.9em;
         background-color: #2098B3;
         color: #fff;
+        padding: 5px 0px;
+        text-transform: uppercase;
     }
+
+        .grid-table thead td {
+            padding: 10px 0px;
+        }
 
     .grid-table td {
         /*vertical-align: top;*/
-        padding: 10px 10px;
+        padding: 7px;
         text-align: center;
     }
 
@@ -509,6 +523,24 @@ table {
         text-align: left;
         background-color: #777;
     }
+
+/*širina tablica*/
+
+#rt {
+    width: 20%;
+}
+
+#ro {
+    width: 65%;
+}
+
+#rs {
+    width: 30%;
+}
+
+#prp {
+    width: 20%;
+}
 
 .del {
     background-color: #B59CAA;
@@ -560,6 +592,8 @@ table {
 .drop-down-list-scroll-div {
     background-color: white;
     border: 1px solid gray;
+    padding: 10px 10px 10px 5px;
+    font-size: 0.9em;
 }
 
 .drop-down-list-ul {

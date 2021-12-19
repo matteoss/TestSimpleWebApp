@@ -89,20 +89,24 @@ define(['jquery', 'ko'], function ($, ko) {
         });
     };
 
-    Security.prototype.makeRequest = function (url, type, data, success, error) {
+    Security.prototype.makeRequest = function (params) {
         let self = this;
         $.ajax({
-            url: url,
-            type: type,
-            contentType: "application/json",
+            url: params.url,
+            type: params.type,
+            contentType: params.contentType == null ? "application/json" : params.contentType,
+            dataType: params.dataType,
             beforeSend: self.beforeSendFunction,
-            data: data,
-            success: success,
+            data: params.data,
+            success: params.success,
             error: function (jqXHR, textStatus, errorThrown) {
+                console.error(jqXHR);
                 if (jqXHR.status == 401) {
                     self.logout();
                 }
-                error();
+                if (typeof params.error === 'function') {
+                    params.error(jqXHR);
+                }
             }
         });
     };

@@ -14,15 +14,17 @@ using TestSimpleWebApp.Security;
 
 namespace TestSimpleWebApp.Controllers
 {
-    [Authorize(Role = "Admin")]
+    [Authorize(Role = new string[] { "User", "Admin" })]
     public class UserController : ODataController
     {
 
         private readonly PropertyManagementSystemDbContext _propertyManagementSystemDbContext;
+        private readonly IUserService _userService;
 
-        public UserController(PropertyManagementSystemDbContext propertyManagementSystemDbContext)
+        public UserController(PropertyManagementSystemDbContext propertyManagementSystemDbContext, IUserService userService)
         {
             _propertyManagementSystemDbContext = propertyManagementSystemDbContext;
+            _userService = userService;
         }
 
         [HttpGet("odata/Users")]
@@ -46,6 +48,7 @@ namespace TestSimpleWebApp.Controllers
             {
                 return BadRequest(ModelState);
             }
+            user.Password = _userService.HashPassword(user.Password);
             _propertyManagementSystemDbContext.Users.Add(user);
             await _propertyManagementSystemDbContext.SaveChangesAsync();
             return Created(user);
@@ -63,7 +66,21 @@ namespace TestSimpleWebApp.Controllers
             {
                 return NotFound();
             }
+
+            bool passwordChanged = false;
+            object newPassword = "";
+            user.TryGetPropertyValue("Password", out newPassword);
+
+            if (newPassword != null && !entity.Password.Equals(newPassword))
+            {
+                passwordChanged = true;
+            }
+
             user.Patch(entity);
+            if (passwordChanged)
+            {
+                entity.Password = _userService.HashPassword(entity.Password);
+            }
             if (!TryValidateModel(entity))
             {
                 return BadRequest(ModelState);

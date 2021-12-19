@@ -1,4 +1,4 @@
-﻿-define(['ko', 'signalr'], function (ko, signalR) {
+﻿-define(['ko', 'signalr', 'security'], function (ko, signalR, security) {
     function Book() {
         let self = this;
         this.version = "1.0";
@@ -107,60 +107,64 @@
             + (additionalQueryFilter.length > 0 ? "&$filter=" + additionalQueryFilter.join(' and ') : "")
             + "&$orderby=PropertyId,RoomNumber";
         console.log(query);
-        $.getJSON(query, function (result) {
-            //console.log(JSON.stringify(result));
+        security.makeRequest({
+            url: query,
+            type: 'GET',
+            success: function (result) {
+                //console.log(JSON.stringify(result));
 
-            self.reservationRows(result.value);
+                self.reservationRows(result.value);
 
 
-            $.each(self.reservationRows(), function (i, room) {
-                //console.log(JSON.stringify(res));
+                $.each(self.reservationRows(), function (i, room) {
+                    //console.log(JSON.stringify(res));
 
 
-                let lastEndIndex = ko.observable(0);
+                    let lastEndIndex = ko.observable(0);
 
-                room.reservations = ko.observableArray(room.reservations);
+                    room.reservations = ko.observableArray(room.reservations);
 
-                $.each(room.reservations(), function (i, res) {
+                    $.each(room.reservations(), function (i, res) {
 
-                    self.addLegendItemIfNotExists({ name: res.resStatus.name, colorClass: res.resStatus.color.definition });
+                        self.addLegendItemIfNotExists({ name: res.resStatus.name, colorClass: res.resStatus.color.definition });
 
-                    for (var propt in res) {
-                        res[propt] = ko.observable(res[propt]);
-                    }
-
-                    res.lastEndIndex = lastEndIndex;
-
-                    res.offset = ko.computed(function () {
-                        let offset = self.dates().findIndex((e) => e.dateString == res.startDate().split('T')[0]);
-                        if (offset == -1) {
-                            offset = 0;
+                        for (var propt in res) {
+                            res[propt] = ko.observable(res[propt]);
                         }
-                        offset = offset - res.lastEndIndex();
-                        return offset;
-                    });
-                    res.size = ko.computed(function () {
-                        let size = self.dates().findIndex((e) => e.dateString == res.endDate().split('T')[0]);
-                        if (size > -1) {
-                            size = size - res.offset() + res.lastEndIndex();
-                        } else {
-                            size = self.numberOfDays - res.offset();
-                        }
-                        return size;
-                    });
 
-                    res.endIndex = ko.computed(function () {
-                        return res.lastEndIndex() + res.offset() + res.size()
+                        res.lastEndIndex = lastEndIndex;
+
+                        res.offset = ko.computed(function () {
+                            let offset = self.dates().findIndex((e) => e.dateString == res.startDate().split('T')[0]);
+                            if (offset == -1) {
+                                offset = 0;
+                            }
+                            offset = offset - res.lastEndIndex();
+                            return offset;
+                        });
+                        res.size = ko.computed(function () {
+                            let size = self.dates().findIndex((e) => e.dateString == res.endDate().split('T')[0]);
+                            if (size > -1) {
+                                size = size - res.offset() + res.lastEndIndex();
+                            } else {
+                                size = self.numberOfDays - res.offset();
+                            }
+                            return size;
+                        });
+
+                        res.endIndex = ko.computed(function () {
+                            return res.lastEndIndex() + res.offset() + res.size()
+                        });
+
+                        console.log(ko.toJSON(res));
+
+                        lastEndIndex = res.endIndex;
                     });
-
-                    console.log(ko.toJSON(res));
-
-                    lastEndIndex = res.endIndex;
                 });
-            });
-            self.loaded(true);
+                self.loaded(true);
 
-            //console.log(ko.toJSON(self.reservationRows()));
+                //console.log(ko.toJSON(self.reservationRows()));
+            }
         });
     }
 
